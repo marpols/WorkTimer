@@ -1,0 +1,16 @@
+﻿{
+    "lastTick":  "2026-04-23T17:05:24.9046440-04:00",
+    "warned15":  false,
+    "emergencyUntil":  null,
+    "remainingSeconds":  5000,
+    "extendedIdle":  false,
+    "emergencyUsed":  false,
+    "cooldownUntil":  null,
+    "warnedIdle":  false,
+    "warned5":  false,
+    "lockOut":  20,
+    "cooldown":  false,
+    "lastDate":  "2026-04-22",
+    "warned30":  false,
+    "eveningNotified":  false
+}

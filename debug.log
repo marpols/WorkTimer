@@ -1,0 +1,158 @@
+Exit-App start 2026-04-18T04:20:31.2974512-04:00
+Cancel clicked
+Returning AllowExit=False
+Show-ExitChallenge returned: False False
+Proceeding with exit
+Cancel clicked
+Returning AllowExit=False
+Show-ExitChallenge returned: False
+Cancel clicked
+Returning AllowExit=False
+Show-ExitChallenge returned: False False
+Proceeding with exit
+Show-ExitChallenge returned: 
+Exit cancelled
+Show-ExitChallenge returned: 
+Exit cancelled
+Show-ExitChallenge returned: 
+Exit cancelled
+Cancel clicked
+Returning AllowExit=False
+Show-ExitChallenge returned: <False>
+Exit cancelled
+Cancel clicked
+Returning AllowExit=False
+Show-ExitChallenge returned: <False False>
+Show-ExitChallenge returned: 
+Exit cancelled
+Cancel clicked
+Returning AllowExit=False
+Show-ExitChallenge returned: <False>
+Exit cancelled
+Cancel clicked
+Returning AllowExit=False
+Show-ExitChallenge returned: <False>
+Exit cancelled
+Cancel clicked
+Returning AllowExit=False
+Show-ExitChallenge returned: <False>
+Exit cancelled
+Cancel clicked
+Returning AllowExit=False
+Show-ExitChallenge returned: <False>
+Exit cancelled
+Cancel clicked
+Returning AllowExit=False
+Show-ExitChallenge returned: <False>
+Exit cancelled
+Show-ExitChallenge returned: <False>
+Exit cancelled
+User= Correct=
+User= Correct=
+Show-ExitChallenge returned: <True>
+User= Correct=
+User= Correct=
+Show-ExitChallenge returned: <True>
+Show-ExitChallenge returned: <False>
+Exit cancelled
+Show-ExitChallenge returned: <False>
+Exit cancelled
+User=left Correct=left
+Show-ExitChallenge returned: <True>
+User=76846 Correct=76846
+Show-ExitChallenge returned: <True>
+User=left Correct=left
+Show-ExitChallenge returned: <True>
+User=right Correct=right
+Show-ExitChallenge returned: <True>
+User=20 Correct=91
+User= Correct=18
+User=85003 Correct=85003
+Show-ExitChallenge returned: <True>
+Show-ExitChallenge returned: <False>
+Exit cancelled
+Show-ExitChallenge returned: <False>
+Exit cancelled
+User=39008 Correct=39008
+Show-ExitChallenge returned: <True>
+User=17 Correct=17
+Show-ExitChallenge returned: <True>
+User= Correct=52
+User= Correct=161
+User=left Correct=left
+Show-ExitChallenge returned: <True>
+Show-ExitChallenge returned: <False>
+Exit cancelled
+Show-ExitChallenge returned: <False>
+Exit cancelled
+User=right Correct=left
+User=138 Correct=138
+Show-ExitChallenge returned: <True>
+User=1720 Correct=1068
+User=88 Correct=88
+Show-ExitChallenge returned: <True>
+User=9042 Correct=9042
+Show-ExitChallenge returned: <True>
+User=48 Correct=64
+User=left Correct=left
+Show-ExitChallenge returned: <True>
+User=980333 Correct=980333
+Show-ExitChallenge returned: <True>
+Show-ExitChallenge returned: <False>
+Exit cancelled
+User=left Correct=left
+Show-ExitChallenge returned: <True>
+Show-ExitChallenge returned: <False>
+Exit cancelled
+Show-ExitChallenge returned: <False>
+Exit cancelled
+Show-ExitChallenge returned: <False>
+Exit cancelled
+Show-ExitChallenge returned: <False>
+Exit cancelled
+Show-ExitChallenge returned: <False>
+Exit cancelled
+User=9 Correct=9
+Show-ExitChallenge returned: <True>
+Show-ExitChallenge returned: <False>
+Exit cancelled
+Show-ExitChallenge returned: <False>
+Exit cancelled
+User=right Correct=right
+Show-ExitChallenge returned: <True>
+Show-ExitChallenge returned: <False>
+Exit cancelled
+User=right Correct=right
+Show-ExitChallenge returned: <True>
+User=849403 Correct=849403
+Show-ExitChallenge returned: <True>
+User=56 Correct=49
+Show-ExitChallenge returned: <False>
+Exit cancelled
+User=22 Correct=22
+Show-ExitChallenge returned: <True>
+Show-ExitChallenge returned: <False>
+Exit cancelled
+User=right Correct=right
+Show-ExitChallenge returned: <True>
+User=365178 Correct=365178
+Show-ExitChallenge returned: <True>
+User=right Correct=right
+Show-ExitChallenge returned: <True>
+User=12 Correct=12
+Show-ExitChallenge returned: <True>
+User=862970 Correct=862970
+Show-ExitChallenge returned: <True>
+User=right Correct=right
+Show-ExitChallenge returned: <True>
+User=984289 Correct=984289
+Show-ExitChallenge returned: <True>
+User=right Correct=right
+Show-ExitChallenge returned: <True>
+User=18 Correct=80
+User=040670 Correct=040670
+Show-ExitChallenge returned: <True>
+Show-ExitChallenge returned: <False>
+Exit cancelled
+Show-ExitChallenge returned: <False>
+Exit cancelled
