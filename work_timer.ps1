@@ -154,7 +154,6 @@ function Show-Message($text, $title = "Work Timer", $type = 'Warning') {
 }
 
 function Show-Balloon($text, $title = "Work Timer", $timeout = 5000) {
-	$script.notifyIcon.Icon = New-Object System.Drawing.Icon("$PSScriptRoot\time.ico")
     $script:notifyIcon.BalloonTipTitle = $title
     $script:notifyIcon.BalloonTipText = $text
     $script:notifyIcon.ShowBalloonTip($timeout)
@@ -301,13 +300,13 @@ $script:timer.Add_Tick({
 	$properties = Load-Properties
 	
 	$firstWarning = $properties.workPeriod * 0.25
-	if ($firstWarning -gt 30){$firstWarning = 30} else {$firstWarning = [Math]::Ceiling(%firstWarning/5)*5}
+	if ($firstWarning -gt 30){$firstWarning = 30} else{$firstWarning = [Math]::Ceiling($firstWarning/5)*5}
 	$secondWarning = $properties.workPeriod * 0.125
-	if ($secondWarning -gt 15) {$secondWarning = 15} else {$secondWarning = [Math]::Ceiling(%firstWarning/5)*5}
-	if ($secondWarning -eq $firstWarning) $secondWarning = [Math]::Round($secondWarning)
+	if ($secondWarning -gt 15){$secondWarning = 15} else{$secondWarning = [Math]::Ceiling($secondWarning/5)*5}
+	if ($secondWarning -eq $firstWarning){$secondWarning = [Math]::Round($secondWarning)}
 	$thirdWarning = $properties.workPeriod * 0.0417
-	if ($thirdWarning -gt 5) {$thirdWarning = 5} else {$thirdWarning = [Math]::Ceiling(%firstWarning/5)*5}
-	if ($thirdWarning -eq $secondWarning) $thirdWarning = [Math]::Round($thirdWarning)
+	if ($thirdWarning -gt 5){$thirdWarning = 5} else{$thirdWarning = [Math]::Ceiling($thirdWarning/5)*5}
+	if ($thirdWarning -eq $secondWarning){$thirdWarning = [Math]::Round($thirdWarning)}
 
     $now = Get-Now
     $lastTick = [datetime]$state.lastTick
