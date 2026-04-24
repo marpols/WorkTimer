@@ -313,11 +313,6 @@ $script:timer.Add_Tick({
     $lastTick = [datetime]$state.lastTick
     $elapsed = [math]::Max(0, [int]($now - $lastTick).TotalSeconds)
 
-    if (-not (In-WorkHours)) {
-        $state.lastTick = $now.ToString("o")
-        Save-State $state
-        return
-    }
 	
 	if ($state.emergencyUntil) {
 		$emergencyUntil = [datetime]$state.emergencyUntil
@@ -378,6 +373,12 @@ $script:timer.Add_Tick({
         } else {
             $state.cooldownUntil = $null
         }
+    }
+	
+	if (-not (In-WorkHours)) {
+        $state.lastTick = $now.ToString("o")
+        Save-State $state
+        return
     }
 
     $state.remainingSeconds -= $elapsed

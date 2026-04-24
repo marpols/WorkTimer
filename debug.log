@@ -156,3 +156,5 @@ Show-ExitChallenge returned: <False>
 Exit cancelled
 Show-ExitChallenge returned: <False>
 Exit cancelled
+User=450962 Correct=450962
+Show-ExitChallenge returned: <True>
