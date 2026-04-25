@@ -60,7 +60,7 @@ function Show-TimeLeft {
     $msg = "Time left in this Session: $(Get-RemainingText $state.remainingSeconds)"
 	
 	if ($properties.pomodoro){
-		$msg += "`nPomodoro:  $($properties.numPomodoros - $state.pomNum + 1) out of $properties.numPomodoros"
+		$msg += "`nPomodoro:  $($properties.numPomodoros - $state.pomNum + 1) out of $($properties.numPomodoros)"
 	}
 	
     if ($pause) {
@@ -159,12 +159,12 @@ $script:timer.Add_Tick({
 	$properties = Load-Properties
 	
 	$firstWarning = $properties.workPeriod * 0.25
-	if ($firstWarning -gt 30){$firstWarning = 30} else{$firstWarning = [Math]::Ceiling($firstWarning/5)*5}
+	if ($firstWarning -gt 1800){$firstWarning = 1800} elseif($firstWarning -lt 300){$firstWarning = 120} else{$firstWarning = [Math]::Ceiling($firstWarning/300)*300}
 	$secondWarning = $properties.workPeriod * 0.125
-	if ($secondWarning -gt 15){$secondWarning = 15} else{$secondWarning = [Math]::Ceiling($secondWarning/5)*5}
+	if ($secondWarning -gt 900){$secondWarning = 900} elseif($firstWarning -eq 120){$secondWarning = 60} else{$secondWarning = [Math]::Ceiling($secondWarning/300)*300}
 	if ($secondWarning -eq $firstWarning){$secondWarning = [Math]::Round($secondWarning)}
 	$thirdWarning = $properties.workPeriod * 0.0417
-	if ($thirdWarning -gt 5){$thirdWarning = 5} else{$thirdWarning = [Math]::Ceiling($thirdWarning/5)*5}
+	if ($thirdWarning -gt 300){$thirdWarning = 300} elseif($secondWarning -eq 60){$thirdWarning = 30} else{$thirdWarning = [Math]::Ceiling($thirdWarning/300)*300}
 	if ($thirdWarning -eq $secondWarning){$thirdWarning = [Math]::Round($thirdWarning)}
 
     $now = Get-Now
@@ -253,12 +253,16 @@ $script:timer.Add_Tick({
     }
 	
 	if (-not $state.warned5 -and $state.remainingSeconds -le $thirdWarning -and $state.remainingSeconds -gt 0) {
-        Show-Message "$(Get-RemainingText $state.remainingSeconds $true) left. Save your work now and write next steps." "Work Timer"
+		if ($thirdWarning -eq 30){
+			$timetext = "30 seconds"
+		} else {
+			$timetext = "$(Get-RemainingText $state.remainingSeconds $true)"
+		}
+        Show-Message "$timetext left. Save your work now and write next steps." "Work Timer"
         $state.warned5 = $true
     }
 
     if (-not $state.cooldown -and $state.remainingSeconds -le 0) {
-        Show-Message "Time is up. The computer will lock now. Cooldown: $($properties.lockOut) minutes." "Work Timer"
 		if ($properties.pomodoro){
 			if($state.pomNum -gt 1){
 				$lockoutTime = $properties.shortBreak
@@ -269,7 +273,7 @@ $script:timer.Add_Tick({
 		} else {
 			$lockoutTime = $properties.lockOut
 		}
-			
+		Show-Message "Time is up. The computer will lock now. Cooldown: $($lockoutTime) minutes." "Work Timer"	
         $state.cooldownUntil = $now.AddMinutes($lockoutTime).ToString("o")
 		$state.cooldown = $true
         Lock-PC

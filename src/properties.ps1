@@ -276,7 +276,7 @@ function Show-Properties {
 	$updateDiff))
 
 	#Update All Button
-	$updateAll = New-Object System.Windows.Forms.Button -Property @{Location='245,310'; Size='100,40'; Text="Update All"}
+	$updateAll = New-Object System.Windows.Forms.Button -Property @{Location='247,310'; Size='100,40'; Text="Update All"}
 	$updateAll.Add_Click({
 		$time = HM-S $objHours.Value $objMin.Value
 		$properties.workPeriod = $time

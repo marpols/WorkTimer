@@ -167,8 +167,8 @@ function Show-ExitChallenge {
 		$statusLabel.Text = ""
 		$textbox.Clear()
 
-			
-		$exitform.Tag = New-ExitChallenge $difficulty[$(Get-Property "exitDifficulty")]
+		$diffval = Get-Property "exitDifficulty"	
+		$exitform.Tag = New-ExitChallenge $difficulty[[int]$diffval]
 		$challenge = $exitform.Tag
 
 		if (-not $challenge) {
