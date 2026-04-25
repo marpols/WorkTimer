@@ -1,23 +1,23 @@
 Add-Type -AssemblyName System.Windows.Forms
 Add-Type -AssemblyName System.Drawing
 
-function New-ExitChallenge($difficulty) {
+function New-ExitChallenge($difflvl) {
     $type = Get-Random -InputObject @("parentheses", "twoStep", "comparison", "reverseMemory")
 
     switch ($type) {
         "parentheses" {
-			switch ($difficulty) {
-				"easy" {
+			switch ($difflvl) {
+				"Easy" {
 					$a = Get-Random -Minimum 2 -Maximum 10
 					$b = Get-Random -Minimum 2 -Maximum 10
 					$c = Get-Random -Minimum 2 -Maximum 9
 				}
-				"medium" {
+				"Medium" {
 					$a = Get-Random -Minimum 2 -Maximum 100
 					$b = Get-Random -Minimum 2 -Maximum 100
 					$c = Get-Random -Minimum 2 -Maximum 9
 				}
-				"hard"{
+				"Hard"{
 					$a = Get-Random -Minimum 2 -Maximum 1000
 					$b = Get-Random -Minimum 2 -Maximum 1000
 					$c = Get-Random -Minimum 2 -Maximum 9
@@ -32,18 +32,18 @@ function New-ExitChallenge($difficulty) {
         }
 
         "twoStep" {
-			switch ($difficulty) {
-				"easy" {
+			switch ($difflvl) {
+				"Easy" {
 					$divisor  = Get-Random -Minimum 2 -Maximum 10
 					$quotient = Get-Random -Minimum 2 -Maximum 10
 					$addend   = Get-Random -Minimum 1 -Maximum 10
 				}
-				"medium" {
+				"Medium" {
 					$divisor  = Get-Random -Minimum 2 -Maximum 100
 					$quotient = Get-Random -Minimum 2 -Maximum 10
 					$addend   = Get-Random -Minimum 1 -Maximum 100
 				}
-				"hard"{
+				"Hard"{
 					$divisor  = Get-Random -Minimum 2 -Maximum 100
 					$quotient = Get-Random -Minimum 2 -Maximum 100
 					$addend   = Get-Random -Minimum 1 -Maximum 100
@@ -61,20 +61,20 @@ function New-ExitChallenge($difficulty) {
 
         "comparison" {
             do {
-				switch ($difficulty) {
-					"easy" {
+				switch ($difflvl) {
+					"Easy" {
 						$b = Get-Random -Minimum 2 -Maximum 5
 						$d = Get-Random -Minimum 2 -Maximum 5
 						$c = Get-Random -Minimum 2 -Maximum 5
 						$a = Get-Random -Minimum 2 -Maximum 5
 					}
-					"medium" {
+					"Medium" {
 						$b = Get-Random -Minimum 2 -Maximum 8
 						$d = Get-Random -Minimum 2 -Maximum 8
 						$c = Get-Random -Minimum 2 -Maximum 8
 						$a = Get-Random -Minimum 2 -Maximum 8
 					}
-					"hard"{
+					"Hard"{
 						$b = Get-Random -Minimum 2 -Maximum 12
 						$d = Get-Random -Minimum 2 -Maximum 12
 						$c = Get-Random -Minimum 2 -Maximum 12
@@ -95,14 +95,14 @@ function New-ExitChallenge($difficulty) {
         }
 
         "reverseMemory" {
-			switch ($difficulty) {
-					"easy" {
+			switch ($difflvl) {
+					"Easy" {
 						$digits = -join ((1..6) | ForEach-Object { Get-Random -Minimum 0 -Maximum 10 })
 					}
-					"medium" {
+					"Medium" {
 						$digits = -join ((1..8) | ForEach-Object { Get-Random -Minimum 0 -Maximum 10 })					
 					}
-					"hard"{
+					"Hard"{
 						$digits = -join ((1..10) | ForEach-Object { Get-Random -Minimum 0 -Maximum 10 })
 					}
 				}
@@ -167,7 +167,8 @@ function Show-ExitChallenge {
 		$statusLabel.Text = ""
 		$textbox.Clear()
 
-		$exitform.Tag = New-ExitChallenge "easy"
+			
+		$exitform.Tag = New-ExitChallenge $difficulty[$(Get-Property "exitDifficulty")]
 		$challenge = $exitform.Tag
 
 		if (-not $challenge) {

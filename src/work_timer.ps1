@@ -1,113 +1,23 @@
+#Requires -Version 7.0
+
 Add-Type -AssemblyName System.Windows.Forms
 Add-Type -AssemblyName System.Drawing
 Add-Type -AssemblyName PresentationFramework
 [System.Windows.Forms.Application]::EnableVisualStyles()
 
-. "$PSScriptRoot\properties.ps1"
-. "$PSScriptRoot\exit_challenge.ps1"
-. "$PSScriptRoot\idle.ps1"
-
-$statePath = "$PSScriptRoot\state.json"
-$propertiesPath = "$PSScriptRoot\properties.json"
-$pausePath = "$PSScriptRoot\pause.json"
+. "$PSScriptRoot/global_vars.ps1"
+$src = @("utils.ps1", "state_func.ps1", "pause_func.ps1","properties.ps1", "exit_challenge.ps1", "idle.ps1")
+foreach ($file in $src) {
+    $path = Join-Path $parentDir "src" $file
+	if (-not (Test-Path $path)) {
+        throw "Missing file: $path"
+    }
+	. $path
+}
 
 
 $tbfrelock = 20000 #miliseconds (30s = 30000)
 
-
-function Get-Now {
-    Get-Date
-}
-
-function Str-to-Date($dateStr){
-	return [datetime]::Parse($dateStr)
-}
-
-function Load-Properties {
-	Get-Content $propertiesPath -Raw | ConvertFrom-Json
-}
-
-function Save-Properties($properties) {
-    $properties | ConvertTo-Json | Set-Content $propertiesPath -Encoding UTF8
-}
-
-function Is-Scheduled {
-	$properties = Load-Properties
-    $day = (Get-Now).DayOfWeek
-	
-    return $day -in $properties.days
-}
-
-function In-WorkHours {
-	$properties = Load-Properties
-    $now = Get-Now
-    $start = Str-to-Date($properties.startTime)
-    $end   = Str-to-Date($properties.endTime)
-    return (Is-Scheduled) -and ($now -ge $start -and $now -lt $end)
-}
-
-function In-EveningLockWindow {
-	$properties = Load-Properties
-    $now = Get-Date
-    $start = Str-to-Date($properties.endTime)
-    $end   = $start.AddMinutes($properties.duration)
-    return (Is-Scheduled) -and ($now -ge $start -and $now -lt $end)
-}
-
-function Ensure-State {
-	$properties = Load-Properties
-	$state = @{
-		remainingSeconds = $properties.workPeriod
-		lockOut = $properties.lockOut
-		warned30 = $false
-		warned15 = $false
-		warned5 = $false
-		warnedIdle = $false
-		extendedIdle = $false
-		cooldown = $false
-		cooldownUntil = $null
-		lastTick = (Get-Now).ToString("o")
-		lastDate = (Get-Now).ToString("yyyy-MM-dd")
-		eveningNotified = $false
-		emergencyUsed = $false
-		emergencyUntil = $null
-	}
-	$state | ConvertTo-Json | Set-Content $statePath -Encoding UTF8
-}
-
-function Load-State {
-    #Ensure-State
-    Get-Content $statePath -Raw | ConvertFrom-Json
-}
-
-function Save-State($state) {
-    $state | ConvertTo-Json | Set-Content $statePath -Encoding UTF8
-}
-
-
-function Get-PauseData {
-    if (-not (Test-Path $pausePath)) {
-        return $null
-    }
-
-    try {
-        $pause = Get-Content $pausePath -Raw | ConvertFrom-Json
-        $until = [datetime]$pause.pauseUntil
-        if ((Get-Now) -lt $until) {
-            return $pause
-        } else {
-            Remove-Item $pausePath -Force -ErrorAction SilentlyContinue
-            return $null
-        }
-    } catch {
-        Remove-Item $pausePath -Force -ErrorAction SilentlyContinue
-        return $null
-    }
-}
-
-function Pause-Active {
-    return $null -ne (Get-PauseData)
-}
 
 function Get-RemainingText($seconds, $verbose = $false) {
     $seconds = [math]::Max(0, [int]$seconds)
@@ -142,73 +52,17 @@ function Get-RemainingText($seconds, $verbose = $false) {
 	return $text
 }
 
-function Show-Message($text, $title = "Work Timer", $type = 'Warning') {
-   [System.Windows.Forms.MessageBox]::Show(
-    $text,
-    $title,
-    [System.Windows.Forms.MessageBoxButtons]::OK,
-    [System.Windows.Forms.MessageBoxIcon]::Warning,
-	[System.Windows.Forms.MessageBoxDefaultButton]::Button1,
-	[System.Windows.Forms.MessageBoxOptions]::ServiceNotification
-	)
-}
-
-function Show-Balloon($text, $title = "Work Timer", $timeout = 5000) {
-    $script:notifyIcon.BalloonTipTitle = $title
-    $script:notifyIcon.BalloonTipText = $text
-    $script:notifyIcon.ShowBalloonTip($timeout)
-}
-
-function Lock-PC {
-    rundll32.exe user32.dll,LockWorkStation
-}
-
-function Pause-Timer {
-	$pause = @{
-		pauseUntil = (Get-Date).AddHours(1).ToString("o")
-	}
-    $pause | ConvertTo-Json | Set-Content $pausePath -Encoding UTF8
-}
-
-function Resume-Timer {
-    if (Test-Path $pausePath) {
-        Remove-Item $pausePath -Force -ErrorAction SilentlyContinue
-		return $true
-	}
-	return $false
-}
-
-function Pause-OneHour {
-    Add-Type -AssemblyName Microsoft.VisualBasic
-    $answer = [Microsoft.VisualBasic.Interaction]::InputBox(
-        "Type MEETING to pause the timer for 1 hour.",
-        "Pause Work Timer",
-        ""
-    )
-
-    if ($answer -ceq "MEETING") {
-		Pause-Timer
-        Show-Balloon "Paused for 1 hour. Remaining time is frozen."
-    } else {
-        Show-Balloon "Pause cancelled."
-    }
-}
-
-function Resume-Now {
-	if ($(Resume-Timer)){
-        Show-Balloon "Pause cleared."
-    } else {
-        Show-Balloon "No pause is active."
-    }
-}
-
 function Show-TimeLeft {
     $state = Load-State
     Save-State $state
 
     $pause = Get-PauseData
     $msg = "Time left in this Session: $(Get-RemainingText $state.remainingSeconds)"
-
+	
+	if ($properties.pomodoro){
+		$msg += "`nPomodoro:  $($properties.numPomodoros - $state.pomNum + 1) out of $properties.numPomodoros"
+	}
+	
     if ($pause) {
         $until = [datetime]$pause.pauseUntil
         $msg += "`nPause active until: $($until.ToString('HH:mm'))"
@@ -217,7 +71,7 @@ function Show-TimeLeft {
     if ($state.cooldownUntil) {
         $cool = [datetime]$state.cooldownUntil
         if ((Get-Now) -lt $cool) {
-            $msg += "`nCooldown until: $($cool.ToString('HH:mm'))"
+            $msg += "`nBreak until: $($cool.ToString('HH:mm'))"
         }
     }
 	
@@ -242,10 +96,10 @@ function Exit-App {
     }
 	Start-Sleep -Milliseconds 150
     $passed = Show-ExitChallenge
-    Add-Content "$PSScriptRoot\debug.log" "Show-ExitChallenge returned: <$passed>"
+    Add-Content "$parentDir\logs\debug.log" "Show-ExitChallenge returned: <$passed>"
 
     if (-not $passed) {
-        Add-Content "$PSScriptRoot\debug.log" "Exit cancelled"
+        Add-Content "$parentDir\logs\debug.log" "Exit cancelled"
         return
     }
 
@@ -254,18 +108,13 @@ function Exit-App {
     if ($script:timer) {
         $script:timer.Stop()
     }
-
-    if ($script:notifyIcon) {
-        $script:notifyIcon.Visible = $false
-        $script:notifyIcon.Dispose()
-    }
-
+    Cleanup-TrayIcon
     [System.Windows.Forms.Application]::Exit()
 }
 
 # Tray icon
 $script:notifyIcon = New-Object System.Windows.Forms.NotifyIcon
-$script:notifyIcon.Icon = New-Object System.Drawing.Icon("$PSScriptRoot\time.ico")
+$script:notifyIcon.Icon = New-Object System.Drawing.Icon("$parentDir\assets\time.ico")
 $script:notifyIcon.Text = "Work Timer"
 $script:notifyIcon.Visible = $true
 
@@ -282,10 +131,20 @@ $itemShow.Add_Click({ Show-TimeLeft })
 $itemPause.Add_Click({ Pause-OneHour })
 $itemResume.Add_Click({ Resume-Now })
 $itemProperties.Add_Click({ Show-Properties })
-$itemExit.Add_Click({ Exit-App })
+$itemExit.Add_Click({ 
+	if (($properties.eveningLO -and (In-EveningLockWindow)) -or ((Is-Scheduled) -and (In-WorkHours))){
+		Exit-App 
+	} else {
+		if ($script:timer) {
+        $script:timer.Stop()
+		}
+		Cleanup-TrayIcon
+		[System.Windows.Forms.Application]::Exit()
+	}
+})
 
 $itemEmergency = $menu.Items.Add("Emergency unlock (15 min)")
-$itemEmergency.Add_Click({ powershell.exe -ExecutionPolicy Bypass -File "C:\WorkTimer\emergency_unlock.ps1" })
+$itemEmergency.Add_Click({ powershell.exe -ExecutionPolicy Bypass -File "C:\WorkTimer\src\emergency_unlock.ps1" })
 
 $script:notifyIcon.ContextMenuStrip = $menu
 $script:notifyIcon.Add_DoubleClick({ Show-TimeLeft })
@@ -399,8 +258,19 @@ $script:timer.Add_Tick({
     }
 
     if (-not $state.cooldown -and $state.remainingSeconds -le 0) {
-        Show-Message "Time is up. The computer will lock now. Cooldown: $($properties.lockout) minutes." "Work Timer"
-        $state.cooldownUntil = $now.AddMinutes($properties.lockOut).ToString("o")
+        Show-Message "Time is up. The computer will lock now. Cooldown: $($properties.lockOut) minutes." "Work Timer"
+		if ($properties.pomodoro){
+			if($state.pomNum -gt 1){
+				$lockoutTime = $properties.shortBreak
+				$state.pomNum -= 1
+			} else {
+				$lockoutTime = $properties.lockOut
+			}
+		} else {
+			$lockoutTime = $properties.lockOut
+		}
+			
+        $state.cooldownUntil = $now.AddMinutes($lockoutTime).ToString("o")
 		$state.cooldown = $true
         Lock-PC
     }
@@ -412,8 +282,16 @@ $script:timer.Add_Tick({
 $properties = Load-Properties
 
 # Start
-Ensure-State
-Show-Balloon "Work Timer is running.`nActive $($properties.days | ForEach-Object { $_[0] }), $($properties.startTime)-$($properties.endTime).`nWork for $(Get-RemainingText $properties.workPeriod $true). `nBreaks for $($properties.lockOut) minutes."
+Set-State
+if ($properties.pomodoro){
+	$msg = "Work Timer is running`nActive $($properties.days | ForEach-Object { $_[0] }), $($properties.startTime)-$($properties.endTime)`nNumber of Pomodoros: $($properties.numPomodoros)`nWork for $(Get-RemainingText $properties.workPeriod $true)`nShort breaks for $($properties.shortBreak) minute(s)`nLong breaks for $($properties.lockOut) minutes."
+} else {
+	$msg = "Work Timer is running`nActive $($properties.days | ForEach-Object { $_[0] }), $($properties.startTime)-$($properties.endTime)`nWork for $(Get-RemainingText $properties.workPeriod $true) `nBreaks for $($properties.lockOut) minutes."
+}
+if ($properties.eveningLO){
+	$msg += "`nEvening Lockout enabled for $($properties.duration) minutes"
+}
+Show-Balloon $msg 
 $script:timer.Start()
 
 [System.Windows.Forms.Application]::Run()

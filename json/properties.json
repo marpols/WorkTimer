@@ -1,0 +1,19 @@
+{
+  "workPeriod": 1500.0,
+  "lockOut": 20.0,
+  "startTime": "09:00",
+  "endTime": "18:00",
+  "days": [
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday"
+  ],
+  "eveningLO": true,
+  "duration": 60.0,
+  "pomodoro": true,
+  "shortBreak": 5.0,
+  "numPomodoros": 4.0,
+  "exitDifficulty": 0
+}

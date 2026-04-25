@@ -1,15 +1,9 @@
 Add-Type -AssemblyName Microsoft.VisualBasic
 Add-Type -AssemblyName PresentationFramework
 
-$statePath = "$PSScriptRoot\state.json"
+. "$PSScriptRoot\utils.ps1"
 
-function Load-State {
-    Get-Content $statePath -Raw | ConvertFrom-Json
-}
-
-function Save-State($state) {
-    $state | ConvertTo-Json | Set-Content $statePath -Encoding UTF8
-}
+$statePath = "$PSScriptRoot\json\state.json"
 
 $state = Load-State
 
