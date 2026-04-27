@@ -1,9 +1,9 @@
 Add-Type -AssemblyName Microsoft.VisualBasic
 Add-Type -AssemblyName PresentationFramework
 
-. "$PSScriptRoot\utils.ps1"
 
-$statePath = "$PSScriptRoot\json\state.json"
+. "$PSScriptRoot\global_vars.ps1"
+Import-Module "$parentDir\modules\utils.ps1" -Function "Load-State", "Save-State"
 
 $state = Load-State
 

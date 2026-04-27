@@ -1,6 +1,3 @@
-Add-Type -AssemblyName System.Windows.Forms
-Add-Type -AssemblyName System.Drawing
-
 function New-ExitChallenge($difflvl) {
     $type = Get-Random -InputObject @("parentheses", "twoStep", "comparison", "reverseMemory")
 
@@ -207,14 +204,14 @@ function Show-ExitChallenge {
 		$challenge = $exitform.Tag
 
 		if (-not $challenge -or [string]::IsNullOrWhiteSpace($challenge.Answer)) {
-			Add-Content "$PSScriptRoot\debug.log" "Submit ignored: no challenge loaded"
+			Add-Content "$parentdir\logs\debug.log" "Submit ignored: no challenge loaded"
 			return
 		}
 
 		$userAnswer = $textbox.Text.Trim().ToLower()
 		$correctAnswer = $challenge.Answer.ToString().Trim().ToLower()
 
-		Add-Content "$PSScriptRoot\debug.log" "User=$userAnswer Correct=$correctAnswer"
+		Add-Content "$parentdir\logs\debug.log" "User=$userAnswer Correct=$correctAnswer"
 
 		if ($userAnswer -eq $correctAnswer) {
 			$exitform.DialogResult = [System.Windows.Forms.DialogResult]::OK

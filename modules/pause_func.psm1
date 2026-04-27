@@ -40,12 +40,12 @@ function Resume-Timer {
 function Pause-OneHour {
     Add-Type -AssemblyName Microsoft.VisualBasic
     $answer = [Microsoft.VisualBasic.Interaction]::InputBox(
-        "Type MEETING to pause the timer for 1 hour.",
+        "Type PAUSE WORK TIMER to pause the timer for 1 hour.",
         "Pause Work Timer",
         ""
     )
 
-    if ($answer -ceq "MEETING") {
+    if ($answer -ceq "PAUSE WORK TIMER") {
 		Pause-Timer
         Show-Balloon "Paused for 1 hour. Remaining time is frozen."
     } else {

@@ -18,7 +18,7 @@ function Show-Properties {
 	$tabControl.Controls.AddRange(@($setPage, $schedPage, $diffPage))
 	$form.Controls.Add($tabControl)
 
-	#Mode
+	#Pomodoro Mode
 	$checkboxPom = New-Object System.Windows.Forms.Checkbox -Property @{Text = "Pomodoro"; Location='30,10'; AutoSize=$true; Checked = $properties.pomodoro}
 	$tooltip = New-Object System.Windows.Forms.ToolTip
 	$tooltip.SetToolTip($checkboxPom, "If checked allows setting a short break time and longer break time seperately.")
@@ -33,7 +33,7 @@ function Show-Properties {
 		$time = HM-S $objHours.Value $objMin.Value
 		$properties.workPeriod = $time
 		Save-Properties $properties
-		Show-Balloon "Work period duration updated to $($objHours.Value) hour(s) and $($objMin.Value) minute(s).`nChanges will take effect in the next cycle." "Work Timer Update"
+		Show-Balloon "Work period duration updated to $($objHours.Value) hour(s) and $($objMin.Value) minute(s).`nChanges will take effect on restart." "Work Timer Update"
 	})
 	$setPage.Controls.AddRange(@($objHours, $objMin, $updateWP,
 	(New-Object System.Windows.Forms.Label -Property @{Text = "Work period length:"; Location = '10,40'; Autosize = $true}),
@@ -48,7 +48,7 @@ function Show-Properties {
 		$properties.pomodoro = $false
 		$properties.lockOut = $objLO.Value
 		Save-Properties $properties
-		Show-Balloon "Lockout duration updated to $($objLO.Value) minutes.`nChanges will take effect in the next cycle." "Work Timer Update"
+		Show-Balloon "Lockout duration updated to $($objLO.Value) minutes.`nChanges will take effect on restart." "Work Timer Update"
 	})
 
 	$titleLB = New-Object System.Windows.Forms.Label -Property @{Text = "Long break length:"; Location = '10,120'; Autosize = $true}
@@ -71,7 +71,7 @@ function Show-Properties {
 		$properties.shortBreak = $objSB.Value
 		$properties.numPomodoros = $pomNum.Value
 		Save-Properties $properties
-		Show-Balloon "Pomodoro updated:`nShort Break: $($objSB.Value) minutes.`nLong Break: $($objLO.Value) minutes.`nNumber of Pomodoros: $($pomNum.Value)`nChanges will take effect in the next cycle." "Work Timer Update"
+		Show-Balloon "Pomodoro updated:`nShort Break: $($objSB.Value) minutes.`nLong Break: $($objLO.Value) minutes.`nNumber of Pomodoros: $($pomNum.Value)`nChanges will take effect on restart." "Work Timer Update"
 	})
 	
 	$controlsLO = @($titleLO, $updateLO)
@@ -298,7 +298,7 @@ function Show-Properties {
 		$properties.duration = $objELO.Value
 		$properties.exitDifficulty = $diffSlider.Value
 		Save-Properties $properties
-		Show-Balloon "All settings have been updated.`nChanges to work period and lockouts will take place in the next cycle.`nChanges to days and hours will be applied on restart."
+		Show-Balloon "All settings have been updated.`nChanges will be applied on restart."
 	})
 	$form.Controls.Add($updateAll)
 	$form.AcceptButton = $updateAll

@@ -6,61 +6,33 @@ Add-Type -AssemblyName PresentationFramework
 [System.Windows.Forms.Application]::EnableVisualStyles()
 
 . "$PSScriptRoot/global_vars.ps1"
-$src = @("utils.ps1", "state_func.ps1", "pause_func.ps1","properties.ps1", "exit_challenge.ps1", "idle.ps1")
-foreach ($file in $src) {
-    $path = Join-Path $parentDir "src" $file
+if (-not $parentDir) {
+    throw "`$parentDir was not set by global_vars.ps1"
+}
+. "$PSScriptRoot/idle.ps1"
+
+$files = @("utils.psm1", "state_func.psm1", "pause_func.psm1","properties.psm1", "exit_challenge.psm1")
+foreach ($file in $files) {
+    $path = Join-Path $parentDir "modules" $file
 	if (-not (Test-Path $path)) {
         throw "Missing file: $path"
     }
-	. $path
+	Import-Module $path
 }
 
 
 $tbfrelock = 20000 #miliseconds (30s = 30000)
 
 
-function Get-RemainingText($seconds, $verbose = $false) {
-    $seconds = [math]::Max(0, [int]$seconds)
-    $ts = [TimeSpan]::FromSeconds($seconds)
-	$plural = $false
-    if ($ts.Hours -gt 0) {
-		if($verbose){
-			$text = "{0} hour" -f $ts.Hours
-			$plural = $ts.Hours -ne 1
-		} else {
-			return "{0}h {1}m" -f $ts.Hours, $ts.Minutes
-		}
-    } else {
-		if ($ts.Minutes -lt 0) {
-			if($verbose){
-				$text = "{0}seconds" -f $ts.seconds
-				} else {
-					return "{0}s" -f $seconds
-				}
-		} else {
-			if($verbose){
-				$text = "{0} minute" -f $ts.Minutes
-				$plural = $ts.Minutes -ne 1
-			} else {
-				return "{0}m" -f $ts.Minutes
-			}
-		}
-	}
-	if($plural){
-		$text = $text + "s"
-	}
-	return $text
-}
-
 function Show-TimeLeft {
     $state = Load-State
-    Save-State $state
+  
 
     $pause = Get-PauseData
     $msg = "Time left in this Session: $(Get-RemainingText $state.remainingSeconds)"
 	
-	if ($properties.pomodoro){
-		$msg += "`nPomodoro:  $($properties.numPomodoros - $state.pomNum + 1) out of $($properties.numPomodoros)"
+	if ($state.pomodoro){
+		$msg += "`nPomodoro:  $($state.numPomodoros - $state.pomNum + 1) out of $($state.numPomodoros)"
 	}
 	
     if ($pause) {
@@ -82,7 +54,7 @@ function Show-TimeLeft {
 		}
 	}
 	
-	if (-not (Is-Scheduled) -or -not (In-WorkHours)){
+	if (-not (In-WorkHours)){
 		$msg = "Work Timer is running but not currently active."
 	}
 
@@ -132,7 +104,7 @@ $itemPause.Add_Click({ Pause-OneHour })
 $itemResume.Add_Click({ Resume-Now })
 $itemProperties.Add_Click({ Show-Properties })
 $itemExit.Add_Click({ 
-	if (($properties.eveningLO -and (In-EveningLockWindow)) -or ((Is-Scheduled) -and (In-WorkHours))){
+	if (($state.eveningLO -and (In-EveningLockWindow)) -or ((Is-Scheduled) -and (In-WorkHours))){
 		Exit-App 
 	} else {
 		if ($script:timer) {
@@ -144,7 +116,7 @@ $itemExit.Add_Click({
 })
 
 $itemEmergency = $menu.Items.Add("Emergency unlock (15 min)")
-$itemEmergency.Add_Click({ powershell.exe -ExecutionPolicy Bypass -File "C:\WorkTimer\src\emergency_unlock.ps1" })
+$itemEmergency.Add_Click({ powershell.exe -ExecutionPolicy Bypass -File "$parentDir\scripts\emergency_unlock.ps1" })
 
 $script:notifyIcon.ContextMenuStrip = $menu
 $script:notifyIcon.Add_DoubleClick({ Show-TimeLeft })
@@ -156,14 +128,12 @@ $script:timer.Interval = $tbfrelock
 $script:timer.Add_Tick({
     $state = Load-State
 	
-	$properties = Load-Properties
-	
-	$firstWarning = $properties.workPeriod * 0.25
+	$firstWarning = $state.workPeriod * 0.25
 	if ($firstWarning -gt 1800){$firstWarning = 1800} elseif($firstWarning -lt 300){$firstWarning = 120} else{$firstWarning = [Math]::Ceiling($firstWarning/300)*300}
-	$secondWarning = $properties.workPeriod * 0.125
+	$secondWarning = $state.workPeriod * 0.125
 	if ($secondWarning -gt 900){$secondWarning = 900} elseif($firstWarning -eq 120){$secondWarning = 60} else{$secondWarning = [Math]::Ceiling($secondWarning/300)*300}
 	if ($secondWarning -eq $firstWarning){$secondWarning = [Math]::Round($secondWarning)}
-	$thirdWarning = $properties.workPeriod * 0.0417
+	$thirdWarning = $state.workPeriod * 0.0417
 	if ($thirdWarning -gt 300){$thirdWarning = 300} elseif($secondWarning -eq 60){$thirdWarning = 30} else{$thirdWarning = [Math]::Ceiling($thirdWarning/300)*300}
 	if ($thirdWarning -eq $secondWarning){$thirdWarning = [Math]::Round($thirdWarning)}
 
@@ -183,17 +153,20 @@ $script:timer.Add_Tick({
 		}
 	}
 	
-	if ($properties.eveningLO -and (In-EveningLockWindow)) {
+	if ($state.eveningLO -and (In-EveningLockWindow)) {
 
 		if (Pause-Active) {
-			# Allow temporary override for meetings
+			$state.lastTick = $now.ToString("o")
+			Save-State $state
 			return
 		}
 		
 		if (-not $state.eveningNotified) {
-			$endTime = Str-to-Date($properties.endTime)
-			Show-Message "Workday ended! You can come back at $($endTime.AddMinutes($properties.duration).ToString('HH:mm')) if needed otherwise gtfo." "Work Timer"
+			$endTime = Str-to-Date($state.endTime)
+			Show-Message "Workday ended! You can come back at $($endTime.AddMinutes($state.duration).ToString('HH:mm')) if needed otherwise gtfo." "Work Timer"
 			$state.eveningNotified = $true
+			$state.lastTick = $now.ToString("o")
+			Save-State $state
 			}
 
 		Lock-PC
@@ -223,15 +196,30 @@ $script:timer.Add_Tick({
 
     if ($state.cooldownUntil) {
         $cooldownUntil = [datetime]$state.cooldownUntil
+		$lastUnlock = [datetime]$state.lastUnlock
         if ($now -lt $cooldownUntil) {
-            Lock-PC
             $state.lastTick = $now.ToString("o")
             Save-State $state
+			Lock-PC
             return
         } else {
+			if ($lastUnlock -ge $lastTick -or $lastUnlock -ge $cooldownUntil){
+				Reset-State
+				$state = Load-State
+				$state.lastTick = $now.ToString("o")
+				Save-State $state
+				if ($state.pomodoro){
+					Pom-Message $state
+				} else {
+					Timer-Message $state
+				}
+				Add-Content "$parentDir\logs\debug.log" "$now - Reset from work_timer.ps1 check"
+				return
+			}
             $state.cooldownUntil = $null
-        }
+		}
     }
+		
 	
 	if (-not (In-WorkHours)) {
         $state.lastTick = $now.ToString("o")
@@ -263,18 +251,22 @@ $script:timer.Add_Tick({
     }
 
     if (-not $state.cooldown -and $state.remainingSeconds -le 0) {
-		if ($properties.pomodoro){
+		if ($state.pomodoro){
 			if($state.pomNum -gt 1){
-				$lockoutTime = $properties.shortBreak
-				$state.pomNum -= 1
+				$text = "Short Break:"
+				$lockoutTime = $state.shortBreak
 			} else {
-				$lockoutTime = $properties.lockOut
+				$text = "Long Break:"
+				$lockoutTime = $state.lockOut
 			}
+			$state.pomNum -= 1
 		} else {
-			$lockoutTime = $properties.lockOut
+			$text = "Break:"
+			$lockoutTime = $state.lockOut
 		}
-		Show-Message "Time is up. The computer will lock now. Cooldown: $($lockoutTime) minutes." "Work Timer"	
-        $state.cooldownUntil = $now.AddMinutes($lockoutTime).ToString("o")
+		$breakUntil = $now.AddMinutes($lockoutTime)
+		Show-Popup "Time is up! The computer will lock now.`n$text $(Get-remainingText ($lockoutTime*60) $true)`nYou can come back at $($breakUntil.ToString(`"HH:mm`"))" "Work Timer"	
+        $state.cooldownUntil = $breakUntil.ToString("o")
 		$state.cooldown = $true
         Lock-PC
     }
@@ -287,14 +279,19 @@ $properties = Load-Properties
 
 # Start
 Set-State
-if ($properties.pomodoro){
-	$msg = "Work Timer is running`nActive $($properties.days | ForEach-Object { $_[0] }), $($properties.startTime)-$($properties.endTime)`nNumber of Pomodoros: $($properties.numPomodoros)`nWork for $(Get-RemainingText $properties.workPeriod $true)`nShort breaks for $($properties.shortBreak) minute(s)`nLong breaks for $($properties.lockOut) minutes."
+if (-not (In-WorkHours)){
+	$msg = "Work Timer is running but not active.`nActive $($properties.days | ForEach-Object { $_[0] }), $($properties.startTime)-$($properties.endTime).`nGo to properties to update schedule." 
 } else {
-	$msg = "Work Timer is running`nActive $($properties.days | ForEach-Object { $_[0] }), $($properties.startTime)-$($properties.endTime)`nWork for $(Get-RemainingText $properties.workPeriod $true) `nBreaks for $($properties.lockOut) minutes."
+	if ($properties.pomodoro){
+		$msg = "Work Timer is running`nActive $($properties.days | ForEach-Object { $_[0] }), $($properties.startTime)-$($properties.endTime)`nNumber of Pomodoros: $($properties.numPomodoros)`nWork for: $(Get-RemainingText $properties.workPeriod $true)`nShort breaks for: $($properties.shortBreak) minute(s)`nLong breaks for: $($properties.lockOut) minutes."
+	} else {
+		$msg = "Work Timer is running`nActive $($properties.days | ForEach-Object { $_[0] }), $($properties.startTime)-$($properties.endTime)`nWork for: $(Get-RemainingText $properties.workPeriod $true) `nBreaks for: $($properties.lockOut) minutes"
+	}
+	if ($properties.eveningLO){
+		$msg += "`nEvening Lockout enabled for $($properties.duration) minutes"
+	}
 }
-if ($properties.eveningLO){
-	$msg += "`nEvening Lockout enabled for $($properties.duration) minutes"
-}
+
 Show-Balloon $msg 
 $script:timer.Start()
 
