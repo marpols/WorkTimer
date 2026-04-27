@@ -274,6 +274,9 @@ $script:timer.Add_Tick({
     $state.lastTick = $now.ToString("o")
     Save-State $state
 })
+if (-not (Test-Path $propertiesPath)){
+	Default-Properties
+}
 
 $properties = Load-Properties
 

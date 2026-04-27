@@ -367,6 +367,23 @@ function Set-ControlsEnabled {
     }
 }
 
+function Default-Properties {
+	$properties = @{
+		workPeriod = 3600.0
+		pomodoro = $false
+		numPomodoros = 4.0
+		startTime = "09:00"
+		endTime = "18:00"
+		days = "Monday", "Tuesday", "Wednesday", "Thursday", "Friday"
+		shortBreak = 5.0
+		lockOut = 10.0
+		eveningLO = $true
+		duration = 60.0
+		exitDifficulty = 0	
+	}
+	Save-Properties $properties
+}
+
 function Load-Properties {
 	Get-Content $propertiesPath -Raw | ConvertFrom-Json
 }

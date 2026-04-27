@@ -25,7 +25,6 @@ function Set-State {
 		lastUnlock = $null
 		eveningLO = $properties.eveningLO
 		duration = $properties.duration
-		
 	}
 	Save-State $state
 }
