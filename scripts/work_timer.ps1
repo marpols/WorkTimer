@@ -179,7 +179,7 @@ $script:timer.Add_Tick({
         return
     }
 	
-	if ($(Is-Idle 3) -and (-not $state.cooldown)){
+	if ($(Is-Idle 3) -and (-not $state.cooldown) -and (In-WorkHours)){
 		if (-not $state.warnedIdle){
 			Show-Balloon "Computer has been idle for 3 minutes. Pausing timer." "Work Timer"
 			$state.warnedIdle = $true

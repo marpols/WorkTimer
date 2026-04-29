@@ -8,15 +8,12 @@ Where-Object {
 } |
 Select-Object -First 1
 
+. "$PSScriptRoot\global_vars.ps1"
+Import-Module "$parentDir/modules/utils.psm1" -Function "Get-Now", "Show-Balloon", "Show-Popup", "Get-RemainingText", "Pom-Message", "Timer-Message", "In-WorkHours"
+Import-Module "$parentDir/modules/state_func.psm1" -Function "Load-State", "Save-State", "Reset-State"
+Import-Module "$parentDir/modules/properties.psm1" -Function "Load-Properties"
 
-
-if ($running) {
-	
-	. "$PSScriptRoot\global_vars.ps1"
-	Import-Module "$parentDir/modules/utils.psm1" -Function "Get-Now", "Show-Balloon", "Show-Popup", "Get-RemainingText", "Pom-Message", "Timer-Message"
-	Import-Module "$parentDir/modules/state_func.psm1" -Function "Load-State", "Save-State", "Reset-State"
-	Import-Module "$parentDir/modules/properties.psm1" -Function "Load-Properties"
-	
+if ($running -and (In-WorkHours)) {
 
 	$state = Load-State
 	$now = Get-Now
