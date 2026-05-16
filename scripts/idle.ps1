@@ -30,9 +30,5 @@ public class Win32 {
 
 function Is-Idle($duration){
 	$idle = [Win32]::GetIdleTime()
-	if ($idle.TotalMinutes -ge $duration){
-		return $true
-	} else{
-		return $false
-	}
+	return $($idle.TotalMinutes -ge $duration)
 }

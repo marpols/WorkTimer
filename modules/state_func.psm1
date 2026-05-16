@@ -57,3 +57,9 @@ function Load-State {
 function Save-State($state) {
     $state | ConvertTo-Json | Set-Content $statePath -Encoding UTF8
 }
+
+function Update-Pom($state) {
+	$state.pomNum -= 1
+	Save-State $state
+	Load-State
+}

@@ -96,6 +96,24 @@ function Show-Popup {
     $icon.Dispose()
 }
 
+function Pom-Message {
+	param(
+		$state,
+		[string]$msg = ""
+	)
+	$msg += "🍅 Pomodoro:  $($state.numPomodoros - $state.pomNum + 1) out of $($state.numPomodoros)" 
+	Show-Balloon $msg "Work Timer is Active"
+}
+
+function Timer-Message {
+	param(
+		$state,
+		[string]$msg = ""
+	)
+	$msg += "⏲️ Work Time: $(Get-RemainingText $state.workPeriod $true)`n Breaks: $(Get-RemainingText $state.lockOut*60 $true)" 
+	Show-Balloon $msg "Work Timer is Active" 
+}
+
 function Lock-PC {
     rundll32.exe user32.dll,LockWorkStation
 }
@@ -146,10 +164,5 @@ function Get-RemainingText($seconds, $verbose = $false) {
 	return $text
 }
 
-function Pom-Message ($state){
-	Show-Balloon "🍅 Pomodoro:  $($state.numPomodoros - $state.pomNum + 1) out of $($state.numPomodoros)" "Work Timer is Active"
-}
 
-function Timer-Message ($state){
-	Show-Balloon "⏲️ Work Time: $(Get-RemainingText $state.workPeriod $true)`n Breaks: $(Get-RemainingText $state.lockOut*60 $true)" "Work Timer is Active"
-}
+

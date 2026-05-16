@@ -33,7 +33,7 @@ function Show-Properties {
 		$time = HM-S $objHours.Value $objMin.Value
 		$properties.workPeriod = $time
 		Save-Properties $properties
-		Show-Balloon "Work period duration updated to $($objHours.Value) hour(s) and $($objMin.Value) minute(s).`nChanges will take effect on restart." "Work Timer Update"
+		Show-Balloon "Work period duration updated to $($objHours.Value) hour(s) and $($objMin.Value) minute(s).`nChanges will take effect after restarting Work Timer." "Work Timer Update"
 	})
 	$setPage.Controls.AddRange(@($objHours, $objMin, $updateWP,
 	(New-Object System.Windows.Forms.Label -Property @{Text = "Work period length:"; Location = '10,40'; Autosize = $true}),
@@ -48,7 +48,7 @@ function Show-Properties {
 		$properties.pomodoro = $false
 		$properties.lockOut = $objLO.Value
 		Save-Properties $properties
-		Show-Balloon "Lockout duration updated to $($objLO.Value) minutes.`nChanges will take effect on restart." "Work Timer Update"
+		Show-Balloon "Lockout duration updated to $($objLO.Value) minutes.`nChanges will take effect after restarting Work Timer." "Work Timer Update"
 	})
 
 	$titleLB = New-Object System.Windows.Forms.Label -Property @{Text = "Long break length:"; Location = '10,120'; Autosize = $true}
@@ -71,7 +71,7 @@ function Show-Properties {
 		$properties.shortBreak = $objSB.Value
 		$properties.numPomodoros = $pomNum.Value
 		Save-Properties $properties
-		Show-Balloon "Pomodoro updated:`nShort Break: $($objSB.Value) minutes.`nLong Break: $($objLO.Value) minutes.`nNumber of Pomodoros: $($pomNum.Value)`nChanges will take effect on restart." "Work Timer Update"
+		Show-Balloon "Pomodoro updated:`nShort Break: $($objSB.Value) minutes.`nLong Break: $($objLO.Value) minutes.`nNumber of Pomodoros: $($pomNum.Value)`nChanges will take effect after restarting Work Timer." "Work Timer Update"
 	})
 	
 	$controlsLO = @($titleLO, $updateLO)
@@ -128,9 +128,9 @@ function Show-Properties {
 		$properties.duration = $objELO.Value
 		Save-Properties $properties
 		if($checkboxELO.Checked){
-			$msg = "Evening Lockout Enabled for $($objELO.Value) minutes."
+			$msg = "Evening Lockout Enabled for $($objELO.Value) minutes.`nChanges will take effect after restarting Work Timer."
 		} else{
-			$msg = "Evening Lockout Disabled."
+			$msg = "Evening Lockout Disabled.`nChanges will take effect after restarting Work Timer."
 		}
 		Show-Balloon $msg "Work Timer Update"
 	})
@@ -235,7 +235,7 @@ function Show-Properties {
 	$updateDays.Add_Click({ 
 		$properties.days = @($daysList.CheckedItems | ForEach-Object { $_.ToString() })
 		Save-Properties $properties
-		Show-Balloon "Work Timer will now be active on $($daysList.CheckedItems).`nChanges will take effect on restart." "Work Timer Update"
+		Show-Balloon "Work Timer will now be active on $($daysList.CheckedItems).`nChanges will take effect after restarting Work Timer." "Work Timer Update"
 	})
 	$controlsSched = @($daysList, $updateDays, $weekDays, $weekEnds, $allDays)
 	$schedPage.Controls.AddRange($controlsSched)
@@ -253,7 +253,7 @@ function Show-Properties {
 			$properties.startTime = $timePickerStart.Value.ToString("HH:mm")
 			$properties.endTime = $timePickerEnd.Value.ToString("HH:mm")
 			Save-Properties $properties
-			Show-Balloon "Work Timer will now be active between $($timePickerStart.Value.ToString("HH:mm")) and $($timePickerEnd.Value.ToString("HH:mm")).`nChanges will take effect on restart." "Work Timer Update"
+			Show-Balloon "Work Timer will now be active between $($timePickerStart.Value.ToString("HH:mm")) and $($timePickerEnd.Value.ToString("HH:mm")).`nChanges will take effect after restarting Work Timer." "Work Timer Update"
 		}
 	})
 	$schedPage.Controls.AddRange(@($timePickerStart, $timePickerEnd, $updateTime, 
@@ -298,7 +298,7 @@ function Show-Properties {
 		$properties.duration = $objELO.Value
 		$properties.exitDifficulty = $diffSlider.Value
 		Save-Properties $properties
-		Show-Balloon "All settings have been updated.`nChanges will be applied on restart."
+		Show-Balloon "All settings have been updated.`nChanges will take effect after restarting Work Timer."
 	})
 	$form.Controls.Add($updateAll)
 	$form.AcceptButton = $updateAll

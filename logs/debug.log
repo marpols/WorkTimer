@@ -194,3 +194,162 @@ Show-ExitChallenge returned: <True>
 04/28/2026 16:05:26 - Reset from unlock
 04/28/2026 16:46:18 - Reset from unlock
 04/28/2026 17:29:48 - Reset from unlock
+User=8 Correct=8
+Show-ExitChallenge returned: <True>
+User= Correct=046574
+User=72 Correct=72
+Show-ExitChallenge returned: <True>
+User=91 Correct=91
+Show-ExitChallenge returned: <True>
+04/30/2026 11:33:41 - Reset from unlock after extended idle
+User=922265 Correct=922265
+Show-ExitChallenge returned: <True>
+User=72 Correct=72
+Show-ExitChallenge returned: <True>
+04/30/2026 14:28:58 - Reset from unlock
+04/30/2026 15:01:09 - Reset from unlock
+04/30/2026 15:32:07 - Reset from unlock
+04/30/2026 16:09:08 - Reset from unlock
+04/30/2026 16:58:59 - Reset from unlock
+04/30/2026 17:30:30 - Reset from unlock
+04/30/2026 18:51:39 - Reset from unlock
+04/30/2026 19:29:06 - Reset from unlock
+04/30/2026 19:59:40 - Reset from unlock
+04/30/2026 20:43:16 - Reset from unlock
+04/30/2026 21:14:11 - Reset from unlock
+04/30/2026 22:31:01 - Reset from unlock
+04/30/2026 23:01:08 - Reset from unlock
+04/30/2026 23:39:03 - Reset from unlock
+05/01/2026 00:11:38 - Reset from unlock
+05/01/2026 00:42:40 - Reset from unlock
+05/01/2026 01:12:23 - Reset from work_timer.ps1 check
+05/01/2026 01:54:46 - Reset from unlock
+05/01/2026 02:43:31 - Reset from unlock
+05/01/2026 03:27:27 - Reset from unlock
+05/01/2026 03:58:28 - Reset from unlock
+05/01/2026 04:36:04 - Reset from unlock
+05/01/2026 05:06:19 - Reset from unlock
+Show-ExitChallenge returned: <False>
+Exit cancelled
+Show-ExitChallenge returned: <False>
+Exit cancelled
+Show-ExitChallenge returned: <False>
+Exit cancelled
+05/01/2026 08:51:12 - Reset from unlock
+User=496345 Correct=496435
+User=12 Correct=12
+Show-ExitChallenge returned: <True>
+05/01/2026 09:22:13 - Reset from unlock
+05/01/2026 10:15:09 - Reset from unlock
+05/01/2026 10:49:25 - Reset from unlock
+User=85 Correct=85
+Show-ExitChallenge returned: <True>
+05/01/2026 13:08:08 - Reset from unlock
+User=40 Correct=40
+Show-ExitChallenge returned: <True>
+05/04/2026 12:21:36 - Reset from unlock
+User=44 Correct=44
+Show-ExitChallenge returned: <True>
+05/04/2026 12:54:03 - Reset from unlock
+05/04/2026 13:24:31 - Reset from unlock
+05/04/2026 13:54:13 - Reset from work_timer.ps1 check
+05/04/2026 14:29:51 - Reset from unlock
+05/04/2026 15:15:38 - Reset from unlock
+05/04/2026 15:54:03 - Reset from unlock
+05/04/2026 16:31:56 - Reset from unlock
+05/04/2026 17:19:24 - Reset from unlock
+05/04/2026 17:50:31 - Reset from unlock
+05/05/2026 10:09:03 - Reset from unlock after extended idle
+05/05/2026 11:36:46 - Reset from unlock after extended idle
+05/05/2026 12:06:57 - Reset from unlock
+05/05/2026 12:39:34 - Reset from unlock
+05/05/2026 13:10:51 - Reset from unlock
+05/05/2026 14:16:06 - Reset from unlock
+05/05/2026 15:10:00 - Reset from unlock
+05/05/2026 15:56:32 - Reset from unlock
+05/05/2026 16:26:52 - Reset from unlock
+05/05/2026 17:37:54 - Reset from unlock
+05/06/2026 10:58:54 - Reset from unlock
+User=right Correct=right
+Show-ExitChallenge returned: <True>
+05/06/2026 12:51:52 - Reset from unlock
+05/06/2026 13:22:15 - Reset from unlock
+05/06/2026 13:58:15 - Reset from unlock
+05/06/2026 14:40:09 - Reset from unlock
+05/06/2026 15:15:52 - Reset from unlock
+05/06/2026 15:53:54 - Reset from unlock
+05/06/2026 16:49:52 - Reset from unlock
+05/06/2026 17:30:24 - Reset from unlock
+05/07/2026 10:37:28 - Reset from unlock
+User=right Correct=right
+Show-ExitChallenge returned: <True>
+05/07/2026 11:00:01 - Reset from unlock
+User=14 Correct=14
+Show-ExitChallenge returned: <True>
+User=13 Correct=14
+User=678483 Correct=678483
+Show-ExitChallenge returned: <True>
+05/07/2026 13:04:13 - Reset from unlock
+05/07/2026 13:37:25 - Reset from unlock
+05/07/2026 14:09:20 - Reset from unlock
+05/07/2026 15:12:29 - Reset from unlock
+05/07/2026 15:46:43 - Reset from unlock
+05/07/2026 16:16:45 - Reset from unlock
+05/07/2026 17:07:24 - Reset from unlock
+05/07/2026 17:52:23 - Reset from unlock
+05/08/2026 10:02:37 - Reset from unlock after extended idle
+User=104 Correct=112
+User=left Correct=right
+User=left Correct=left
+Show-ExitChallenge returned: <True>
+05/08/2026 11:53:29 - Reset from work_timer.ps1 check
+User=left Correct=left
+Show-ExitChallenge returned: <True>
+05/08/2026 13:18:39 - Reset from unlock
+05/08/2026 13:48:58 - Reset from unlock
+05/08/2026 14:29:00 - Reset from unlock
+05/08/2026 17:30:12 - Reset from unlock
+05/11/2026 11:42:40 - Reset from unlock after extended idle
+05/11/2026 12:14:10 - Reset from unlock
+User=left Correct=left
+Show-ExitChallenge returned: <True>
+05/11/2026 13:47:06 - Reset from unlock
+05/11/2026 14:25:02 - Reset from unlock
+05/11/2026 14:59:39 - Reset from unlock
+05/11/2026 15:34:24 - Reset from work_timer.ps1 check
+05/11/2026 16:20:28 - Reset from unlock
+05/11/2026 16:53:04 - Reset from unlock
+05/11/2026 17:34:20 - Reset from unlock
+05/12/2026 10:46:52 - Reset from unlock
+User=right Correct=right
+Show-ExitChallenge returned: <True>
+User=right Correct=right
+Show-ExitChallenge returned: <True>
+05/13/2026 14:56:52 - Reset from unlock
+05/13/2026 15:34:29 - Reset from unlock
+05/13/2026 16:06:02 - Reset from unlock
+05/13/2026 17:04:09 - Reset from unlock
+05/13/2026 17:46:59 - Reset from unlock
+05/14/2026 12:41:57 - Reset from unlock after extended idle
+05/14/2026 13:13:57 - Reset from unlock
+05/14/2026 13:48:28 - Reset from unlock
+05/14/2026 14:20:32 - Reset from unlock
+05/14/2026 15:50:30 - Reset from unlock
+05/14/2026 16:20:54 - Reset from unlock
+05/14/2026 17:46:13 - Reset from unlock
+User=416729 Correct=416729
+Show-ExitChallenge returned: <True>
+05/14/2026 18:36:43 - Reset from unlock
+05/15/2026 11:00:46 - Reset from unlock after extended idle
+05/15/2026 11:45:04 - Reset from unlock after extended idle
+05/15/2026 12:21:45 - Reset from unlock
+05/15/2026 12:54:57 - Reset from unlock
+05/15/2026 13:33:45 - Reset from unlock
+05/15/2026 14:37:35 - Reset from unlock
+05/15/2026 15:15:58 - Reset from unlock
+05/15/2026 15:54:24 - Reset from unlock
+05/15/2026 16:25:05 - Reset from unlock
+05/15/2026 17:03:04 - Reset from unlock
+05/15/2026 17:40:04 - Reset from unlock
+05/15/2026 18:13:43 - Reset from unlock
+05/15/2026 18:52:35 - Reset from unlock

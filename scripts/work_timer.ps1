@@ -104,7 +104,7 @@ $itemPause.Add_Click({ Pause-OneHour })
 $itemResume.Add_Click({ Resume-Now })
 $itemProperties.Add_Click({ Show-Properties })
 $itemExit.Add_Click({ 
-	if (($state.eveningLO -and (In-EveningLockWindow)) -or ((Is-Scheduled) -and (In-WorkHours))){
+	if (($state.eveningLO -and (In-EveningLockWindow)) -or (In-WorkHours)){
 		Exit-App 
 	} else {
 		if ($script:timer) {
@@ -128,14 +128,28 @@ $script:timer.Interval = $tbfrelock
 $script:timer.Add_Tick({
     $state = Load-State
 	
-	$firstWarning = $state.workPeriod * 0.25
-	if ($firstWarning -gt 1800){$firstWarning = 1800} elseif($firstWarning -lt 300){$firstWarning = 120} else{$firstWarning = [Math]::Ceiling($firstWarning/300)*300}
-	$secondWarning = $state.workPeriod * 0.125
-	if ($secondWarning -gt 900){$secondWarning = 900} elseif($firstWarning -eq 120){$secondWarning = 60} else{$secondWarning = [Math]::Ceiling($secondWarning/300)*300}
-	if ($secondWarning -eq $firstWarning){$secondWarning = [Math]::Round($secondWarning)}
-	$thirdWarning = $state.workPeriod * 0.0417
-	if ($thirdWarning -gt 300){$thirdWarning = 300} elseif($secondWarning -eq 60){$thirdWarning = 30} else{$thirdWarning = [Math]::Ceiling($thirdWarning/300)*300}
-	if ($thirdWarning -eq $secondWarning){$thirdWarning = [Math]::Round($thirdWarning)}
+	$firstWarning = $state.workPeriod * 0.5
+	if ($state.workPeriod -lt 600) {
+	 $firstWarning = [Math]::Round($firstWarning/60)*60
+	 $secondWarning = [Math]::Round($firstWarning*0.5/60)*60
+	} elseif ($state.workPeriod -lt 1200){ 
+	 $firstWarning = [Math]::Round($firstWarning/300)*300
+	 $secondWarning = [Math]::Round($firstWarning*0.5/300)*300
+	} else { 
+	 $firstWarning = 600
+	 $secondWarning = 300 
+	}
+	$thirdWarning = 60
+	
+	
+	#$firstWarning = $state.workPeriod * 0.25
+	#if ($firstWarning -gt 1800){$firstWarning = 1800} elseif($firstWarning -lt 300){$firstWarning = 120} else{$firstWarning = [Math]::Ceiling($firstWarning/300)*300}
+	#$secondWarning = $state.workPeriod * 0.125
+	#if ($secondWarning -gt 900){$secondWarning = 900} elseif($firstWarning -eq 120){$secondWarning = 60} else{$secondWarning = [Math]::Ceiling($secondWarning/300)*300}
+	#if ($secondWarning -eq $firstWarning){$secondWarning = [Math]::Round(($state.workPeriod * 0.125)/10) * 10}
+	#$thirdWarning = $state.workPeriod * 0.0417
+	#if ($thirdWarning -gt 300){$thirdWarning = 300} elseif($secondWarning -eq 60){$thirdWarning = 30} else{$thirdWarning = [Math]::Ceiling($thirdWarning/300)*300}
+	#if ($thirdWarning -eq $secondWarning){$thirdWarning = [Math]::Round(($state.workPeriod * 0.0417)/10) * 10}
 
     $now = Get-Now
     $lastTick = [datetime]$state.lastTick
@@ -204,6 +218,7 @@ $script:timer.Add_Tick({
             return
         } else {
 			if ($lastUnlock -ge $lastTick -or $lastUnlock -ge $cooldownUntil){
+				Update-Pom $state
 				Reset-State
 				$state = Load-State
 				$state.lastTick = $now.ToString("o")
@@ -241,12 +256,7 @@ $script:timer.Add_Tick({
     }
 	
 	if (-not $state.warned5 -and $state.remainingSeconds -le $thirdWarning -and $state.remainingSeconds -gt 0) {
-		if ($thirdWarning -eq 30){
-			$timetext = "30 seconds"
-		} else {
-			$timetext = "$(Get-RemainingText $state.remainingSeconds $true)"
-		}
-        Show-Message "$timetext left. Save your work now and write next steps." "Work Timer"
+        Show-Message "1 minute left! Save your work now and write next steps." "Work Timer"
         $state.warned5 = $true
     }
 
@@ -259,7 +269,6 @@ $script:timer.Add_Tick({
 				$text = "Long Break:"
 				$lockoutTime = $state.lockOut
 			}
-			$state.pomNum -= 1
 		} else {
 			$text = "Break:"
 			$lockoutTime = $state.lockOut
