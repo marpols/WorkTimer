@@ -353,3 +353,90 @@ Show-ExitChallenge returned: <True>
 05/15/2026 17:40:04 - Reset from unlock
 05/15/2026 18:13:43 - Reset from unlock
 05/15/2026 18:52:35 - Reset from unlock
+05/19/2026 09:29:36 - Reset from unlock after extended idle
+User=45 Correct=75
+Show-ExitChallenge returned: <False>
+Exit cancelled
+User=241162 Correct=241162
+Show-ExitChallenge returned: <True>
+User=left Correct=left
+Show-ExitChallenge returned: <True>
+User=84 Correct=84
+Show-ExitChallenge returned: <True>
+05/19/2026 11:44:43 - Reset from unlock
+05/19/2026 12:14:24 - Reset from work_timer.ps1 check
+05/19/2026 12:49:42 - Reset from unlock
+05/19/2026 13:25:52 - Reset from unlock
+05/19/2026 14:17:21 - Reset from unlock
+05/19/2026 15:40:51 - Reset from unlock
+05/19/2026 16:20:31 - Reset from unlock
+05/19/2026 17:16:33 - Reset from unlock
+05/20/2026 09:58:21 - Reset from unlock
+User=15 Correct=15
+Show-ExitChallenge returned: <True>
+05/20/2026 11:53:03 - Reset from unlock
+05/20/2026 12:26:13 - Reset from unlock
+05/20/2026 12:58:26 - Reset from unlock
+05/20/2026 15:27:14 - Reset from unlock
+05/20/2026 16:09:41 - Reset from unlock
+05/20/2026 17:14:47 - Reset from unlock
+05/21/2026 10:32:42 - Reset from unlock
+Show-ExitChallenge returned: <False>
+Exit cancelled
+User=5 Correct=5
+Show-ExitChallenge returned: <True>
+05/25/2026 12:36:40 - Reset from unlock after extended idle
+User=7 Correct=7
+Show-ExitChallenge returned: <True>
+05/25/2026 13:28:01 - Reset from unlock
+05/25/2026 15:53:50 - Reset from unlock
+05/25/2026 16:25:39 - Reset from unlock
+05/26/2026 10:23:08 - Reset from unlock after extended idle
+05/26/2026 11:24:00 - Reset from unlock after extended idle
+05/26/2026 12:48:11 - Reset from unlock
+05/26/2026 13:20:39 - Reset from unlock
+05/26/2026 14:02:20 - Reset from unlock
+05/26/2026 15:49:53 - Reset from unlock
+05/26/2026 16:34:28 - Reset from unlock
+05/26/2026 17:04:53 - Reset from unlock
+05/26/2026 17:37:28 - Reset from unlock
+05/27/2026 09:52:28 - Reset from unlock
+User=083233 Correct=083233
+Show-ExitChallenge returned: <True>
+05/27/2026 10:34:28 - Reset from unlock
+05/27/2026 11:05:48 - Reset from unlock
+05/27/2026 11:35:36 - Reset from unlock
+05/27/2026 12:33:52 - Reset from unlock
+User=572828 Correct=572828
+Show-ExitChallenge returned: <True>
+05/27/2026 14:34:32 - Reset from unlock
+05/27/2026 16:31:55 - Reset from unlock
+05/27/2026 17:02:34 - Reset from unlock
+05/28/2026 09:29:18 - Reset from unlock after extended idle
+User=17 Correct=17
+Show-ExitChallenge returned: <True>
+05/28/2026 13:27:26 - Reset from unlock
+05/28/2026 14:02:53 - Reset from unlock
+05/28/2026 14:34:45 - Reset from unlock
+05/28/2026 15:48:09 - Reset from unlock
+05/28/2026 16:18:39 - Reset from unlock
+05/28/2026 16:50:03 - Reset from unlock
+05/28/2026 17:23:11 - Reset from unlock
+05/29/2026 12:02:58 - Reset from unlock after extended idle
+05/29/2026 15:22:56 - Reset from unlock
+User=left Correct=left
+Show-ExitChallenge returned: <True>
+05/31/2026 17:52:59 - Reset from unlock
+User=96 Correct=96
+Show-ExitChallenge returned: <True>
+05/31/2026 18:37:49 - Reset from unlock
+User=24 Correct=24
+Show-ExitChallenge returned: <True>
+05/31/2026 18:42:35 - Reset from unlock
+05/31/2026 18:45:37 - Reset from work_timer.ps1 check
+User=625400 Correct=625400
+Show-ExitChallenge returned: <True>
+05/31/2026 19:37:47 - Reset from unlock
+User=16 Correct=16
+Show-ExitChallenge returned: <True>
+05/31/2026 19:57:48 - Reset from unlock

@@ -12,6 +12,7 @@ Select-Object -First 1
 Import-Module "$parentDir/modules/utils.psm1" -Function "Get-Now", "Show-Balloon", "Show-Popup", "Get-RemainingText", "Pom-Message", "Timer-Message", "In-WorkHours"
 Import-Module "$parentDir/modules/state_func.psm1" -Function "Load-State", "Save-State", "Reset-State", "Update-Pom"
 Import-Module "$parentDir/modules/properties.psm1" -Function "Load-Properties"
+Import-Module "$parentDir/modules/toast.psm1" -Function "Toast-Notification"
 
 if ($running -and (In-WorkHours)) {
 

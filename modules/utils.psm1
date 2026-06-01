@@ -57,13 +57,12 @@ function Show-Popup {
 		[string]$title = "Work Timer",
 		[int]$timeout = 3000,
 		$chime = $true,
-		[string]$soundfile = "$parentDir\assets\chimes-glassy-456.mp3",
+		[string]$soundfile = "$parentDir\assets\chimes-glassy.mp3",
 		$volume = 1.0
 		)
 
 	Add-Type -AssemblyName System.Windows.Forms
 	Add-Type -AssemblyName System.Drawing
-	Add-Type -AssemblyName presentationCore
 
 	$icon = New-Object System.Drawing.Icon("C:\WorkTimer\assets\time.ico")
 	$form = New-Object System.Windows.Forms.Form -Property @{Text = $title; Size = '300,150'; StartPosition = "CenterScreen"; TopMost = $true; Icon = $icon}
@@ -81,13 +80,11 @@ function Show-Popup {
 	$form.Add_Shown({
 		$timer.Start()
 	}.GetNewClosure())
-	
-	$mediaPlayer = New-Object system.windows.media.mediaplayer -Property @{Volume = $volume}
-	$mediaPlayer.open($soundfile)
-	
+
 	if($chime){
-		$mediaPlayer.Play()
+		Play-Chime -soundfile $soundfile -volume $volume
 	}
+	
 	[void]$form.ShowDialog()
 	
 
@@ -96,13 +93,28 @@ function Show-Popup {
     $icon.Dispose()
 }
 
+function Play-Chime{
+	
+	param(
+		[string]$soundfile = "$parentDir\assets\chimes-glassy.mp3",
+		$volume = 1.0
+		)
+		
+	Add-Type -AssemblyName presentationCore
+	
+	$mediaPlayer = New-Object system.windows.media.mediaplayer -Property @{Volume = $volume}
+	$mediaPlayer.open($soundfile)
+	
+	$mediaPlayer.Play()
+}
+
 function Pom-Message {
 	param(
 		$state,
 		[string]$msg = ""
 	)
 	$msg += "🍅 Pomodoro:  $($state.numPomodoros - $state.pomNum + 1) out of $($state.numPomodoros)" 
-	Show-Balloon $msg "Work Timer is Active"
+	Toast-Notification -msg $msg -header "Work Timer is Active"
 }
 
 function Timer-Message {
@@ -110,8 +122,8 @@ function Timer-Message {
 		$state,
 		[string]$msg = ""
 	)
-	$msg += "⏲️ Work Time: $(Get-RemainingText $state.workPeriod $true)`n Breaks: $(Get-RemainingText $state.lockOut*60 $true)" 
-	Show-Balloon $msg "Work Timer is Active" 
+	$msg += "⏲️ Work Time: $(Get-RemainingText $state.workPeriod $true)`n Breaks: $(Get-RemainingText $($state.lockOut*60) $true)" 
+	Toast-Notification -msg $msg -header "Work Timer is Active" 
 }
 
 function Lock-PC {

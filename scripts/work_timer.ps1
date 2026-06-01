@@ -11,7 +11,7 @@ if (-not $parentDir) {
 }
 . "$PSScriptRoot/idle.ps1"
 
-$files = @("utils.psm1", "state_func.psm1", "pause_func.psm1","properties.psm1", "exit_challenge.psm1")
+$files = @("utils.psm1", "state_func.psm1", "pause_func.psm1","properties.psm1", "exit_challenge.psm1", "toast.psm1")
 foreach ($file in $files) {
     $path = Join-Path $parentDir "modules" $file
 	if (-not (Test-Path $path)) {
@@ -195,7 +195,7 @@ $script:timer.Add_Tick({
 	
 	if ($(Is-Idle 3) -and (-not $state.cooldown) -and (In-WorkHours)){
 		if (-not $state.warnedIdle){
-			Show-Balloon "Computer has been idle for 3 minutes. Pausing timer." "Work Timer"
+			Toast-Notification "Computer has been idle for 3 minutes. Pausing timer." "Work Timer"
 			$state.warnedIdle = $true
 		}
 		if (Is-Idle 10){
@@ -242,21 +242,22 @@ $script:timer.Add_Tick({
         return
     }
 
+	$reminderChime = "$parentDir\assets\long-chime-sound.mp3"
     $state.remainingSeconds -= $elapsed
     if ($state.remainingSeconds -lt 0) { $state.remainingSeconds = 0 }
 
     if (-not $state.warned30 -and $state.remainingSeconds -le $firstWarning -and $state.remainingSeconds -gt $secondWarning) {
-        Show-Balloon "$(Get-RemainingText $state.remainingSeconds $true) left." "Work Timer"
+        Toast-Notification "$(Get-RemainingText $state.remainingSeconds $true) left."
         $state.warned30 = $true
     }
 
     if (-not $state.warned15 -and $state.remainingSeconds -le $secondWarning -and $state.remainingSeconds -gt $thirdWarning) {
-        Show-Message "$(Get-RemainingText $state.remainingSeconds $true) left. Start wrapping up." "Work Timer"
+        Show-Popup -text "$(Get-RemainingText $state.remainingSeconds $true) left.`nStart wrapping up." -soundfile $reminderChime
         $state.warned15 = $true
     }
 	
 	if (-not $state.warned5 -and $state.remainingSeconds -le $thirdWarning -and $state.remainingSeconds -gt 0) {
-        Show-Message "1 minute left! Save your work now and write next steps." "Work Timer"
+        Show-Popup -text "1 minute left!`nSave your work now and write next steps." -soundfile $reminderChime
         $state.warned5 = $true
     }
 
@@ -278,6 +279,31 @@ $script:timer.Add_Tick({
         $state.cooldownUntil = $breakUntil.ToString("o")
 		$state.cooldown = $true
         Lock-PC
+		
+		$endChime = "$parentDir\assets\alarm-bell.mp3"
+		$breakScript = @"
+		param(
+			`$breakTime,
+			`$endChime
+		)
+
+		Import-Module "$parentDir/modules/toast.psm1" -Force
+		Import-Module "$parentDir/modules/utils.psm1" -Function "Play-Chime" -Force
+
+		Break-Countdown -breakLength `$breakTime -endChime $endChime
+"@
+
+		$temp = Join-Path $env:TEMP "toast.ps1"
+		$breakScript | Set-Content -Path $temp -Encoding UTF8
+
+		Start-Process pwsh `
+		-WindowStyle Hidden `
+		-ArgumentList @(
+			'-NoProfile',
+			'-ExecutionPolicy', 'Bypass',
+			'-File', $temp,
+			$lockoutTime, $endChime
+		)
     }
 
     $state.lastTick = $now.ToString("o")
@@ -297,14 +323,14 @@ if (-not (In-WorkHours)){
 	if ($properties.pomodoro){
 		$msg = "Work Timer is running`nActive $($properties.days | ForEach-Object { $_[0] }), $($properties.startTime)-$($properties.endTime)`nNumber of Pomodoros: $($properties.numPomodoros)`nWork for: $(Get-RemainingText $properties.workPeriod $true)`nShort breaks for: $($properties.shortBreak) minute(s)`nLong breaks for: $($properties.lockOut) minutes."
 	} else {
-		$msg = "Work Timer is running`nActive $($properties.days | ForEach-Object { $_[0] }), $($properties.startTime)-$($properties.endTime)`nWork for: $(Get-RemainingText $properties.workPeriod $true) `nBreaks for: $($properties.lockOut) minutes"
+		$msg = "Work Timer is running`nActive $($properties.days | ForEach-Object { $_[0] }), $($properties.startTime)-$($properties.endTime)`nWork for: $(Get-RemainingText $properties.workPeriod $true) `nBreaks for: $($properties.lockOut) minute(s)"
 	}
 	if ($properties.eveningLO){
 		$msg += "`nEvening Lockout enabled for $($properties.duration) minutes"
 	}
 }
 
-Show-Balloon $msg 
+Toast-Notification -msg $msg 
 $script:timer.Start()
 
 [System.Windows.Forms.Application]::Run()
