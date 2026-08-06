@@ -8,11 +8,21 @@ Where-Object {
 } |
 Select-Object -First 1
 
-. "$PSScriptRoot\global_vars.ps1"
-Import-Module "$parentDir/modules/utils.psm1" -Function "Get-Now", "Show-Balloon", "Show-Popup", "Get-RemainingText", "Pom-Message", "Timer-Message", "In-WorkHours"
-Import-Module "$parentDir/modules/state_func.psm1" -Function "Load-State", "Save-State", "Reset-State", "Update-Pom"
-Import-Module "$parentDir/modules/properties.psm1" -Function "Load-Properties"
-Import-Module "$parentDir/modules/toast.psm1" -Function "Toast-Notification"
+. "$PSScriptRoot/global_vars.ps1"
+if (-not $parentDir) {
+    throw "`$parentDir was not set by global_vars.ps1"
+}
+. "$PSScriptRoot/idle.ps1"
+
+#load modules
+$files = Get-childItem  -path $(Join-Path $parentDir "modules")
+foreach ($file in $files.Name) {
+    $path = Join-Path $parentDir "modules" $file
+	if (-not (Test-Path $path)) {
+        throw "Missing file: $path"
+    }
+	Import-Module $path
+}
 
 if ($running -and (In-WorkHours)) {
 
@@ -29,7 +39,7 @@ if ($running -and (In-WorkHours)) {
 		if ($state.extendedIdle) {
 			Reset-State
 			$state = Load-State
-			$msg = "Computer was idle for more than 10 minutes. Time has been reset.`n"
+			$msg = "Computer was idle for more than 10 minutes. Timer has been reset.`n"
 			Add-Content "$parentDir\logs\debug.log" "$now - Reset from unlock after extended idle"			
 		} elseif (-not ($state.warnedIdle)){
 			$state = Update-Pom $state

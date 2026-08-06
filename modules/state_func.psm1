@@ -2,9 +2,9 @@ function Set-State {
 	$properties = Load-Properties
 	$state = @{
 		remainingSeconds = $properties.workPeriod
-		warned30 = $false
-		warned15 = $false
-		warned5 = $false
+		thirdWarning = $false
+		secondWarning = $false
+		warnedoneMin = $false
 		warnedIdle = $false
 		extendedIdle = $false
 		cooldown = $false
@@ -30,13 +30,13 @@ function Set-State {
 }
 
 function Reset-State{
-	$properties = Load-Properties
+	
 	$state = Load-State
 	
 	$state.remainingSeconds = $state.workPeriod
-	$state.warned30 = $false
-	$state.warned15 = $false
-	$state.warned5 = $false
+	$state.thirdWarning = $false
+	$state.secondWarning = $false
+	$state.warnedoneMin = $false
 	$state.warnedIdle = $false
 	$state.extendedIdle = $false
 	$state.cooldown = $false
