@@ -22,6 +22,7 @@ foreach ($file in $files.Name) {
 }
 
 $tbfrelock = 20000 #miliseconds (30s = 30000)
+$mainPID = $PID
 
 $script:isExiting = $false
 
@@ -51,7 +52,16 @@ $itemExit.Add_Click({
 		if ($script:timer) {
         $script:timer.Stop()
 		}
+
+		if (
+			$script:pieCountdown -and
+			-not $script:pieCountdown.IsDisposed
+		) {
+			$script:pieCountdown.Close()
+			$script:pieCountdown = $null
+		}
 		Cleanup-TrayIcon
+		
 		[System.Windows.Forms.Application]::Exit()
 	}
 })
@@ -145,14 +155,30 @@ $script:timer.Add_Tick({
 				$state = Load-State
 				$state.lastTick = $now.ToString("o")
 				Save-State $state
+				
+				Add-Content "$parentDir\logs\debug.log" "$now - Starting Next Work Period"
+				Add-Content "$parentDir\logs\debug.log" "showPie  = $($state.showPie)"
+				Add-Content "$parentDir\logs\debug.log" "showTime = $($state.showTime)"
+				Add-Content "$parentDir\logs\debug.log" "workPeriod = $($state.workPeriod)"
+
+				if ($state.showPie -or $state.showTime) {
+					Add-Content "$parentDir\logs\debug.log" "CALLING Show-CountdownPie"
+        			$script:pieCountdown = Show-CountdownPie `
+            			-DurationSeconds $state.workPeriod `
+            			-showPie $state.showPie `
+            			-showTime $state.showTime `
+						-mainPID $mainPID
+					Add-Content "$parentDir\logs\debug.log" "Show-CountdownPie returned: $script:pieCountdown"
+    			} else {
+					 Write-Host "NOT showing countdown"
+				}
+
 				if ($state.pomodoro){
-					$timer_msg = Pom-Message $state
+					Pom-Message $state
 				} else {
 					Timer-Message $state
-					$timer_msg = ""
 				}
 				Add-Content "$parentDir\logs\debug.log" "$now - Reset from work_timer.ps1 check"
-		
 
 				return
 			}
@@ -169,8 +195,18 @@ $script:timer.Add_Tick({
     }
 
 	#reminders
-	$reminderChime = "$parentDir\assets\sounds\long-chime-sound.mp3"
+	$reminderChime = $state.timeReminderChime
     $state.remainingSeconds -= $elapsed
+
+	Add-Content "$parentDir\logs\debug.log" (
+    "$(Get-Date -Format o) " +
+    "stateNull=$($null -eq $state); " +
+    "sounds='$($state.sounds)'; " +
+    "soundFile='$reminderChime'; " +
+    "fileExists=$(Test-Path -LiteralPath $reminderChime)"
+	)
+
+
 	if ($state.remainingSeconds -lt 0) { $state.remainingSeconds = 0 }
 
 	$warnings = Time_Warning($state.workPeriod)
@@ -180,12 +216,20 @@ $script:timer.Add_Tick({
 	
 
     if ($thirdPopup) {
-        Toast-Notification "$(Get-RemainingText $state.remainingSeconds $true) left."
+		if($state.reminderPopups){
+        Toast-Notification "$(Get-RemainingText $state.remainingSeconds $true) left." -soundFile $reminderChime -chime $state.sounds
+		} elseif ($state.sounds) {
+			Play-Chime $reminderChime
+		}
         $state.thirdWarning = $true
     }
 
     if ($secondPopup) {
-        Show-Popup -text "$(Get-RemainingText $state.remainingSeconds $true) left.`nStart wrapping up." -soundfile $reminderChime
+		if($state.reminderPopups){
+        Show-Popup -text "$(Get-RemainingText $state.remainingSeconds $true) left.`nStart wrapping up." -soundfile $reminderChime -chime $state.sounds
+		} elseif ($state.sounds) {
+			Play-Chime $reminderChime
+		}
         $state.secondWarning = $true
     }
 	
@@ -193,9 +237,12 @@ $script:timer.Add_Tick({
 	if ($oneminWarning) {
 
 		#start toast notification as seperate process
-		Start-Countdown -duration 1 -chime $false -msg "1 minute to go!" -msg2 "Save your work and write next steps (leave some breadcrumbs)" -barTitle "Time until break:" -endMsg "You did it! Time for a break!"
+		if($state.reminderPopups){
+			Show-Popup -text "1 minute left!" -soundfile $reminderChime -chime $state.sounds
+		} elseif (-not $state.showPie -and -not $state.showTime){
+			Start-Countdown -duration 1 -chime $false -msg "1 minute to go!" -msg2 "Save your work and write next steps (leave some breadcrumbs)" -barTitle "Time until break:" -endMsg "You did it! Time for a break!"
+		}
 
-		Show-Popup -text "1 minute left!" -soundfile $reminderChime
         $state.warnedoneMin = $true
     }
 
@@ -213,14 +260,12 @@ $script:timer.Add_Tick({
 			$lockoutTime = $state.lockOut
 		}
 		$breakUntil = $now.AddMinutes($lockoutTime)
-		Show-Popup -text "Time is up! The computer will lock now.`n$text $(Get-remainingText ($lockoutTime*60) $true)`nYou can come back at $($breakUntil.ToString(`"HH:mm`"))"	
+		Show-Popup -text "Time is up! The computer will lock now.`n$text $(Get-remainingText ($lockoutTime*60) $true)`nYou can come back at $($breakUntil.ToString(`"HH:mm`"))"	-soundFile $state.workEndChime -chime $state.sounds
         $state.cooldownUntil = $breakUntil.ToString("o")
 		$state.cooldown = $true
         Lock-PC
 		
-		$endChime = "$parentDir\assets\sounds\alarm-bell.mp3"
-		
-		Start-Countdown -duration $lockoutTime -imageFile "C:\WorkTimer\assets\break_time-amonrat-rungreangfangsai.png"
+		Start-Countdown -duration $lockoutTime -endChime $state.breakEndChime -chime $state.sounds
 		
     }
 
@@ -241,10 +286,10 @@ if (-not (In-WorkHours)){
 	$msg = "but not active.`nActive $($properties.days | ForEach-Object { $_[0] }), $($properties.startTime)-$($properties.endTime).`nGo to properties to update schedule." 
 } else {
 	if ($properties.pomodoro){
-		$msg = "Active $($properties.days | ForEach-Object { $_[0] }), $($properties.startTime)-$($properties.endTime)`nNumber of Pomodoros: $($properties.numPomodoros)`nWork for: $(Get-RemainingText $properties.workPeriod $true)`nShort breaks for: $($properties.shortBreak) minute(s)`nLong breaks for: $($properties.lockOut) minutes."
+		$msg = "Active $($properties.days | ForEach-Object { $_[0] }), $($properties.startTime)-$($properties.endTime)`nPomodoros: $($properties.numPomodoros)`nWork for: $(Get-RemainingText $properties.workPeriod $true), Breaks for: $($properties.shortBreak) minute(s)`nLong breaks: $($properties.lockOut) minutes."
 		$msg2 = "Pomodoro 1 of $($properties.numPomodoros)"
 	} else {
-		$msg = "Active $($properties.days | ForEach-Object { $_[0] }), $($properties.startTime)-$($properties.endTime)`nWork for: $(Get-RemainingText $properties.workPeriod $true) `nBreaks for: $($properties.lockOut) minute(s)"
+		$msg = "Active $($properties.days | ForEach-Object { $_[0] }), $($properties.startTime)-$($properties.endTime)`nWork for: $(Get-RemainingText $properties.workPeriod $true), Breaks for: $($properties.lockOut) minute(s)"
 	    $msg2 = ""
 	}	
 	if ($properties.eveningLO){
@@ -253,7 +298,27 @@ if (-not (In-WorkHours)){
 }
 
 Toast-Notification -header "Work Timer is running" -msg $msg
-#Start-Countdown -duration $($properties.workPeriod/60) -chime $false -noPopup $true -msg "Time to focus!" -msg2 $msg2 -barTitle "Time remaining:" -endMsg "Time for a break!"  -imageFile "C:\WorkTimer\assets\freelance_amonrat-rungreangfangsai.png" -removeAfter 300
 
 $script:timer.Start()
+
+$showCountdownHandler = {
+    [System.Windows.Forms.Application]::remove_Idle(
+        $script:showCountdownHandler
+    )
+
+    if ($properties.showPie -or $properties.showTime -and (In-WorkHours)) {
+        $script:pieCountdown = Show-CountdownPie `
+            -DurationSeconds $properties.workPeriod `
+            -showPie $properties.showPie `
+            -showTime $properties.showTime `
+			-mainPID $mainPID
+    }
+}
+
+$script:showCountdownHandler = $showCountdownHandler
+[System.Windows.Forms.Application]::add_Idle(
+    $script:showCountdownHandler
+)
+
 [System.Windows.Forms.Application]::Run()
+

@@ -3,16 +3,17 @@ function Show-CountdownPie {
         [Parameter(Mandatory)]
         [ValidateRange(1, [int]::MaxValue)]
         [int]$DurationSeconds,
-        [string]$Title = "Work Timer",
+        [string]$Title = "Work Timer Countdown",
         [bool]$showTime = $true,
-        [bool]$showPie = $true
+        [bool]$showPie = $true,
+        [int]$mainPID = 0,
+        [switch]$Wait
     )
 
     Add-Type -AssemblyName System.Windows.Forms
     Add-Type -AssemblyName System.Drawing
 
-   $screen = [System.Windows.Forms.Screen]::PrimaryScreen.Bounds
-    $screenArea = [System.Windows.Forms.Screen]::AllScreens
+    $screen = [System.Windows.Forms.Screen]::PrimaryScreen.Bounds
     $TargetMonitorIndex = 0
     $TargetScreen = if ($TargetMonitorIndex -lt $Screens.Count) { $Screens[$TargetMonitorIndex] } else { [System.Windows.Forms.Screen]::PrimaryScreen }
 
@@ -22,13 +23,13 @@ function Show-CountdownPie {
     $popupSize = [System.Drawing.Size]::new(
     [int]($screenWidth / 10),
     [int]($screenHeight / 5)
-)
+    )
 
     $form = New-Object System.Windows.Forms.Form -Property @{
     Text            = $Title
     FormBorderStyle = [System.Windows.Forms.FormBorderStyle]::None
-    BackColor       = [System.Drawing.Color]::blue
-    TransparencyKey = [System.Drawing.Color]::blue
+    BackColor       = [System.Drawing.Color]::Gray
+    TransparencyKey = [System.Drawing.Color]::Gray
     TopMost         = $true
     ClientSize      = [System.Drawing.Size]::new($popupSize)
     StartPosition   = [System.Windows.Forms.FormStartPosition]::Manual
@@ -163,7 +164,7 @@ function Show-CountdownPie {
             $backgroundBrush.Dispose()
             $countdownBrush.Dispose()
         }
-    })
+    }.GetNewClosure())
 
     $timer.Add_Tick({
         if ([datetime]::Now -ge $endTime) {
@@ -176,50 +177,85 @@ function Show-CountdownPie {
         else {
             $form.Invalidate()
         }
-    })
 
-    $form.Add_Shown({
-        $timer.Start()
-    })
+        if ($mainPID -gt 0) {
+            if (-not (Get-Process -Id $mainPID -ErrorAction SilentlyContinue)) {
+            $timer.Stop()
+            $form.Close()
+            return
+        }
+    }
+    }.GetNewClosure())
+
 
     $form.Add_FormClosed({
         $timer.Stop()
         $timer.Dispose()
-    })
+    }.GetNewClosure())
 
-    $script:isDragging = $false
-    $script:dragOffset = [System.Drawing.Point]::Empty
+   # One mutable object shared by all event handlers.
+    $dragState = @{
+        IsDragging = $false
+        StartMouse = [System.Drawing.Point]::Empty
+        StartForm  = [System.Drawing.Point]::Empty
+    }
 
     $form.Add_MouseDown({
         param($sender, $eventArgs)
 
         if ($eventArgs.Button -eq [System.Windows.Forms.MouseButtons]::Left) {
-            $script:isDragging = $true
-            $script:dragOffset = $eventArgs.Location
+            $dragState.IsDragging = $true
+            $dragState.StartMouse = [System.Windows.Forms.Cursor]::Position
+            $dragState.StartForm  = $form.Location
+
+            $form.Capture = $true
         }
-    })
+    }.GetNewClosure())
 
     $form.Add_MouseMove({
         param($sender, $eventArgs)
 
-        if ($script:isDragging) {
-            $mousePosition = [System.Windows.Forms.Cursor]::Position
+        if ($dragState.IsDragging) {
+            $currentMouse = [System.Windows.Forms.Cursor]::Position
 
             $form.Location = [System.Drawing.Point]::new(
-                $mousePosition.X - $script:dragOffset.X,
-                $mousePosition.Y - $script:dragOffset.Y
+                $dragState.StartForm.X +
+                    ($currentMouse.X - $dragState.StartMouse.X),
+
+                $dragState.StartForm.Y +
+                    ($currentMouse.Y - $dragState.StartMouse.Y)
             )
         }
-    })
+    }.GetNewClosure())
 
     $form.Add_MouseUp({
         param($sender, $eventArgs)
 
         if ($eventArgs.Button -eq [System.Windows.Forms.MouseButtons]::Left) {
-            $script:isDragging = $false
+            $dragState.IsDragging = $false
+            $form.Capture = $false
         }
-    })
-    
-    [void]$form.ShowDialog()
-    $form.Dispose()
+    }.GetNewClosure())
+
+    $form.Add_MouseCaptureChanged({
+        if (-not $form.Capture) {
+            $dragState.IsDragging = $false
+        }
+    }.GetNewClosure())
+
+    $form.ShowInTaskbar = $false
+
+    $timer.Start()
+    $form.Invalidate()
+
+    if ($Wait) {
+            [void]$form.ShowDialog()
+            $form.TopMost = $true
+    } else {
+            [void]$form.Show()
+            Write-Output -NoEnumerate $form
+    }
+
+
 }
+

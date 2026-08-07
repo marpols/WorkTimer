@@ -150,7 +150,7 @@ function Start-Countdown{
 			`$removeAfter
 		)
 
-		Import-Module "$parentDir/modules/countdown.psm1" -Force
+		Import-Module "$parentDir/modules/toast_countdown.psm1" -Force
 		Import-Module "$parentDir/modules/utils.psm1" -Function "Play-Chime" -Force
 
 		Countdown-Notification -length `$duration -chime ([bool]`$chime) -noPopup ([bool]`$noPopup) -msg `$msg -msg2 `$msg2 -barTitle `$barTitle -endMsg `$endMsg -header `$header -endChime `$endChime -imageFile `$imageFile -removeAfter `$removeAfter

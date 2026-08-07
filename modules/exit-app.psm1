@@ -15,7 +15,17 @@ function Exit-App {
 
     if ($script:timer) {
         $script:timer.Stop()
+        $script:timer.Dispose()
+        $script:timer = $null
+    }
+    if (
+        $script:pieCountdown -and
+        -not $script:pieCountdown.IsDisposed
+    ) {
+        $script:pieCountdown.Close()
+        $script:pieCountdown = $null
     }
     Cleanup-TrayIcon
+  
     [System.Windows.Forms.Application]::Exit()
 }

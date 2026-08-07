@@ -1,3 +1,22 @@
+if (-not ('NativeAudio' -as [type])) {
+    Add-Type @'
+using System;
+using System.Runtime.InteropServices;
+using System.Text;
+
+public static class NativeAudio
+{
+    [DllImport("winmm.dll", CharSet = CharSet.Unicode)]
+    public static extern int mciSendString(
+        string command,
+        StringBuilder returnValue,
+        int returnLength,
+        IntPtr callback
+    );
+}
+'@
+}
+
 function Get-Now {
     Get-Date
 }
@@ -36,6 +55,9 @@ function Lock-PC {
 function Cleanup-TrayIcon {
     if ($script:notifyIcon) {
         $script:notifyIcon.Visible = $false
+		if ($script:notifyIcon.ContextMenuStrip) {
+            $script:notifyIcon.ContextMenuStrip.Dispose()
+        }
         $script:notifyIcon.Dispose()
         $script:notifyIcon = $null
     }
@@ -79,19 +101,100 @@ function Get-RemainingText($seconds, $verbose = $false) {
 	return $text
 }
 
-function Play-Chime{
-	
-	param(
-		[string]$soundfile = "$parentDir\assets\sounds\chimes-glassy.mp3",
-		$volume = 1.0
-		)
-		
-	Add-Type -AssemblyName presentationCore
-	
-	$mediaPlayer = New-Object system.windows.media.mediaplayer -Property @{Volume = $volume}
-	$mediaPlayer.open($soundfile)
-	
-	$mediaPlayer.Play()
+function Play-Chime {
+    param(
+        [string]$SoundFile = "$parentDir/assets/sounds/emergence.mp3",
+        [ValidateRange(0, 1000)]
+        [int]$Volume = 500
+    )
+
+    if (-not (Test-Path -LiteralPath $SoundFile -PathType Leaf)) {
+        Write-Warning "Sound file not found: $SoundFile"
+        return
+    }
+
+    $fullPath = (Resolve-Path -LiteralPath $SoundFile).Path
+    $alias = 'chimePreview'
+
+    # Stop and release any previous preview
+    [void][NativeAudio]::mciSendString(
+        "close $alias",
+        $null,
+        0,
+        [IntPtr]::Zero
+    )
+
+    $result = [NativeAudio]::mciSendString(
+        "open `"$fullPath`" type mpegvideo alias $alias",
+        $null,
+        0,
+        [IntPtr]::Zero
+    )
+
+    if ($result -ne 0) {
+        Write-Warning "Unable to open sound file. MCI error: $result"
+        return
+    }
+
+    [void][NativeAudio]::mciSendString(
+        "setaudio $alias volume to $Volume",
+        $null,
+        0,
+        [IntPtr]::Zero
+    )
+
+    [void][NativeAudio]::mciSendString(
+        "play $alias",
+        $null,
+        0,
+        [IntPtr]::Zero
+    )
 }
+
+# function Play-Chime {
+    
+#     param(
+#         [string]$SoundFile = "$parentDir/assets/sounds/long-chime-sound.mp3",
+#         [double]$Volume = 1.0
+#     )
+
+#     if (-not (Test-Path -LiteralPath $SoundFile)) {
+#         throw "Sound file not found: $SoundFile"
+#     }
+
+#     Add-Type -AssemblyName PresentationCore
+
+#     if ($script:AudioPlayer) {
+#         $script:AudioPlayer.Stop()
+#         $script:AudioPlayer.Close()
+#         $script:AudioPlayer = $null
+#     }
+
+#     $script:AudioPlayer = [System.Windows.Media.MediaPlayer]::new()s
+#     $script:AudioPlayer.Volume = $Volume
+
+#     $script:AudioPlayer.Add_MediaOpened({
+#         $script:AudioPlayer.Play()
+#     })
+
+#     $script:AudioPlayer.Add_MediaEnded({
+#         $script:AudioPlayer.Close()
+#         $script:AudioPlayer = $null
+#     })
+
+#     $script:AudioPlayer.Add_MediaFailed({
+#         param($sender, $eventArgs)
+
+#         Add-Content "C:\WorkTimer\logs\debug.log" (
+#             "$(Get-Date -Format o) Audio failed: " +
+#             $eventArgs.ErrorException.Message
+#         )
+
+#         $script:AudioPlayer.Close()
+#         $script:AudioPlayer = $null
+#     })
+
+#     $script:AudioPlayer.Open([uri]$SoundFile)
+# }
 
 

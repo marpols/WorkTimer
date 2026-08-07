@@ -25,6 +25,14 @@ function Set-State {
 		lastUnlock = $null
 		eveningLO = $properties.eveningLO
 		duration = $properties.duration
+		reminderPopups = $properties.reminderPopups
+		sounds = $properties.sounds
+		showPie = $properties.showPie
+		showTime = $properties.showTime
+		timeReminderChime = $properties.timeReminderChime
+		workEndChime = $properties.workEndChime
+		breakEndChime = $properties.breakEndChime
+		mainProcessID = $mainPID
 	}
 	Save-State $state
 }

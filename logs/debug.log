@@ -666,3 +666,415 @@ Show-ExitChallenge returned: <True>
 08/05/2026 21:11:53 - Reset from work_timer.ps1 check
 User=6 Correct=6
 Show-ExitChallenge returned: <True>
+User=9 Correct=39
+User=745041 Correct=754051
+User=9 Correct=9
+Show-ExitChallenge returned: <True>
+User=521344 Correct=521344
+Show-ExitChallenge returned: <True>
+User=144190 Correct=144190
+Show-ExitChallenge returned: <True>
+User=32 Correct=32
+Show-ExitChallenge returned: <True>
+User=715373 Correct=715373
+Show-ExitChallenge returned: <True>
+User=815727 Correct=815727
+Show-ExitChallenge returned: <True>
+User=24 Correct=24
+Show-ExitChallenge returned: <True>
+User=10 Correct=10
+Show-ExitChallenge returned: <True>
+User=159186 Correct=159186
+Show-ExitChallenge returned: <True>
+User=7 Correct=5
+User=36 Correct=36
+Show-ExitChallenge returned: <True>
+User=10 Correct=8
+User=24 Correct=14
+User=36 Correct=36
+Show-ExitChallenge returned: <True>
+User=12 Correct=12
+Show-ExitChallenge returned: <True>
+User=380118 Correct=380118
+Show-ExitChallenge returned: <True>
+Show-ExitChallenge returned: <False>
+Exit cancelled
+User=8 Correct=8
+Show-ExitChallenge returned: <True>
+Show-ExitChallenge returned: <False>
+Exit cancelled
+User=right Correct=right
+Show-ExitChallenge returned: <True>
+User=15 Correct=15
+Show-ExitChallenge returned: <True>
+User=77 Correct=77
+Show-ExitChallenge returned: <True>
+User=8 Correct=8
+Show-ExitChallenge returned: <True>
+User=right Correct=right
+Show-ExitChallenge returned: <True>
+User=66 Correct=66
+Show-ExitChallenge returned: <True>
+User=75 Correct=75
+Show-ExitChallenge returned: <True>
+User=right Correct=right
+Show-ExitChallenge returned: <True>
+User=60 Correct=60
+Show-ExitChallenge returned: <True>
+User=254313 Correct=254313
+Show-ExitChallenge returned: <True>
+Show-ExitChallenge returned: <False>
+Exit cancelled
+User=right Correct=right
+Show-ExitChallenge returned: <True>
+Show-ExitChallenge returned: <False>
+Exit cancelled
+User=left Correct=left
+Show-ExitChallenge returned: <True>
+User=98 Correct=98
+Show-ExitChallenge returned: <True>
+User=674188 Correct=674188
+Show-ExitChallenge returned: <True>
+User=13 Correct=13
+Show-ExitChallenge returned: <True>
+User=7 Correct=7
+Show-ExitChallenge returned: <True>
+User=78 Correct=78
+Show-ExitChallenge returned: <True>
+User=75 Correct=65
+User=934032 Correct=934032
+Show-ExitChallenge returned: <True>
+Show-ExitChallenge returned: <False>
+Exit cancelled
+User=56 Correct=56
+Show-ExitChallenge returned: <True>
+User=11 Correct=14
+User=right Correct=right
+Show-ExitChallenge returned: <True>
+User=left Correct=left
+Show-ExitChallenge returned: <True>
+User=6 Correct=6
+Show-ExitChallenge returned: <True>
+User=498005 Correct=498005
+Show-ExitChallenge returned: <True>
+User=right Correct=right
+Show-ExitChallenge returned: <True>
+User=28 Correct=28
+Show-ExitChallenge returned: <True>
+User=70 Correct=70
+Show-ExitChallenge returned: <True>
+Show-ExitChallenge returned: <False>
+Exit cancelled
+User=20 Correct=20
+Show-ExitChallenge returned: <True>
+User=078389 Correct=078389
+Show-ExitChallenge returned: <True>
+User=9 Correct=9
+Show-ExitChallenge returned: <True>
+User=18 Correct=18
+Show-ExitChallenge returned: <True>
+Show-ExitChallenge returned: <False>
+Exit cancelled
+Show-ExitChallenge returned: <False>
+Exit cancelled
+08/06/2026 20:29:25 - Reset from unlock
+08/06/2026 20:35:36 - Reset from work_timer.ps1 check
+Show-ExitChallenge returned: <False>
+Exit cancelled
+08/06/2026 20:51:56 - Reset from work_timer.ps1 check
+2026-08-06T20:58:00.1376770-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\office-chime.mp3'; fileExists=True
+2026-08-06T20:58:20.1131194-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\office-chime.mp3'; fileExists=True
+2026-08-06T20:58:40.1139575-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\office-chime.mp3'; fileExists=True
+2026-08-06T20:59:00.1227727-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\office-chime.mp3'; fileExists=True
+2026-08-06T20:59:20.1168497-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\office-chime.mp3'; fileExists=True
+2026-08-06T20:59:40.1118421-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\office-chime.mp3'; fileExists=True
+2026-08-06T21:00:00.1118223-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\office-chime.mp3'; fileExists=True
+2026-08-06T21:00:20.1089936-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\office-chime.mp3'; fileExists=True
+2026-08-06T21:00:40.1093686-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\office-chime.mp3'; fileExists=True
+2026-08-06T21:01:00.1087385-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\office-chime.mp3'; fileExists=True
+2026-08-06T21:01:20.1153567-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\office-chime.mp3'; fileExists=True
+2026-08-06T21:01:40.1094976-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\office-chime.mp3'; fileExists=True
+2026-08-06T21:02:00.1131470-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\office-chime.mp3'; fileExists=True
+2026-08-06T21:02:55.9519356-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\office-chime.mp3'; fileExists=True
+2026-08-06T21:03:05.8451680-04:00 Calling Play-Chime
+2026-08-06T21:03:06.1904831-04:00 Play-Chime returned successfully
+2026-08-06T21:03:15.9256481-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\office-chime.mp3'; fileExists=True
+2026-08-06T21:03:35.9067391-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\office-chime.mp3'; fileExists=True
+2026-08-06T21:03:55.9088501-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\office-chime.mp3'; fileExists=True
+2026-08-06T21:04:15.9092559-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\office-chime.mp3'; fileExists=True
+2026-08-06T21:04:35.9096986-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\office-chime.mp3'; fileExists=True
+2026-08-06T21:04:55.9055192-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\office-chime.mp3'; fileExists=True
+2026-08-06T21:05:15.9084104-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\office-chime.mp3'; fileExists=True
+2026-08-06T21:05:35.9112188-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\office-chime.mp3'; fileExists=True
+2026-08-06T21:05:55.9063527-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\office-chime.mp3'; fileExists=True
+2026-08-06T21:06:15.9050974-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\office-chime.mp3'; fileExists=True
+2026-08-06T21:06:35.9071597-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\office-chime.mp3'; fileExists=True
+2026-08-06T21:06:35.9373051-04:00 Calling Play-Chime
+2026-08-06T21:06:36.2207489-04:00 Play-Chime returned successfully
+2026-08-06T21:06:55.9061599-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\office-chime.mp3'; fileExists=True
+2026-08-06T21:07:15.9110864-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\office-chime.mp3'; fileExists=True
+2026-08-06T21:14:40.4737218-04:00 Calling Play-Chime
+2026-08-06T21:14:40.7284713-04:00 Play-Chime returned successfully
+2026-08-06T21:23:30.3442848-04:00 stateNull=True; sounds=''; soundFile=''; fileExists=
+2026-08-06T21:26:00.9517972-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\office-chime.mp3'; fileExists=True
+Show-ExitChallenge returned: <False>
+Exit cancelled
+2026-08-06T21:26:20.9510900-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\office-chime.mp3'; fileExists=True
+User=522966 Correct=522966
+Show-ExitChallenge returned: <True>
+2026-08-06T21:27:03.2895063-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-06T21:36:59.9040052-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-06T21:37:19.9045526-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-06T21:37:39.8789547-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-06T21:37:59.8772307-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-06T21:38:19.8906936-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-06T21:38:39.8787899-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-06T21:38:59.8741308-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-06T21:39:19.8753601-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-06T21:40:19.9109408-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+08/06/2026 21:40:37 - Reset from unlock
+2026-08-06T21:40:39.8756524-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-06T21:40:59.8844518-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-06T21:41:19.8794234-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-06T21:44:01.7367271-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-06T21:44:21.7208915-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-06T21:44:41.7222801-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-06T21:45:01.7222770-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-06T21:45:21.7210316-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-06T21:45:41.7177386-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-06T21:46:41.7324544-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+08/06/2026 21:46:55 - Reset from unlock
+2026-08-06T21:47:01.7211467-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-06T21:47:21.7279042-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-06T21:47:41.7228988-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-06T21:48:01.7291388-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-06T21:48:21.7195084-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-06T21:48:41.7214045-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-06T21:49:42.1900405-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-06T21:50:02.1976618-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+08/06/2026 21:50:16 - Reset from unlock
+2026-08-06T21:50:22.1914776-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-06T21:50:42.1753362-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-06T21:53:03.9300123-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-06T21:53:23.8935052-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-06T21:53:43.8944942-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-06T21:54:03.8918808-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-06T21:54:23.8930405-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-06T21:54:43.8948009-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-06T21:55:44.4676951-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+08/06/2026 21:56:03 - Reset from unlock
+2026-08-06T21:56:04.4646601-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+User=27 Correct=27
+Show-ExitChallenge returned: <True>
+2026-08-06T22:00:47.7901089-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-06T22:01:07.7622454-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-06T22:01:27.7539988-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-06T22:01:47.7527524-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-06T22:02:07.7518602-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-06T22:02:27.7534576-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-06T22:03:47.7549538-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+08/06/2026 22:03:48 - Reset from unlock
+2026-08-06T22:04:07.7533010-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-06T22:04:27.7506371-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-06T22:04:47.7492258-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-06T22:27:03.6438955-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-06T22:27:23.6262499-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-06T22:27:43.6293433-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-06T22:28:03.6274267-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-06T22:28:23.6267979-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-06T22:28:43.6299510-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+08/06/2026 22:30:03 - Starting Next Work Period
+showPie  = True
+showTime = True
+workPeriod = 120
+CALLING Show-CountdownPie
+Show-CountdownPie returned: System.Windows.Forms.Form, Text: Work Timer Countdown
+08/06/2026 22:30:03 - Reset from work_timer.ps1 check
+2026-08-06T22:30:23.6279756-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-06T22:30:43.6353691-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-06T22:31:03.6262930-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-06T22:31:23.6329853-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-06T22:31:43.6238493-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-06T22:32:03.6238625-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-06T22:33:03.6260630-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-06T22:33:23.6247646-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-06T22:33:43.6269091-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-06T22:34:03.6374150-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+08/06/2026 22:34:09 - Reset from unlock
+2026-08-06T22:34:23.6316297-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-06T22:38:47.8655108-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-06T22:39:07.8321978-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-06T22:39:27.8333026-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-06T22:39:47.8309784-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-06T22:40:07.8314593-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-06T22:40:27.8300628-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-06T22:41:27.8389014-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-06T22:41:47.8321819-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-06T22:42:07.8345628-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-06T22:42:27.9001501-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-06T22:42:47.8474258-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-06T22:43:07.8461536-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+08/06/2026 22:43:12 - Reset from unlock
+2026-08-06T22:43:27.8442398-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-06T22:43:47.8472689-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-06T22:44:07.8460347-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-06T22:44:27.8445191-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-06T22:44:47.8458524-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-06T22:45:07.8439295-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-06T22:46:07.8461517-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-06T22:46:27.8453850-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+08/06/2026 22:46:37 - Reset from unlock
+2026-08-06T22:46:47.8438024-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-06T22:47:07.8478049-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+User=017457 Correct=017457
+Show-ExitChallenge returned: <True>
+2026-08-06T22:53:32.9759749-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-06T22:53:52.9576963-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-06T22:54:12.9690239-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-06T22:54:32.9564282-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-06T22:54:52.9654212-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-06T22:55:12.9545513-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-06T22:56:12.9603698-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-06T22:56:32.9603970-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+08/06/2026 22:56:41 - Reset from unlock
+2026-08-06T22:56:52.9548010-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-06T22:57:12.9563554-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-06T22:57:32.9535206-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-06T23:02:30.9063027-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-06T23:02:50.8788444-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-06T23:03:10.8763664-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-06T23:03:30.8751463-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-06T23:03:50.8764732-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-06T23:04:10.8782718-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-06T23:05:10.8939817-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-06T23:05:30.8777428-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-06T23:05:50.8774885-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-06T23:06:10.8758482-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-06T23:06:30.8756380-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+08/06/2026 23:06:39 - Reset from unlock
+2026-08-06T23:06:50.8760412-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-06T23:07:14.6251520-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-06T23:07:30.8784134-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-06T23:07:50.8795685-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-06T23:08:10.8755128-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-06T23:08:30.8760587-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-06T23:09:50.8943151-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-06T23:10:10.8774624-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+08/06/2026 23:10:27 - Reset from unlock
+2026-08-06T23:10:30.8736979-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-06T23:10:50.8755396-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-06T23:11:10.8745709-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+Show-ExitChallenge returned: <False>
+Exit cancelled
+2026-08-06T23:11:30.8883237-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+Show-ExitChallenge returned: <False>
+Exit cancelled
+2026-08-06T23:14:40.3844535-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-06T23:15:00.3611734-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-06T23:15:20.3599046-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-06T23:15:40.3592297-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-06T23:16:00.3599443-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-06T23:16:20.3598402-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-06T23:17:20.3726821-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-06T23:17:40.3655383-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-06T23:18:00.3605608-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-06T23:18:20.3652835-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+08/06/2026 23:18:23 - Reset from unlock
+2026-08-06T23:18:40.3607455-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-06T23:19:00.3606789-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-06T23:19:20.3605991-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-06T23:19:40.3609406-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-06T23:20:00.3593341-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-06T23:20:20.3604471-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-06T23:21:20.3608365-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-06T23:21:40.3629040-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-06T23:22:00.3595477-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-06T23:22:20.3588794-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-06T23:22:40.3576746-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+08/06/2026 23:22:42 - Reset from unlock
+2026-08-06T23:23:00.3600927-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-06T23:23:20.3572910-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-06T23:23:40.3615814-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-06T23:24:00.3599853-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-06T23:24:20.3602822-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-06T23:24:40.3604270-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-06T23:26:00.3654360-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+08/06/2026 23:26:07 - Reset from unlock
+2026-08-06T23:26:20.3597173-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-06T23:26:40.3590697-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-06T23:27:00.3632837-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-06T23:27:20.3610688-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-06T23:34:54.4411896-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-06T23:35:14.4098319-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-06T23:35:34.4081495-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-06T23:35:54.4114673-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-06T23:36:14.4128763-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-06T23:36:34.4091371-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-06T23:37:34.7504822-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-06T23:37:54.7418247-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-06T23:38:14.7391000-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-06T23:38:34.7375573-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+08/06/2026 23:38:35 - Reset from unlock
+2026-08-06T23:38:54.7393085-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-06T23:42:50.9705980-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-06T23:43:10.9427345-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-06T23:43:30.9415339-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-06T23:43:50.9398218-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-06T23:44:10.9383480-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-06T23:44:30.9401552-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-06T23:45:31.2387004-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-06T23:45:51.2209854-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+08/06/2026 23:45:59 - Reset from unlock
+2026-08-06T23:46:11.2186562-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-06T23:46:31.2291135-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-06T23:46:51.2196313-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-06T23:47:11.2204088-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+Show-ExitChallenge returned: <False>
+Exit cancelled
+2026-08-06T23:52:16.1835579-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-06T23:52:36.1598401-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-06T23:52:56.1614384-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-06T23:53:16.1548619-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-06T23:53:36.1585202-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-06T23:53:56.1545222-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-06T23:54:56.1628456-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-06T23:55:16.1609325-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+08/06/2026 23:55:33 - Reset from unlock
+2026-08-06T23:55:36.1563280-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-06T23:55:56.1596745-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-07T00:00:12.1609448-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-07T00:00:32.1638177-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-07T00:00:52.1618254-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-07T00:01:12.1591127-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-07T00:01:32.1579998-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-07T00:01:52.1624626-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-07T00:02:52.1632863-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-07T00:03:12.1657844-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-07T00:03:32.1576694-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+08/07/2026 00:03:40 - Reset from unlock
+2026-08-07T00:03:52.1557108-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-07T00:04:12.1596563-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-07T00:04:32.1590711-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-07T00:04:52.1665300-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-07T00:05:12.1569702-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-07T00:05:32.1573382-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-07T00:06:32.8281257-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-07T00:06:52.8150772-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+08/07/2026 00:07:07 - Reset from unlock
+2026-08-07T00:07:12.8133173-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-07T00:07:32.8238047-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-07T00:07:52.8141974-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-07T00:15:30.3309265-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-07T00:15:50.3015689-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-07T00:16:10.2979909-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-07T00:16:30.2982930-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-07T00:16:50.2976042-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-07T00:17:10.3007791-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-07T00:18:10.6157716-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-07T00:18:30.5978542-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-07T00:18:50.5942762-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+08/07/2026 00:19:00 - Reset from unlock
+2026-08-07T00:19:10.5949028-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-07T00:19:30.5948302-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-07T00:19:50.5978188-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-07T00:20:10.5962200-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True

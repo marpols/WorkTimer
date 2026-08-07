@@ -3,7 +3,8 @@ function Toast-Notification {
 	param(
         [string]$msg = "",
         [string]$header = "Work Timer",
-		[string]$soundfile = "$parentDir\assets\sounds\emergence.mp3"
+		[string]$soundfile = "$parentDir\assets\sounds\emergence.mp3",
+		[bool]$chime = $true
     )
 
 	$script = @"
@@ -11,9 +12,10 @@ function Toast-Notification {
 		param(
 			`$msg,
 			`$header,
-			`$soundfile
+			`$soundfile,
+			`$chime
 		)
-		
+	
 	Import-Module BurntToast
 	Import-Module "$parentDir/modules/utils.psm1" -Function "Play-Chime" -Force
 	
@@ -29,7 +31,7 @@ function Toast-Notification {
 	`$Content1 = New-BTContent -Visual `$Visual1 -Audio `$Audio1 -Duration Long -Scenario Reminder
 
 	Submit-BTNotification -Content `$Content1 -UniqueIdentifier "workTimerNotification"
-	Play-Chime `$soundfile
+	if (`$chime -eq 1){ Play-Chime `$soundfile }
 	
 	Start-Sleep 60
 	Remove-BTNotification -UniqueIdentifier "workTimerNotification"
@@ -37,6 +39,7 @@ function Toast-Notification {
 
 	$temp = Join-Path $env:TEMP "toast-$([guid]::NewGuid()).ps1"
 	$script | Set-Content -Path $temp -Encoding UTF8
+
 	
 	Start-Process pwsh `
 		-WindowStyle Hidden `
@@ -46,7 +49,8 @@ function Toast-Notification {
 			'-File', "`"$temp`"",
 			"`"$msg`"",
 			"`"$header`"",
-			"`"$soundfile`""
+			"`"$soundfile`"",
+			"-chime", $(if ($chime) { "1" } else { "0" })
 		)
 		
 }

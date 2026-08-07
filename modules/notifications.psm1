@@ -27,7 +27,7 @@ function Show-Popup {
 		[int]$timeout = 3000,
 		$chime = $true,
 		[string]$soundfile = "$parentDir\assets\sounds\long-chime-sound.mp3",
-		$volume = 1.0
+		$volume = 500
 		)
 
 	Add-Type -AssemblyName System.Windows.Forms
