@@ -3,7 +3,6 @@ function Show-Properties {
 	Add-Type -AssemblyName System.Windows.Forms
 	
 	$parentDir = Split-Path -Path $PSScriptRoot -Parent
-	$state = Load-State
 	$properties = Load-Properties
 	$curHours, $curMin = S-HM $properties.workPeriod
 	
@@ -330,12 +329,52 @@ function Show-Properties {
 		Text = "Reminder sounds";
 		Location='10,40';
 		Autosize=$true;
+		Size = '20,20'
 		Checked = $properties.sounds
 	}
 	$soundsTooltip = New-Object System.Windows.Forms.ToolTip
 	$soundsTooltip.SetToolTip($soundsCheck, "Turn sound reminders on or off")
 
 	#sound options
+	##volume
+	$volSlider = New-Object System.Windows.Forms.TrackBar -Property @{
+		Location = '275, 40';
+		Size = '175,50';
+		Minimum = 0;
+		Maximum = 100;
+		TickFrequency = 1;
+		LargeChange = 10;
+		SmallChange = 1;
+		Value = $properties.volume
+		}
+	$volLabel = New-Object System.Windows.Forms.Label -Property @{Text='🔊'; Location='250,40'; Font = [System.Drawing.Font]::new("Segoe UI Emoji", 14)}
+
+	$script:volSliderValue = [System.Windows.Forms.ToolTip]::new()
+	$script:volSliderValue.TextAlign = [System.Drawing.ContentAlignment]::MiddleCenter
+
+	$volSlider.add_Scroll({
+		$val = $volSlider.Value
+
+		$range = $volSlider.Maximum - $volSlider.Minimum
+		if ($range -eq 0) { $pct = 0 } else { $pct = ($volSlider.Value - $volSlider.Minimum) / $range }
+    
+		$usableWidth = $volSlider.Width - 30
+		$newX = ($usableWidth * $pct) + 5
+
+		$script:volSliderValue.Show(
+			[string]"$val",
+			$volSlider,
+			$newX,
+			-25,
+			5000
+		)
+	})
+
+	$volSlider.add_MouseUp({
+		play-Chime -volume $($volSlider.Value * 10)
+		$script:volSliderValue.Hide($volSlider)
+	})
+
 	$soundFiles  = Get-ChildItem -Path "$parentdir/assets/sounds" -File 
 	foreach ($row in $soundFiles) {
     	$cleanName = "$($row.Name -replace '-', ' ' -replace '\.mp3$', '')"
@@ -523,9 +562,11 @@ function Show-Properties {
 	})
 
 	$controlsRem = @($popupCheck, $pieCheck, $timedispCheck, $soundsCheck)
-	$controlsSound = @($timeReminderList, $timeReminderTxt, $timeReminderBtn, $timeRemTxtBx,
-	 $workEndList, $workEndTxt, $workEndBtn, $workEndTxtBx,
-	 $breakEndList, $breakEndTxt, $breakEndBtn, $breakEndTxtBx)
+	$controlsSound = @($volSlider, $volLabel,
+		$timeReminderList, $timeReminderTxt, $timeReminderBtn, $timeRemTxtBx,
+	 	$workEndList, $workEndTxt, $workEndBtn, $workEndTxtBx,
+	 	$breakEndList, $breakEndTxt, $breakEndBtn, $breakEndTxtBx
+		)
 
 	if($soundsCheck.Checked){
 		Set-ControlsEnabled $true $controlsSound
@@ -572,6 +613,8 @@ function Show-Properties {
 		$properties.showPie = $pieCheck.Checked
 		$properties.showTime = $timedispCheck.Checked	
 		$properties.sounds = $soundsCheck.Checked
+
+		$properties.volume = $volSlider.Value * 10
 
 		If ($soundFiles.CleanName -contains $timeRemTxtBx.Text){
 			$file = $soundFiles.Name[$soundFiles.CleanName.Indexof($timeRemTxtBx.Text)] 
@@ -631,7 +674,8 @@ function Default-Properties {
 		showTime = $true
 		timeReminderChime = "$parentDir/assets/sounds/long-chime-sound.mp3"
 		workEndChime = "$parentDir/assets/sounds/long-dang.mp3"
-		breakEndChime = "$parentDir/assets/sounds/alarm-bell.mp3"	
+		breakEndChime = "$parentDir/assets/sounds/alarm-bell.mp3"
+		volume = 500	
 	}
 	Save-Properties $properties
 }

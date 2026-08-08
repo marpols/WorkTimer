@@ -33,6 +33,7 @@ function Set-State {
 		workEndChime = $properties.workEndChime
 		breakEndChime = $properties.breakEndChime
 		mainProcessID = $mainPID
+		volume = 500
 	}
 	Save-State $state
 }
