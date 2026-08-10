@@ -53,47 +53,38 @@ if ($running -and (In-WorkHours)) {
 		} else {
 			Timer-Message $state
 		}
-		$duration = $state.remainingSeconds - [math]::Max(0, [int](Get-Now - [datetime]$state.lastTick).TotalSeconds)
+		# $duration = $state.remainingSeconds - [math]::Max(0, [int](Get-Now - [datetime]$state.lastTick).TotalSeconds)
 
-		# Start-Process pwsh -ArgumentList @(
-		# 	"-NoProfile"
-		# 	"-WindowStyle", "Hidden"
-		# 	"-File", "$parentDir\scripts\pie_countdown.ps1"
-		# 	"-DurationSeconds", $duration
-		# 	"-showPie", ([int]$state.showPie)
-		# 	"-showTime", ([int]$state.showTime)
-		# 	"-mainPID", $state.mainProcessID
-		# )
+		# $countdownScript = Join-Path $parentDir "scripts" "pie_countdown.ps1"
 
-		$countdownScript = Join-Path $parentDir "scripts" "pie_countdown.ps1"
+		# $psi = [System.Diagnostics.ProcessStartInfo]::new()
+		# $psi.FileName = "pwsh.exe"
 
-		$psi = [System.Diagnostics.ProcessStartInfo]::new()
-		$psi.FileName = "pwsh.exe"
+		# $psi.ArgumentList.Add("-NoProfile")
+		# $psi.ArgumentList.Add("-File")
+		# $psi.ArgumentList.Add($countdownScript)
 
-		$psi.ArgumentList.Add("-NoProfile")
-		$psi.ArgumentList.Add("-File")
-		$psi.ArgumentList.Add($countdownScript)
+		# $psi.ArgumentList.Add("-DurationSeconds")
+		# $psi.ArgumentList.Add([string]$duration)
 
-		$psi.ArgumentList.Add("-DurationSeconds")
-		$psi.ArgumentList.Add([string]$duration)
+		# $psi.ArgumentList.Add("-showPie")
+		# $psi.ArgumentList.Add([string][int]$state.showPie)
 
-		$psi.ArgumentList.Add("-showPie")
-		$psi.ArgumentList.Add([string][int]$state.showPie)
+		# $psi.ArgumentList.Add("-showTime")
+		# $psi.ArgumentList.Add([string][int]$state.showTime)
 
-		$psi.ArgumentList.Add("-showTime")
-		$psi.ArgumentList.Add([string][int]$state.showTime)
+		# $psi.ArgumentList.Add("-mainPID")
+		# $psi.ArgumentList.Add([string]$state.mainProcessID)
 
-		$psi.ArgumentList.Add("-mainPID")
-		$psi.ArgumentList.Add([string]$state.mainProcessID)
+		# $psi.UseShellExecute = $false
+		# $psi.CreateNoWindow = $true
+		# $psi.WindowStyle = [System.Diagnostics.ProcessWindowStyle]::Hidden
 
-		$psi.UseShellExecute = $false
-		$psi.CreateNoWindow = $true
-		$psi.WindowStyle = [System.Diagnostics.ProcessWindowStyle]::Hidden
-
-		[System.Diagnostics.Process]::Start($psi) | Out-Null
+		# [System.Diagnostics.Process]::Start($psi) | Out-Null
 
 	}
 
+	$state.unlockReset = $true
 	$state.lastUnlock = $now
 	Save-State $state
 }

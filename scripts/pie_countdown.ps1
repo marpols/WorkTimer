@@ -5,7 +5,6 @@ param(
     [int]$mainPID
 )
 
-# Load your globals/modules as usual
 . "$PSScriptRoot\global_vars.ps1"
 
 $files = Get-ChildItem -Path (Join-Path $parentDir "modules")

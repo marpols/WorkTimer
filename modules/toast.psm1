@@ -17,7 +17,7 @@ function Toast-Notification {
 		)
 	
 	Import-Module BurntToast
-	Import-Module "$parentDir/modules/utils.psm1" -Function "Play-Chime" -Force
+	Import-Module "$parentDir/modules/play_chime.psm1" -Force
 	
 	
 	`$Text1 = New-BTText -Content `$msg

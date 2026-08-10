@@ -34,6 +34,7 @@ function Set-State {
 		breakEndChime = $properties.breakEndChime
 		mainProcessID = $mainPID
 		volume = 500
+		unlockReset = $false
 	}
 	Save-State $state
 }
@@ -63,11 +64,17 @@ function Load-State {
     Get-Content $statePath -Raw | ConvertFrom-Json
 }
 
-function Save-State($state) {
+function Save-State {
+	param(
+		$state
+	)
     $state | ConvertTo-Json | Set-Content $statePath -Encoding UTF8
 }
 
-function Update-Pom($state) {
+function Update-Pom {
+	param(
+		$state
+	)
 	$state.pomNum -= 1
 	Save-State $state
 	Load-State

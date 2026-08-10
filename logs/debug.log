@@ -1670,3 +1670,119 @@ Exit cancelled
 2026-08-07T17:59:19.5097914-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
 2026-08-07T17:59:39.5113451-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
 2026-08-07T17:59:59.5061366-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-09T16:15:30.6781803-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-09T16:15:50.6436797-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-09T16:16:10.6422384-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-09T16:16:30.6450793-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-09T16:16:50.6458331-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-09T16:17:10.6464523-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-09T16:18:30.6744378-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+08/09/2026 16:18:34 - Reset from unlock
+2026-08-09T16:18:51.6911456-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+User=11 Correct=11
+Show-ExitChallenge returned: <True>
+2026-08-09T16:23:50.0186151-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-09T16:24:09.9746899-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-09T16:24:29.9709748-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-09T16:24:49.9709627-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-09T16:25:09.9714944-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-09T16:25:29.9695559-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-09T16:26:29.9835922-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-09T16:26:49.9729227-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+08/09/2026 16:26:52 - Reset from unlock
+2026-08-09T16:27:09.9717728-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-09T16:27:29.9715667-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+User=16 Correct=16
+Show-ExitChallenge returned: <True>
+2026-08-09T17:00:14.8133475-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-09T17:00:34.8003973-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-09T17:00:54.7996005-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-09T17:01:14.7991446-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-09T17:01:34.8032643-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-09T17:01:54.8030018-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-09T17:02:54.8315091-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-09T17:03:14.8264230-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-09T17:03:34.8198106-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-09T17:03:54.8132201-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-09T17:04:14.8178263-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-09T17:04:34.8746189-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-09T17:04:54.8590675-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-09T17:05:14.8684322-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-09T17:05:34.8844301-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-09T17:05:54.8634562-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-09T17:06:14.8604615-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-09T17:06:34.8620052-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-09T17:06:54.8611201-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-09T17:07:14.8636276-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-09T17:07:35.0570715-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+08/09/2026 17:07:48 - Reset from unlock
+2026-08-09T17:07:55.0467863-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-09T17:08:15.0479536-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-09T17:08:35.0513167-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+User=left Correct=right
+User=right Correct=right
+Show-ExitChallenge returned: <True>
+2026-08-09T17:10:31.4519599-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-09T17:10:51.4244546-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-09T17:11:11.4265031-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-09T17:11:31.4274226-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-09T17:11:51.4272323-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-09T17:12:11.4294528-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+08/09/2026 17:18:11 - Starting Next Work Period
+showPie  = True
+showTime = True
+workPeriod = 120
+08/09/2026 17:18:11 - Reset from work_timer.ps1 check
+2026-08-09T17:18:31.4369055-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-09T17:18:51.4403044-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-09T17:19:11.4425113-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-09T17:19:31.4384060-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-09T17:19:51.4363525-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-09T17:20:11.4388198-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+08/09/2026 17:21:31 - Starting Next Work Period
+showPie  = True
+showTime = True
+workPeriod = 120
+08/09/2026 17:21:31 - Reset from work_timer.ps1 check
+2026-08-09T17:21:51.4398441-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-09T17:22:11.4405960-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-09T17:22:31.4402946-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-09T17:22:51.4418483-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-09T17:23:11.4425236-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+2026-08-09T17:23:31.4398354-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+User=11 Correct=11
+Show-ExitChallenge returned: <True>
+2026-08-09T17:30:27.5924893-04:00 stateNull=False; sounds='True'; soundFile='C:\WorkTimer\assets\sounds\long-chime-sound.mp3'; fileExists=True
+User=72 Correct=72
+Show-ExitChallenge returned: <True>
+User=right Correct=right
+Show-ExitChallenge returned: <True>
+User=9 Correct=9
+Show-ExitChallenge returned: <True>
+Show-ExitChallenge returned: <False>
+Exit cancelled
+User=left Correct=left
+Show-ExitChallenge returned: <True>
+Show-ExitChallenge returned: <False>
+Exit cancelled
+08/09/2026 18:12:07 - Reset from work_timer.ps1 check
+08/09/2026 18:37:31 - Reset from work_timer.ps1 check
+08/09/2026 18:43:07 - Reset from unlock
+User=right Correct=left
+User=7 Correct=7
+Show-ExitChallenge returned: <True>
+08/09/2026 18:50:26 - start pop up after unlock reset
+08/09/2026 18:54:27 - Reset from unlock
+08/09/2026 18:57:26 - start pop up after unlock reset
+08/09/2026 19:04:25 - Reset from unlock
+User=right Correct=right
+Show-ExitChallenge returned: <True>
+08/09/2026 19:14:04 - Reset from unlock
+User=11 Correct=11
+Show-ExitChallenge returned: <True>
+Show-ExitChallenge returned: <False>
+Exit cancelled
+08/09/2026 19:41:20 - Reset from unlock
+08/09/2026 19:44:33 - Reset from unlock
+User=6 Correct=6
+Show-ExitChallenge returned: <True>

@@ -3,6 +3,7 @@ function Show-CountdownPie {
         [Parameter(Mandatory)]
         [ValidateRange(1, [int]::MaxValue)]
         [int]$DurationSeconds,
+        [int]$workPeriod,
         [string]$Title = "Work Timer Countdown",
         [bool]$showTime = $true,
         [bool]$showPie = $true,
@@ -68,7 +69,7 @@ function Show-CountdownPie {
             $graphics.SmoothingMode =
                 [System.Drawing.Drawing2D.SmoothingMode]::AntiAlias
 
-            $fractionRemaining = $remaining / $DurationSeconds
+            $fractionRemaining = $remaining / $workPeriod
             $sweepAngle = [single](360 * $fractionRemaining)
 
             $pieBounds = [System.Drawing.RectangleF]::new(
@@ -140,9 +141,15 @@ function Show-CountdownPie {
                     [System.Drawing.Color]::red
                 )
             } else {
-                $textBrush = [System.Drawing.SolidBrush]::new(
-                    [System.Drawing.Color]::White
-                )
+                if ($(Get-SysTheme) -eq "Light"){
+                    $textBrush = [System.Drawing.SolidBrush]::new(
+                        [System.Drawing.Color]::Gainsboro
+                    )
+                } else {
+                    $textBrush = [System.Drawing.SolidBrush]::new(
+                        [System.Drawing.Color]::black
+                    )
+                }
             }
 
             $textSize = $graphics.MeasureString($timeText, $font)
