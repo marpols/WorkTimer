@@ -1786,3 +1786,10 @@ Exit cancelled
 08/09/2026 19:44:33 - Reset from unlock
 User=6 Correct=6
 Show-ExitChallenge returned: <True>
+08/10/2026 11:36:53 - Reset from unlock
+User=right Correct=right
+Show-ExitChallenge returned: <True>
+User=13 Correct=13
+Show-ExitChallenge returned: <True>
+Show-ExitChallenge returned: <False>
+Exit cancelled

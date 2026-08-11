@@ -4,7 +4,6 @@ function Show-Properties {
 	
 	$parentDir = Split-Path -Path $PSScriptRoot -Parent
 	$properties = Load-Properties
-	$curHours, $curMin = S-HM $properties.workPeriod
 	
 	$form = New-Object System.Windows.Forms.Form -Property @{
 		Text = "Work Timer Properties";
@@ -23,357 +22,64 @@ function Show-Properties {
 	$schedPage = New-Object System.Windows.Forms.TabPage -Property @{Text = "Schedule"}
 	$diffPage = New-Object System.Windows.Forms.TabPage -Property @{Text = "Exit Difficulty"}
 	$remPage = New-Object System.Windows.Forms.TabPage -Property @{Text = "Reminders"}
+	$dispPage = New-Object System.Windows.Forms.TabPage -Property @{Text = "Countdown Display"}
 	
-	$tabControl.Controls.AddRange(@($setPage, $schedPage, $diffPage, $remPage))
+	$tabControl.Controls.AddRange(@($setPage, $schedPage, $diffPage, $remPage, $dispPage))
 	$form.Controls.Add($tabControl)
 
 	####### Settings Tab
-	#Pomodoro Mode
-	$checkboxPom = New-Object System.Windows.Forms.Checkbox -Property @{
-		Text = "Pomodoro";
-		Location='30,10';
-		Autosize=$true;
-		Checked = $properties.pomodoro
-	}
-
-	$tooltip = New-Object System.Windows.Forms.ToolTip
-	$tooltip.SetToolTip($checkboxPom, "If checked allows setting a short break time and longer break time seperately.")
-	$setPage.Controls.Add($checkboxPom)
-	
 	#Work Period
-	$objHours = New-Object System.Windows.Forms.NumericUpDown -Property @{Location = '30,60'; Size = '50,50'; Maximum = 4; Minimum = 0; Value = $curHours}
-	$objMin = New-Object System.Windows.Forms.NumericUpDown -Property @{Location = '140,60'; Size = '50,50'; Maximum = 59; Minimum = 0; Value = $curMin}
-
-	$updateWP = New-Object System.Windows.Forms.Button -Property @{Text = "Set work period"; Location = '140,90'; Autosize=$true}
-	$updateWP.Add_Click({
-		$time = HM-S $objHours.Value $objMin.Value
-		$properties.workPeriod = $time
-		Save-Properties $properties
-		Toast-Notification -msg "Work period duration updated to $($objHours.Value) hour(s) and $($objMin.Value) minute(s).`nChanges will take effect on restart." -header "Work Timer Update"
-	})
-	$setPage.Controls.AddRange(@($objHours, $objMin, $updateWP,
-	(New-Object System.Windows.Forms.Label -Property @{Text = "Work period length:"; Location = '10,40'; Autosize=$true}),
-	(New-Object System.Windows.Forms.Label -Property @{Text = "Hours"; Location = '84,65'; Autosize=$true}),
-	(New-Object System.Windows.Forms.Label -Property @{Text = "Minutes"; Location = '194,65'; Autosize=$true})))
+	$workOpts = work-Options -page $setPage -properties $properties
 
 	#Lockout
-	$objLO = New-Object System.Windows.Forms.NumericUpDown -Property @{Location = '30,140'; Size = '50,50'; Maximum = 60; Minimum = 0; Value = $properties.lockOut}
-	$titleLO = New-Object System.Windows.Forms.Label -Property @{Text = "Lockout length:"; Location = '10,120'; Autosize=$true}
-	$updateLO = New-Object System.Windows.Forms.Button -Property @{Text = "Set lockout"; Location = '140,140'; Autosize=$true}
-	$updateLO.Add_Click({ 
-		$properties.pomodoro = $false
-		$properties.lockOut = $objLO.Value
-		Save-Properties $properties
-		Toast-Notification -msg "Lockout duration updated to $($objLO.Value) minutes.`nChanges will take effect on restart." -header "Work Timer Update"
-	})
+	$LOopts = lockout-Options -page $setPage -properties $properties
 
-	$titleLB = New-Object System.Windows.Forms.Label -Property @{Text = "Long break length:"; Location = '10,120'; Autosize=$true}
+	#Pomodoro Mode
+	$pomOpts = pomodoro-Options -page $setPage -properties $properties -objLO $LOopts.LO
 	
-	#Short break
-	$objSB = New-Object System.Windows.Forms.NumericUpDown -Property @{Location = '30,190'; Size = '50,50'; Maximum = 60; Minimum = 0; Value = $properties.shortBreak}
-	$titleSB = New-Object System.Windows.Forms.Label -Property @{Text = "Short break length:"; Location = '10,170'; Autosize=$true}
-	$labelSB = New-Object System.Windows.Forms.Label -Property @{Text = "Minutes"; Location = '84,195'; Autosize=$true}
-	
-	#number of Pomodoros
-	$pomNum = New-Object System.Windows.Forms.NumericUpDown -Property @{Location = '30,240'; Size = '50,50'; Maximum = 6; Minimum = 2; Value = $properties.numPomodoros}
-	$pomTitle = New-Object System.Windows.Forms.Label -Property @{Text = "Number of pomodoros:"; Location = '10,220'; Autosize=$true}
-	$tooltip = New-Object System.Windows.Forms.ToolTip
-	$tooltip.SetToolTip($pomTitle,  "Enter the number of pomodoros (work period + breaks). The last break will be a long break.")
-	
-	$updatePom = New-Object System.Windows.Forms.Button -Property @{Text = "Set pomodoro"; Location = '140,240'; Autosize=$true}
-	$updatePom.Add_Click({ 
-		$properties.pomodoro = $true
-		$properties.lockOut = $objLO.Value
-		$properties.shortBreak = $objSB.Value
-		$properties.numPomodoros = $pomNum.Value
-		Save-Properties $properties
-		Toast-Notification -msg "Pomodoro updated:`nShort Break: $($objSB.Value) minutes.`nLong Break: $($objLO.Value) minutes.`nNumber of Pomodoros: $($pomNum.Value)`nChanges will take effect on restart." -header "Work Timer Update"
-	})
-	
-	$controlsLO = @($titleLO, $updateLO)
-	$controlsPom = @($titleLB, $objSB, $titleSB, $labelSB, $pomNum, $pomTitle, $updatePom)
-	
-	if($checkboxPom.Checked){
-		Set-ControlsVisible $true $controlsPom
-		Set-ControlsVisible $false $controlsLO
+	if($pomOpts.check.Checked){
+		Set-ControlsVisible $true $pomOpts.controls
+		Set-ControlsVisible $false $LOopts.controls
 	} else {
-		Set-ControlsVisible $false $controlsPom
-		Set-ControlsVisible $true $controlsLO
+		Set-ControlsVisible $false $pomOpts.controls
+		Set-ControlsVisible $true $LOopts.controls
 	}
-	$checkboxPom.Add_CheckedChanged({
-		  if ($checkboxPom.Checked) {
-			Set-ControlsVisible $true $controlsPom
-			Set-ControlsVisible $false $controlsLO
+	$pomOpts.check.Add_CheckedChanged({
+		  if ($pomOpts.check.Checked) {
+			Set-ControlsVisible $true $pomOpts.controls
+			Set-ControlsVisible $false $LOopts.controls
 		} else {
-			Set-ControlsVisible $false $controlsPom
-			Set-ControlsVisible $true $controlsLO
+			Set-ControlsVisible $false $pomOpts.controls
+			Set-ControlsVisible $true $LOopts.controls
 		}
 	})
-	$setPage.Controls.AddRange(@($objLO, $titleLO, $updateLO,
-	(New-Object System.Windows.Forms.Label -Property @{Text = "Minutes"; Location = '84,145'; Autosize=$true})))
-	
-	$setPage.Controls.AddRange($controlsPom)
+
 	
 	#Evening Lockout
-	$checkboxELO = New-Object System.Windows.Forms.Checkbox -Property @{Text = "Enable evening lockout"; Location='290,10'; Autosize=$true; Checked = $properties.eveningLO}
-	$tooltip = New-Object System.Windows.Forms.ToolTip
-	$tooltip.SetToolTip($checkboxELO, "Set a longer lockout period for the end of your workday.")
-	
-	$labelELO = New-Object System.Windows.Forms.Label -Property @{Text="Duration:"; Location='290,40'; Autosize=$true}
-	$objELO = New-Object System.Windows.Forms.NumericUpDown -Property @{Location='310,60'; Size='50,50'; Minimum=20; Maximum=60; Value=$properties.duration}
-	$labelELO2 = New-Object System.Windows.Forms.Label -Property @{Text="Minutes"; Location='364,65'; Autosize=$true}
-	$updateELO = New-Object System.Windows.Forms.Button -Property @{Text="Update"; Location='290,90';Autosize=$true}
-	
-	$controlsELO = @($objELO, $labelELO, $labelELO2) 
-	
-	if($checkboxELO.Checked){
-		Set-ControlsEnabled $true $controlsELO
-	} else {
-		Set-ControlsEnabled $false $controlsELO
-	}
-	$checkboxELO.Add_CheckedChanged({
-		  if ($checkboxELO.Checked) {
-			Set-ControlsEnabled $true $controlsELO
-		} else {
-			Set-ControlsEnabled $false $controlsELO
-		}
-	})
-	$setPage.Controls.AddRange(@($objELO, $labelELO, $labelELO2, $checkboxELO, $updateELO))
-	$updateELO.Add_Click({
-		$properties.eveningLO = $checkboxELO.Checked
-		$properties.duration = $objELO.Value
-		Save-Properties $properties
-		if($checkboxELO.Checked){
-			$msg = "Evening Lockout Enabled for $($objELO.Value) minutes.`nChanges will take effect after restarting Work Timer."
-		} else{
-			$msg = "Evening Lockout Disabled.`nChanges will take effect on restart."
-		}
-		Toast-Notification -msg $msg -header "Work Timer Update"
-	})
-	
+	$ELOopts = ELO-Options -page $setPage -properties $properties
 
-	####### Schedule Tab
 	$verticalLine = New-Object System.Windows.Forms.Panel -Property @{Width=1; Height=200; Left=275; Top=20; BorderStyle="Fixed3D"; BackColor = [System.Drawing.Color]::Gray}
 	$setPage.Controls.Add($verticalLine)
-	
+
+	####### Schedule Tab
 	#Days of the Week
-	$daysList = New-Object System.Windows.Forms.CheckedListBox -Property @{Location='80,10'; Autosize=$true; CheckOnClick = $true}
-	$daysList.Items.AddRange(@("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"))
 
-	for ($i = 0; $i -lt $daysList.Items.Count; $i++) {
-		if($daysList.Items[$i].ToString() -in $properties.days){
-			$daysList.SetItemChecked($i, $true)
-		}
-	}
-	
-	$weekDays = New-Object System.Windows.Forms.RadioButton -Property @{Text = "Weekdays Only"; Location='80,145'; Autosize=$true}
-	$weekEnds = New-Object System.Windows.Forms.RadioButton -Property @{Text = "Weekends Only"; Location='80,165'; Autosize=$true}
-	$allDays = New-Object System.Windows.Forms.RadioButton -Property @{Text = "Daily"; Location='80,185'; Autosize=$true}
-	
-	$isWeekdays = (@(0..4) | Where-Object {
-    -not $daysList.GetItemChecked($_)
-		}).Count -eq 0
-	$isWeekends = (@(5,6) | Where-Object {
-    -not $daysList.GetItemChecked($_)
-		}).Count -eq 0
-	$isAll = (@(0..6) | Where-Object {
-    -not $daysList.GetItemChecked($_)
-		}).Count -eq 0
-		
-	if($isAll){
-		$allDays.Checked = $true
-	} elseif ($isWeekends){
-		$weekEnds.Checked = $true
-	} elseif ($isWeekdays) {
-		$weekDays.Checked = $true
-	}
-	
-	$daysList.Add_ItemCheck({
-		param($sender, $e)
-
-		$checkedAfterChange = @($sender.CheckedIndices)
-
-		if ($e.NewValue -eq [System.Windows.Forms.CheckState]::Checked) {
-			$checkedAfterChange += $e.Index
-		} else {
-			$checkedAfterChange = $checkedAfterChange | Where-Object { $_ -ne $e.Index }
-		}
-
-		$matchWeekdays =
-			((@(0..4)| Sort-Object) -join ',') -eq
-			(($checkedAfterChange | Sort-Object) -join ',')
-		$matchWeekends =
-			((@(5,6)| Sort-Object) -join ',') -eq
-			(($checkedAfterChange | Sort-Object) -join ',')
-		$matchAll =
-			((@(0..6)| Sort-Object) -join ',') -eq
-			(($checkedAfterChange | Sort-Object) -join ',')
-
-		if ($matchAll) {
-			
-			$allDays.Checked = $true
-		} elseif ($matchWeekends) {
-			$weekEnds.Checked = $true
-		} elseif ($matchWeekdays){
-			$weekDays.Checked = $true
-		} else {
-			$weekDays.Checked = $false
-			$weekEnds.Checked = $false
-			$allDays.Checked = $false
-		}
-	})
-	
-	$weekDays.Add_CheckedChanged({
-		if ($weekDays.Checked){
-			0..4 | ForEach-Object {
-				$daysList.SetItemChecked($_, $true)
-			}	
-			$daysList.SetItemChecked(5, $false)
-			$daysList.SetItemChecked(6, $false)
-		}
-	}) 
-	$weekEnds.Add_CheckedChanged({
-		if ($weekEnds.Checked){
-			0..4 | ForEach-Object {
-				$daysList.SetItemChecked($_, $false)
-			}
-			$daysList.SetItemChecked(5, $true)
-			$daysList.SetItemChecked(6, $true)
-		}
-	}) 
-	$allDays.Add_CheckedChanged({
-		if ($allDays.Checked){
-			0..6 | ForEach-Object {
-				$daysList.SetItemChecked($_, $true)
-			}
-		}
-	})
-	
-	$updateDays = New-Object System.Windows.Forms.Button -Property @{Text="Set days of the week"; Location='80,210'; Autosize=$true}
-	$updateDays.Add_Click({ 
-		$properties.days = @($daysList.CheckedItems | ForEach-Object { $_.ToString() })
-		Save-Properties $properties
-		Toast-Notification -msg "Work Timer will now be active on $($daysList.CheckedItems).`nChanges will take effect on restart." -header "Work Timer Update"
-	})
-	$controlsSched = @($daysList, $updateDays, $weekDays, $weekEnds, $allDays)
-	$schedPage.Controls.AddRange($controlsSched)
-
+	$dayOpts = day-Options -page $schedPage -properties $properties
 
 	#Timeframe
-	$timePickerStart = New-Object System.Windows.Forms.DateTimePicker -Property @{Format='Custom'; CustomFormat = "HH:mm"; Value = Str-to-Date($properties.startTime); ShowUpDown=$true; Location='240,25'; Size='150,20'}
-	$timePickerEnd = New-Object System.Windows.Forms.DateTimePicker -Property @{Format='Custom'; CustomFormat = "HH:mm"; Value = Str-to-Date($properties.endTime); ShowUpDown=$true; Location='240,65'; Size='150,20'}
-	$updateTime = New-Object System.Windows.Forms.Button -Property @{Text='Set schedule'; Location='240,90'; Autosize=$true}
-	$updateTime.Add_Click({
-		if(Check-Hours $timePickerStart.Value $timePickerEnd.Value $form){
-			$form.Refresh()
-			$form.Activate()
-		} else {
-			$properties.startTime = $timePickerStart.Value.ToString("HH:mm")
-			$properties.endTime = $timePickerEnd.Value.ToString("HH:mm")
-			Save-Properties $properties
-			Toast-Notification -msg "Work Timer will now be active between $($timePickerStart.Value.ToString("HH:mm")) and $($timePickerEnd.Value.ToString("HH:mm")).`nChanges will take effect on restart." -header "Work Timer Update"
-		}
-	})
-	$schedPage.Controls.AddRange(@($timePickerStart, $timePickerEnd, $updateTime, 
-	(New-Object System.Windows.Forms.Label -Property @{Text='Start Time:'; Location='240,10'}), (New-Object System.Windows.Forms.Label -Property @{Text='End Time:'; Location='240,50'})))
+	$timeOpts = time-Options -page $schedPage -mainform $form -properties $properties
+
 
 	####### Exit Diffculty Tab
 	#Exit Difficulty Slider
-	$diffSlider = New-Object System.Windows.Forms.TrackBar -Property @{Location = '80, 100'; Size = '300,100'; Minimum = 0; Maximum = 2; TickFrequency = 1; LargeChange = 1; SmallChange = 1; Value = $properties.exitDifficulty}
-	$updateDiff = New-Object System.Windows.Forms.Button -Property @{Text='Set difficulty'; Location='195,170'; Autosize=$true}
-	$updateDiff.Add_Click({
-		$properties.exitDifficulty = $diffSlider.Value
-		Save-Properties $properties
-		Toast-Notification -msg "Exit challenge difficulty has been set to: $($difficulty[$diffSlider.Value])" -header "Work Timer Update"
-	})
-	$diffPage.Controls.AddRange(@(
-	(New-Object System.Windows.Forms.Label -Property @{Text='Easy'; Location='80,130'}),
-	(New-Object System.Windows.Forms.Label -Property @{Text='Medium'; Location='210,130'}),
-	(New-Object System.Windows.Forms.Label -Property @{Text='Hard'; Location='352,130'}),
-	$diffSlider,
-	$updateDiff))
+	$diffOpts = diff-options -page $diffPage -properties $properties
 
 	####### Reminders Tab
-	#Popups
-	$popupCheck = New-Object System.Windows.Forms.Checkbox -Property @{
-		Text = "Popups";
-		Location='10,10';
-		Autosize=$true;
-		Checked = $properties.reminderPopups
-	}
-	$popupTooltip = New-Object System.Windows.Forms.ToolTip
-	$popuptooltip.SetToolTip($popupcheck, "Turn popup time reminders on or off")
-
-	#Piechart
-	$pieCheck = New-Object System.Windows.Forms.Checkbox -Property @{
-		Text = "Piechart";
-		Location='100,10';
-		Autosize=$true;
-		Checked = $properties.showPie
-	}
-	$pieTooltip = New-Object System.Windows.Forms.ToolTip
-	$pieTooltip.SetToolTip($pieCheck, "Display a pie chart showing the elapsed time in the work session")
-	
-	#Time Display
-	$timedispCheck = New-Object System.Windows.Forms.Checkbox -Property @{
-		Text = "Countdown";
-		Location='190,10';
-		Autosize=$true;
-		Checked = $properties.showTime
-	}
-	$timedispTooltip = New-Object System.Windows.Forms.ToolTip
-	$timedispTooltip.SetToolTip($timedispCheck, "Display a countdown of the time left in the work session")
-
-	#Sounds
-	$soundsCheck = New-Object System.Windows.Forms.Checkbox -Property @{
-		Text = "Reminder sounds";
-		Location='10,40';
-		Autosize=$true;
-		Size = '20,20'
-		Checked = $properties.sounds
-	}
-	$soundsTooltip = New-Object System.Windows.Forms.ToolTip
-	$soundsTooltip.SetToolTip($soundsCheck, "Turn sound reminders on or off")
+	$remOpts = reminder-options -page $remPage -properties $properties
 
 	#sound options
-	##volume
-	$volSlider = New-Object System.Windows.Forms.TrackBar -Property @{
-		Location = '275, 40';
-		Size = '175,50';
-		Minimum = 0;
-		Maximum = 100;
-		TickFrequency = 1;
-		LargeChange = 10;
-		SmallChange = 1;
-		Value = $properties.volume
-		}
-	$volLabel = New-Object System.Windows.Forms.Label -Property @{Text='🔊'; Location='250,40'; Font = [System.Drawing.Font]::new("Segoe UI Emoji", 14)}
-
-	$script:volSliderValue = [System.Windows.Forms.ToolTip]::new()
-	$script:volSliderValue.TextAlign = [System.Drawing.ContentAlignment]::MiddleCenter
-
-	$volSlider.add_Scroll({
-		$val = $volSlider.Value
-
-		$range = $volSlider.Maximum - $volSlider.Minimum
-		if ($range -eq 0) { $pct = 0 } else { $pct = ($volSlider.Value - $volSlider.Minimum) / $range }
-    
-		$usableWidth = $volSlider.Width - 30
-		$newX = ($usableWidth * $pct) + 5
-
-		$script:volSliderValue.Show(
-			[string]"$val",
-			$volSlider,
-			$newX,
-			-25,
-			5000
-		)
-	})
-
-	$volSlider.add_MouseUp({
-		play-Chime -volume $($volSlider.Value * 10)
-		$script:volSliderValue.Hide($volSlider)
-	})
+	## volume
+	$volOpts = volume-options -page $remPage -properties $properties
 
 	$soundFiles  = Get-ChildItem -Path "$parentdir/assets/sounds" -File 
 	foreach ($row in $soundFiles) {
@@ -383,259 +89,66 @@ function Show-Properties {
 	$soundFiles = $soundFiles | Sort-Object CleanName
 	
 	## time left
-	$timeReminderList = New-object System.Windows.Forms.ComboBox -Property @{
-		DropDownStyle = "DropDownList";
-		DropDownWidth = 150;
-		Width = 150;
-		Sorted = $false;
-		Location = [System.Drawing.Point]::new(100,70);
-		IntegralHeight = $false
-	}
-	$timeReminderTxt = New-Object System.Windows.Forms.Label -Property @{
-    	Text = "Time left:";
-    	Autosize=$true;
-    	Location = [System.Drawing.Point]::new(20,70);
-	}
-	$timeReminderBtn = New-Object System.Windows.Forms.Button -Property @{
-		Text='Choose file';
-		Location=[System.Drawing.Point]::new(100, 100);;
-		Autosize=$true
-	}
-	$timeRemTxtBx = New-Object System.Windows.Forms.TextBox -Property @{
-		Location = [System.Drawing.Point]::new(200, 105);;
-		Size = '240,20';
-		ReadOnly = $true
-	}
+	$timeRemOpts = timeRem-Options -page $remPage -properties $properties -sounds $soundFiles -volume ($volOpts.volume)
 
-	$timeReminderList.DropDownHeight = ($timeReminderList.ItemHeight * 4) + 2
-	$timeReminderList.Items.AddRange([object[]]$soundFiles.CleanName)
+	# #end of work session
+	$workRemOpts = workRem-Options -page $remPage -properties $properties -sounds $soundFiles -volume ($volOpts.volume)
 
-	$timeReminderChime = $($properties.timeReminderChime -replace "^.*[\/|\\]", "" -replace "-"," " -replace "\..*","")
-	If ($soundFiles.CleanName -contains $timeReminderChime){
-		$timeReminderList.SelectedIndex = $soundFiles.CleanName.IndexOf($timeReminderChime)
-		$timeRemTxtBx.Text = $timeReminderChime
-	} else {
-		$timeReminderList.SelectedIndex = 0
-		$timeRemTxtBx.Text = $properties.timeReminderChime
-	}
-	
-	$timeReminderList.Add_SelectedIndexChanged({
-		$selectedIndex = $timeReminderList.SelectedIndex
-		$selectedSound = $soundFiles.Name[$selectedIndex]
-		Play-Chime -soundFile $(Join-Path $parentDir "assets/sounds" $selectedSound)
-		$timeRemTxtBx.Text = $soundFiles.CleanName[$selectedIndex]
-	}
-	)
+	# #end of break period
+	$breakRemOpts = breakRem-Options -page $remPage -properties $properties -sounds $soundFiles -volume ($volOpts.volume)
 
-	$timeReminderBtn.Add_Click({
-		$FileDialog = New-Object System.Windows.Forms.OpenFileDialog -Property @{
-    	InitialDirectory = [Environment]::GetFolderPath('Desktop')
-    	Filter           = 'Audio files (*.mp3;*.wav;*.wma;*.m4a)|*.mp3;*.wav;*.wma;*.m4a|MP3 files (*.mp3)|*.mp3|WAV files (*.wav)|*.wav|All files (*.*)|*.*'
-    	Title            = 'Choose file'
-		}
+	$controlsSound = ($volOpts.controls + $timeRemOpts.controls + $workRemOpts.controls + $breakRemOpts.controls)
 
-		if ($FileDialog.ShowDialog() -eq [System.Windows.Forms.DialogResult]::OK) {
-			# Put the selected file path into our text box
-			$timeRemTxtBx.Text = $FileDialog.FileName
-		}
-		 $fileDialog.Dispose()
-	})
-
-
-	#end of work session
-	$workEndList = New-object System.Windows.Forms.ComboBox -Property @{
-		DropDownStyle = "DropDownList";
-		DropDownWidth = 150;
-		Width = 150;
-		Sorted = $false;
-		Location = [System.Drawing.Point]::new(100, 140);
-		IntegralHeight = $false
-	}
-	$workEndTxt = New-Object System.Windows.Forms.Label -Property @{
-    	Text = "End of`r`nwork period:";
-    	Autosize=$true;
-    	Location = [System.Drawing.Point]::new(20,140);
-	}
-	$workEndBtn = New-Object System.Windows.Forms.Button -Property @{
-		Text='Choose file';
-		Location=[System.Drawing.Point]::new(100, 170);;
-		Autosize=$true
-	}
-	$workEndTxtBx = New-Object System.Windows.Forms.TextBox -Property @{
-		Location = [System.Drawing.Point]::new(200, 175);;
-		Size = '240,20';
-		ReadOnly = $true
-	}
-
-	$workEndList.DropDownHeight = ($workEndList.ItemHeight * 4) + 2
-	$workEndList.Items.AddRange([object[]]$soundFiles.CleanName)
-
-	$workEndChime = $($properties.workEndChime -replace "^.*[\/|\\]", "" -replace "-"," " -replace "\..*","")
-	If ($soundFiles.CleanName -contains $workEndChime){
-		$workEndList.SelectedIndex = $soundFiles.CleanName.IndexOf($workEndChime)
-		$workEndTxtBx.Text = $workEndChime
-	} else {
-		$workEndList.SelectedIndex = 0
-		$workEndTxtBx.Text = $properties.workEndChime
-	}
-
-	
-	$workEndList.Add_SelectedIndexChanged({
-		$selectedIndex = $workEndList.SelectedIndex
-		$selectedSound = $soundFiles.Name[$selectedIndex]
-		Play-Chime -soundFile $(Join-Path $parentDir "assets/sounds" $selectedSound)
-		$workEndTxtBx.Text = $soundFiles.CleanName[$selectedIndex]
-	}
-	)
-
-	$workEndBtn.Add_Click({
-		$FileDialog = New-Object System.Windows.Forms.OpenFileDialog -Property @{
-    	InitialDirectory = [Environment]::GetFolderPath('Desktop')
-    	Filter           = 'Audio files (*.mp3;*.wav;*.wma;*.m4a)|*.mp3;*.wav;*.wma;*.m4a|MP3 files (*.mp3)|*.mp3|WAV files (*.wav)|*.wav|All files (*.*)|*.*'
-    	Title            = 'Choose file'
-		}
-
-		if ($FileDialog.ShowDialog() -eq [System.Windows.Forms.DialogResult]::OK) {
-			# Put the selected file path into our text box
-			$workEndTxtBx.Text = $FileDialog.FileName
-		}
-		 $fileDialog.Dispose()
-	})
-
-	#end of break period
-	$breakEndList = New-object System.Windows.Forms.ComboBox -Property @{
-		DropDownStyle = "DropDownList";
-		DropDownWidth = 150;
-		Width = 150;
-		Sorted = $false;
-		Location = [System.Drawing.Point]::new(100, 210);
-		IntegralHeight = $false
-	}
-	$breakEndTxt = New-Object System.Windows.Forms.Label -Property @{
-    	Text = "End of break:";
-    	Autosize=$true;
-    	Location = [System.Drawing.Point]::new(20,210);
-	}
-		$breakEndBtn = New-Object System.Windows.Forms.Button -Property @{
-		Text='Choose file';
-		Location=[System.Drawing.Point]::new(100, 240);;
-		Autosize=$true
-	}
-	$breakEndTxtBx = New-Object System.Windows.Forms.TextBox -Property @{
-		Location = [System.Drawing.Point]::new(200, 245);;
-		Size = '240,20';
-		ReadOnly = $true
-	}
-	
-	$breakEndList.DropDownHeight = ($breakEndList.ItemHeight * 4) + 2
-	$breakEndList.Items.AddRange([object[]]$soundFiles.CleanName)
-
-	$breakEndChime = $($properties.breakEndChime -replace "^.*[\/|\\]", "" -replace "-"," " -replace "\..*","")
-	If ($soundFiles.CleanName -contains $breakEndChime){
-		$breakEndList.SelectedIndex = $soundFiles.CleanName.IndexOf($breakEndChime)
-		$breakEndTxtBx.Text = $breakEndChime
-	} else {
-		$breakEndList.SelectedIndex = 0
-		$breakEndTxtBx.Text = $properties.breakEndChime
-	}
-	
-	$breakEndList.Add_SelectedIndexChanged({
-		$selectedIndex = $breakEndList.SelectedIndex
-		$selectedSound = $soundFiles.Name[$selectedIndex]
-		Play-Chime -soundFile $(Join-Path $parentDir "assets/sounds" $selectedSound)
-		$breakEndTxtBx.Text =  $soundFiles.CleanName[$selectedIndex]
-	}
-	)
-
-	$breakEndBtn.Add_Click({
-		$FileDialog = New-Object System.Windows.Forms.OpenFileDialog -Property @{
-    	InitialDirectory = [Environment]::GetFolderPath('Desktop')
-    	Filter           = 'Audio files (*.mp3;*.wav;*.wma;*.m4a)|*.mp3;*.wav;*.wma;*.m4a|MP3 files (*.mp3)|*.mp3|WAV files (*.wav)|*.wav|All files (*.*)|*.*'
-    	Title            = 'Choose file'
-		}
-
-		if ($FileDialog.ShowDialog() -eq [System.Windows.Forms.DialogResult]::OK) {
-			# Put the selected file path into our text box
-			$breakEndTxtBx.Text = $FileDialog.FileName
-		}
-		 $fileDialog.Dispose()
-	})
-
-	$controlsRem = @($popupCheck, $pieCheck, $timedispCheck, $soundsCheck)
-	$controlsSound = @($volSlider, $volLabel,
-		$timeReminderList, $timeReminderTxt, $timeReminderBtn, $timeRemTxtBx,
-	 	$workEndList, $workEndTxt, $workEndBtn, $workEndTxtBx,
-	 	$breakEndList, $breakEndTxt, $breakEndBtn, $breakEndTxtBx
-		)
-
-	if($soundsCheck.Checked){
+	if($remOpts.sounds.Checked){
 		Set-ControlsEnabled $true $controlsSound
 	} else {
 		Set-ControlsEnabled $false $controlsSound
 	}
-	$soundsCheck.Add_CheckedChanged({
-		  if ($soundsCheck.Checked) {
+	$remOpts.sounds.Add_CheckedChanged({
+		  if ($remOpts.sounds.Checked) {
 			Set-ControlsEnabled $true $controlsSound
 		} else {
 			Set-ControlsEnabled $false $controlsSound
 		}
 	})
 
-	$remPage.Controls.AddRange(
-    [System.Windows.Forms.Control[]]($controlsRem + $controlsSound)
-	)
+	####### Style
+	$dispOpts = display-options -page $dispPage -properties $properties
 	
 	####### Bottom of properties form
 	#Update All Button
 	$updateAll = New-Object System.Windows.Forms.Button -Property @{Location='247,310'; Size='100,40'; Text="Update All"}
 	$updateAll.Add_Click({
-		$time = HM-S $objHours.Value $objMin.Value
+		$time = HM-S $workOpts.hours.Value $workOpts.min.Value
 		$properties.workPeriod = $time
-		$properties.lockOut = $objLO.Value
-		$properties.pomodoro = $checkboxPom.Checked
-		if($checkboxPom.Checked){
-					$properties.shortBreak = $objSB.Value
-					$properties.numPomodoros = $pomNum.Value
+		$properties.lockOut = $LOopts.value.Value
+		$properties.pomodoro = $pomOpts.check.Checked
+		if($pomOpts.check.Checked){
+					$properties.shortBreak = $pomOpts.shortBreak.Value
+					$properties.numPomodoros = $pomOpts.pomNum.Value
 		}
-		$properties.days = @($daysList.CheckedItems | ForEach-Object { $_.ToString() })
-		if(Check-Hours $timePickerStart.Value $timePickerEnd.Value $form){
+		$properties.days = @($dayOpts.list.CheckedItems | ForEach-Object { $_.ToString() })
+		if(Check-Hours $timeOpts.start.Value $timeOpts.end.Value $form){
 			$form.Refresh()
 			$form.Activate()
 		} else {
-			$properties.startTime = $timePickerStart.Value.ToString("HH:mm")
-			$properties.endTime = $timePickerEnd.Value.ToString("HH:mm")
+			$properties.startTime = $timeOpts.start.Value.ToString("HH:mm")
+			$properties.endTime = $timeOpts.end.Value.ToString("HH:mm")
 		}
-		$properties.eveningLO = $checkboxELO.Checked
-		$properties.duration = $objELO.Value
-		$properties.exitDifficulty = $diffSlider.Value
+		$properties.eveningLO = $ELOopts.check.Checked
+		$properties.duration = $ELOopts.value.Value
+		
+		$properties.exitDifficulty = $diffOpts.value.Value
 
-		$properties.reminderPopups = $popupCheck.Checked
-		$properties.showPie = $pieCheck.Checked
-		$properties.showTime = $timedispCheck.Checked	
-		$properties.sounds = $soundsCheck.Checked
+		$properties.reminderPopups = $remOpts.popups.Checked
+		$properties.sounds = $remOpts.sounds.Checked
 
-		$properties.volume = $volSlider.Value * 10
+		$properties.volume = $volOpts.volume.Value * 10
 
-		If ($soundFiles.CleanName -contains $timeRemTxtBx.Text){
-			$file = $soundFiles.Name[$soundFiles.CleanName.Indexof($timeRemTxtBx.Text)] 
-			$properties.timeReminderChime = Join-Path $parentDir "assets/sounds" $file
-		} else {
-			$properties.timeReminderChime = $timeRemTxtBx.Text
-		}
-
-		If ($soundFiles.CleanName -contains $workEndTxtBx.Text){
-			$file = $soundFiles.Name[$soundFiles.CleanName.Indexof($workEndTxtBx.Text)] 
-			$properties.workEndChime = Join-Path $parentDir "assets/sounds" $file
-		} else {
-			$properties.workEndChime = $workEndTxtBx.Text
-		}
-
-		If ($soundFiles.CleanName -contains $breakEndTxtBx.Text){
-			$file = $soundFiles.Name[$soundFiles.CleanName.Indexof($breakEndTxtBx.Text)] 
-			$properties.breakEndChime = Join-Path $parentDir "assets/sounds" $file
-		} else {
-			$properties.breakEndChime = $breakEndTxtBx.Text
-		}
+		$properties.showPie = $dispOpts.vals.showPie
+		$properties.showTime = $dispOpts.vals.showTime
+		$properties.pieChartClr = $dispOpts.vals.pieClr
+		$properties.textDispClr = $dispOpts.vals.txtClr
 
 		Save-Properties $properties
 		Toast-Notification -msg "All settings have been updated.`nChanges will take effect on restart." -header "Work Timer Update"
@@ -646,6 +159,10 @@ function Show-Properties {
 	#Cancel Button
 	$cancel = New-Object System.Windows.Forms.Button -Property @{Text = "Close"; Location = '350,310'; Size = '100,40'}
 	$cancel.Add_Click({ 
+		if ($dispOpts.preview.PreviewForm -and -not $dispOpts.preview.PreviewForm.IsDisposed) {
+            $dispOpts.preview.PreviewForm.Close()
+            $dispOpts.preview.PreviewForm = $null
+		}
 		$form.Close()
 		$form.Dispose()
 	})
@@ -657,7 +174,7 @@ function Show-Properties {
 
 function Default-Properties {
 	$properties = @{
-		workPeriod = 3600.0
+		workPeriod = 3000.0
 		pomodoro = $false
 		numPomodoros = 4.0
 		startTime = "09:00"
@@ -672,15 +189,20 @@ function Default-Properties {
 		sounds = $true
 		showPie = $true
 		showTime = $true
-		timeReminderChime = "$parentDir/assets/sounds/long-chime-sound.mp3"
-		workEndChime = "$parentDir/assets/sounds/long-dang.mp3"
-		breakEndChime = "$parentDir/assets/sounds/alarm-bell.mp3"
-		volume = 500	
+		timeReminderChime = "$parentDir\assets\sounds\long-chime-sound.mp3"
+		workEndChime = "$parentDir\assets\sounds\long-dang.mp3"
+		breakEndChime = "$parentDir\assets\sounds\alarm-bell.mp3"
+		volume = 500
+		pieChartClr = [System.Drawing.Color]::CornflowerBlue
+		textDispClr = [System.Drawing.Color]::Black	
 	}
 	Save-Properties $properties
 }
 
 function Load-Properties {
+	param(
+		$propertiesPath = "$parentDir/json/properties.json"
+	)
 	Get-Content $propertiesPath -Raw | ConvertFrom-Json
 }
 

@@ -8,7 +8,13 @@ function Show-CountdownPie {
         [bool]$showTime = $true,
         [bool]$showPie = $true,
         [int]$mainPID = 0,
-        [switch]$Wait
+        [switch]$Wait,
+        $pieColour = $(ConvertTo-DrawingColor `
+                        -Colour $properties.pieChartClr `
+                        -Default ([System.Drawing.Color]::CornflowerBlue)),
+        $txtColour = $(ConvertTo-DrawingColor `
+                        -Colour $properties.textDispClr `
+                        -Default ([System.Drawing.Color]::Black))
     )
 
     Add-Type -AssemblyName System.Windows.Forms
@@ -92,9 +98,7 @@ function Show-CountdownPie {
                     [System.Drawing.Color]::red
                 )
             } else {
-                    $countdownBrush = [System.Drawing.SolidBrush]::new(
-                    [System.Drawing.Color]::CornflowerBlue
-                )
+                    $countdownBrush = [System.Drawing.SolidBrush]::new($pieColour)
             }
 
             $graphics.FillEllipse($backgroundBrush, $pieBounds)
@@ -141,15 +145,7 @@ function Show-CountdownPie {
                     [System.Drawing.Color]::red
                 )
             } else {
-                if ($(Get-SysTheme) -eq "Light"){
-                    $textBrush = [System.Drawing.SolidBrush]::new(
-                        [System.Drawing.Color]::Gainsboro
-                    )
-                } else {
-                    $textBrush = [System.Drawing.SolidBrush]::new(
-                        [System.Drawing.Color]::black
-                    )
-                }
+                $textBrush = [System.Drawing.SolidBrush]::new($txtColour)
             }
 
             $textSize = $graphics.MeasureString($timeText, $font)
