@@ -1,0 +1,15 @@
+C:\WorkTimer\cs\bin\Release\net8.0-windows\win-x64\WorkTimerProtocol.exe
+C:\WorkTimer\cs\bin\Release\net8.0-windows\win-x64\WorkTimerProtocol.deps.json
+C:\WorkTimer\cs\bin\Release\net8.0-windows\win-x64\WorkTimerProtocol.runtimeconfig.json
+C:\WorkTimer\cs\bin\Release\net8.0-windows\win-x64\WorkTimerProtocol.dll
+C:\WorkTimer\cs\bin\Release\net8.0-windows\win-x64\WorkTimerProtocol.pdb
+C:\WorkTimer\cs\obj\Release\net8.0-windows\win-x64\WorkTimerProtocol.GeneratedMSBuildEditorConfig.editorconfig
+C:\WorkTimer\cs\obj\Release\net8.0-windows\win-x64\WorkTimerProtocol.AssemblyInfoInputs.cache
+C:\WorkTimer\cs\obj\Release\net8.0-windows\win-x64\WorkTimerProtocol.AssemblyInfo.cs
+C:\WorkTimer\cs\obj\Release\net8.0-windows\win-x64\WorkTimerProtocol.csproj.CoreCompileInputs.cache
+C:\WorkTimer\cs\obj\Release\net8.0-windows\win-x64\WorkTimerProtocol.sourcelink.json
+C:\WorkTimer\cs\obj\Release\net8.0-windows\win-x64\WorkTimerProtocol.dll
+C:\WorkTimer\cs\obj\Release\net8.0-windows\win-x64\refint\WorkTimerProtocol.dll
+C:\WorkTimer\cs\obj\Release\net8.0-windows\win-x64\WorkTimerProtocol.pdb
+C:\WorkTimer\cs\obj\Release\net8.0-windows\win-x64\WorkTimerProtocol.genruntimeconfig.cache
+C:\WorkTimer\cs\obj\Release\net8.0-windows\win-x64\ref\WorkTimerProtocol.dll

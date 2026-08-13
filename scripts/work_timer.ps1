@@ -1,5 +1,28 @@
 #Requires -Version 7.0
 
+$mutexName = 'Work Timer'
+
+$createdNew = $false
+
+$script:mutex = [System.Threading.Mutex]::new(
+    $true,
+    $mutexName,
+    [ref]$createdNew
+)
+
+$script:exitEvent = [System.Threading.EventWaitHandle]::new(
+    $false,
+    [System.Threading.EventResetMode]::AutoReset,
+    "WorkTimerExit"
+)
+
+$script:startCyclesEvent =
+    [System.Threading.EventWaitHandle]::new(
+        $false,
+        [System.Threading.EventResetMode]::AutoReset,
+        "WorkTimerStartCycles"
+    )
+
 Add-Type -AssemblyName System.Windows.Forms
 Add-Type -AssemblyName System.Drawing
 Add-Type -AssemblyName PresentationFramework
@@ -21,6 +44,12 @@ foreach ($file in $files.Name) {
 	Import-Module $path
 }
 
+if (-not $createdNew) {
+    Toast-Notification -msg "Work Timer is already running."
+	Exit-App $false
+    exit
+}
+
 $tbfrelock = 20000 #miliseconds (30s = 30000)
 $mainPID = $PID
 
@@ -36,263 +65,56 @@ $script:notifyIcon.Visible = $true
 $menu = New-Object System.Windows.Forms.ContextMenuStrip
 
 $itemShow = $menu.Items.Add("Show time left")
+$itemRestart =$menu.Items.Add("Start new Session...")
 $itemPause = $menu.Items.Add("Pause for 1 hour")
 $itemResume = $menu.Items.Add("End pause now")
 $itemProperties = $menu.Items.Add("Properties")
 $itemExit = $menu.Items.Add("Exit")
 
 $itemShow.Add_Click({ Show-TimeLeft })
+$itemRestart.Add_Click({set-cycles})
 $itemPause.Add_Click({ Pause-OneHour })
 $itemResume.Add_Click({ Resume-Now })
 $itemProperties.Add_Click({ Show-Properties })
 
 $itemExit.Add_Click({ 
-	$state = Load-State
-	if (($state.eveningLO -and (In-EveningLockWindow)) -or (In-WorkHours)){
-		Exit-App 
-	} else {
-		if ($script:timer) {
-        $script:timer.Stop()
-		}
 
-		if (
-			$script:pieCountdown -and
-			-not $script:pieCountdown.IsDisposed
-		) {
-			$script:pieCountdown.Close()
-			$script:pieCountdown = $null
-		}
-		Cleanup-TrayIcon
-		
-		[System.Windows.Forms.Application]::Exit()
-	}
+	Exit-App $true
+
 })
 
 $itemEmergency = $menu.Items.Add("Emergency unlock (15 min)")
 $itemEmergency.Add_Click({ powershell.exe -ExecutionPolicy Bypass -File "$parentDir\scripts\emergency_unlock.ps1" })
 
+$contextMenu.Add_Opening({
+    param($sender, $e)
+
+    $state = Load-State
+
+    Update-ContextMenu `
+        -State $state `
+})
+
 $script:notifyIcon.ContextMenuStrip = $menu
 $script:notifyIcon.Add_DoubleClick({ Show-TimeLeft })
 
-# Timer loop
-$script:timer = New-Object System.Windows.Forms.Timer
-$script:timer.Interval = $tbfrelock
+$script:controlTimer = New-Object System.Windows.Forms.Timer
+$script:controlTimer.Interval = 250
 
-$script:timer.Add_Tick({
-	$state = Load-State
-    $now = Get-Now
-    $lastTick = [datetime]$state.lastTick
-    $elapsed = [math]::Max(0, [int]($now - $lastTick).TotalSeconds)
+$script:controlTimer.Add_Tick({
 
-	#check if emergency unlock
-	if ($state.emergencyUntil) {
-		$emergencyUntil = [datetime]$state.emergencyUntil
-		if ((Get-Date) -lt $emergencyUntil) {
-			$state.lastTick = (Get-Date).ToString("o")
-			Save-State $state
-			return
-		} else {
-			$state.emergencyUntil = $null
-		}
-	}
-	
-	#check if in evening lockout (if activated)
-	if ($state.eveningLO -and (In-EveningLockWindow)) {
-
-		if (Pause-Active) {
-			$state.lastTick = $now.ToString("o")
-			Save-State $state
-			return
-		}
-		
-		if (-not $state.eveningNotified) {
-			$endTime = Str-to-Date($state.endTime)
-			Show-Popup `
-				-text "Workday ended! You can come back at $($endTime.AddMinutes($state.duration).ToString('HH:mm')) if needed otherwise gtfo." `
-				-title "Work Timer"
-			$state.eveningNotified = $true
-			$state.lastTick = $now.ToString("o")
-			Save-State $state
-			}
-
-		Lock-PC
-		return
-	}
-
-	#check pause active
-    if (Pause-Active) {
-        $state.lastTick = $now.ToString("o")
-        Save-State $state
+    if ($script:exitEvent.WaitOne(0)) {
+        Exit-App -exitChallenge $false
         return
     }
-	
-	#check idle
-	if ($(Is-Idle 3) -and (-not $state.cooldown) -and (In-WorkHours)){
-		if (-not $state.warnedIdle){
-			Toast-Notification `
-				-msg "Computer has been idle for 3 minutes. Pausing timer." `
-				-header "Work Timer"
-			$state.warnedIdle = $true
-		}
-		if (Is-Idle 10){
-			$state.extendedIdle = $true
-		}
-		$state.lastTick = $now.ToString("o")
-		Save-State $state
-		return
-	} else {
-		$state.warnedIdle = $false
-	}
 
-	#in cooldown/break
-    if ($state.cooldownUntil) {
-        $cooldownUntil = [datetime]$state.cooldownUntil
-		$lastUnlock = [datetime]$state.lastUnlock
-		
-        if ($now -lt $cooldownUntil) { #still in break period
-            $state.lastTick = $now.ToString("o")
-            Save-State $state
-			Lock-PC
-            return
-        } else { #break over
-
-			#unlock when end of break in between ticks
-			if ($lastUnlock -ge $lastTick -or $lastUnlock -ge $cooldownUntil){
-				Update-Pom $state
-				Reset-State
-				$state = Load-State
-				$state.lastTick = $now.ToString("o")
-				Save-State $state
-
-				if (($state.showPie -or $state.showTime) -and (In-WorkHours)) {
-					$script:pieCountdown = Show-CountdownPie `
-						-DurationSeconds $state.workPeriod `
-						-workPeriod $state.workPeriod `
-						-showPie $state.showPie `
-						-showTime $state.showTime `
-						-mainPID $mainPID
-				}
-
-				if ($state.pomodoro){
-					Pom-Message $state
-				} else {
-					Timer-Message $state
-				}
-				Add-Content "$parentDir\logs\debug.log" "$now - Reset from work_timer.ps1 check"
-
-				return
-			}
-
-            $state.cooldownUntil = $null
-		}
-    }
-	
-	if (-not (In-WorkHours)) {
-        $state.lastTick = $now.ToString("o")
-        Save-State $state
+    if ($script:startCyclesEvent.WaitOne(0)) {
+        Start-CyclesScript
         return
     }
-	
-	$state.remainingSeconds -= $elapsed
-
-	if($state.unlockReset){
-		if (($state.showPie -or $state.showTime) -and (In-WorkHours)) {
-				$script:pieCountdown = Show-CountdownPie `
-					-DurationSeconds $state.remainingSeconds `
-					-workPeriod $state.workPeriod `
-					-showPie $state.showPie `
-					-showTime $state.showTime `
-					-mainPID $mainPID
-			}
-		$state.unlockReset = $false
-	}
-
-	#reminders
-	$reminderChime = $state.timeReminderChime
-
-	if ($state.remainingSeconds -lt 0) { $state.remainingSeconds = 0 }
-
-	$warnings = Time_Warning($state.workPeriod)
-	$oneminWarning = -not $state.warnedoneMin `
-		-and ($state.remainingSeconds -le 60) `
-		-and ($state.remainingSeconds -gt 0)
-	$secondPopup = -not $state.secondWarning `
-		-and ($state.remainingSeconds -le $warnings.second) `
-		-and ($state.remainingSeconds -gt 60)
-	$thirdPopup = -not $state.thirdWarning `
-		-and ($state.remainingSeconds -le $warnings.third) `
-		-and $state.remainingSeconds -gt $warnings.second
-	
-
-    if ($thirdPopup) {
-		if($state.reminderPopups){
-        Toast-Notification `
-			"$(Get-RemainingText $state.remainingSeconds $true) left." `
-			-soundFile $reminderChime `
-			-chime $state.sounds
-		} elseif ($state.sounds) {
-			Play-Chime $reminderChime
-		}
-        $state.thirdWarning = $true
-    }
-
-    if ($secondPopup) {
-		if($state.reminderPopups){
-        Show-Popup `
-			-text "$(Get-RemainingText $state.remainingSeconds $true) left.`nStart wrapping up." `
-			-soundfile $reminderChime `
-			-chime $state.sounds
-		} elseif ($state.sounds) {
-			Play-Chime $reminderChime
-		}
-        $state.secondWarning = $true
-    }
-	
-	#1 minute warning
-	if ($oneminWarning) {
-
-		#start toast notification as seperate process
-		if($state.reminderPopups){
-			Show-Popup -text "1 minute left!" -soundfile $reminderChime -chime $state.sounds
-		} elseif (-not $state.showPie -and -not $state.showTime){
-			Start-Countdown `
-				-duration 1 `
-				-chime $false `
-				-msg "1 minute to go!" `
-				-msg2 "Save your work and write next steps (leave some breadcrumbs)" `
-				-barTitle "Time until break:" `
-				-endMsg "You did it! Time for a break!"
-		}
-
-        $state.warnedoneMin = $true
-    }
-
-    if (-not $state.cooldown -and $state.remainingSeconds -le 0) {
-		if ($state.pomodoro){
-			if($state.pomNum -gt 1){
-				$text = "Short Break:"
-				$lockoutTime = $state.shortBreak
-			} else {
-				$text = "Long Break:"
-				$lockoutTime = $state.lockOut
-			}
-		} else {
-			$text = "Break:"
-			$lockoutTime = $state.lockOut
-		}
-		$breakUntil = $now.AddMinutes($lockoutTime)
-		Show-Popup -text "Time is up! The computer will lock now.`n$text $(Get-remainingText ($lockoutTime*60) $true)`nYou can come back at $($breakUntil.ToString(`"HH:mm`"))"	-soundFile $state.workEndChime -chime $state.sounds
-        $state.cooldownUntil = $breakUntil.ToString("o")
-		$state.cooldown = $true
-        Lock-PC
-		
-		Start-Countdown -duration $lockoutTime -endChime $state.breakEndChime -chime $state.sounds
-		
-    }
-
-    $state.lastTick = $now.ToString("o")
-    Save-State $state
 })
+
+$script:controlTimer.Start()
 
 
 if (-not (Test-Path $propertiesPath)){
@@ -303,31 +125,33 @@ $properties = Load-Properties
 # Start
 Set-State
 
-# pop-up message
-if (-not (In-WorkHours)){
-	$msg = "but not active.`nActive $($properties.days | ForEach-Object { $_[0] }), $($properties.startTime)-$($properties.endTime).`nGo to properties to update schedule." 
-} else {
-	if ($properties.pomodoro){
-		$msg = "Active $($properties.days | ForEach-Object { $_[0] }), $($properties.startTime)-$($properties.endTime)`nPomodoros: $($properties.numPomodoros)`nWork for: $(Get-RemainingText $properties.workPeriod $true), Breaks for: $($properties.shortBreak) minute(s)`nLong breaks: $($properties.lockOut) minutes."
-		$msg2 = "Pomodoro 1 of $($properties.numPomodoros)"
+if ($properties.scheduled){
+	if (-not (In-WorkHours)){
+		$msg = "but not active.`nActive $($properties.days | ForEach-Object { $_[0] }), $($properties.startTime)-$($properties.endTime).`nGo to properties to update schedule." 
 	} else {
-		$msg = "Active $($properties.days | ForEach-Object { $_[0] }), $($properties.startTime)-$($properties.endTime)`nWork for: $(Get-RemainingText $properties.workPeriod $true), Breaks for: $($properties.lockOut) minute(s)"
-	    $msg2 = ""
-	}	
-	if ($properties.eveningLO){
-		$msg += "`nEvening Lockout enabled for $($properties.duration) minutes"
+		if ($properties.pomodoro){
+			$msg = "Active $($properties.days | ForEach-Object { $_[0] }), $($properties.startTime)-$($properties.endTime)`nPomodoros: $($properties.numPomodoros)`nWork for: $(Get-RemainingText $properties.workPeriod $true), Breaks for: $($properties.shortBreak) minute(s)`nLong breaks: $($properties.lockOut) minutes."
+			$msg2 = "Pomodoro 1 of $($properties.numPomodoros)"
+		} else {
+			$msg = "Active $($properties.days | ForEach-Object { $_[0] }), $($properties.startTime)-$($properties.endTime)`nWork for: $(Get-RemainingText $properties.workPeriod $true), Breaks for: $($properties.lockOut) minute(s)"
+			$msg2 = ""
+		}	
+		if ($properties.eveningLO){
+			$msg += "`nEvening Lockout enabled for $($properties.duration) minutes"
+		}
 	}
+	Toast-Notification -header "Work Timer is in Schedule Mode" -msg $msg
+	Start-TimerScript
+} else {
+	Cycles-notification -msg "Work Timer will run for $($properties.cycles) set(s)"
 }
 
-Toast-Notification -header "Work Timer is running" -msg $msg
-
-$script:timer.Start()
 
 $showCountdownHandler = {
     [System.Windows.Forms.Application]::remove_Idle(
         $script:showCountdownHandler
     )
-
+	$state = Load-State
     if ($properties.showPie -or $properties.showTime -and (In-WorkHours)) {
         $script:pieCountdown = Show-CountdownPie `
             -DurationSeconds $properties.workPeriod `
@@ -335,7 +159,11 @@ $showCountdownHandler = {
             -showPie $properties.showPie `
             -showTime $properties.showTime `
 			-mainPID $mainPID
-    }
+		$state.firstCountdown = $true
+    } else {
+		$state.firstCountdown = $false
+	}
+	Save-State $state
 }
 
 $script:showCountdownHandler = $showCountdownHandler

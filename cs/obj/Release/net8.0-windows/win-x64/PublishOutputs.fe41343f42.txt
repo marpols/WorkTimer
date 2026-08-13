@@ -1,0 +1,5 @@
+C:\WorkTimer\protocol\WorkTimerProtocol.exe
+C:\WorkTimer\protocol\WorkTimerProtocol.dll
+C:\WorkTimer\protocol\WorkTimerProtocol.deps.json
+C:\WorkTimer\protocol\WorkTimerProtocol.runtimeconfig.json
+C:\WorkTimer\protocol\WorkTimerProtocol.pdb

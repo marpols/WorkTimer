@@ -6,7 +6,7 @@ function ELO-Options {
 
     $checkboxELO = New-Object System.Windows.Forms.Checkbox -Property @{Text = "Enable evening lockout"; Location='290,10'; Autosize=$true; Checked = $properties.eveningLO}
 	$tooltip = New-Object System.Windows.Forms.ToolTip
-	$tooltip.SetToolTip($checkboxELO, "Set a longer lockout period for the end of your workday.")
+	$tooltip.SetToolTip($checkboxELO, "Schedule Mode: Set a longer lockout period for the end of your workday.")
 	
 	$labelELO = New-Object System.Windows.Forms.Label -Property @{Text="Duration:"; Location='290,40'; Autosize=$true}
 	$objELO = New-Object System.Windows.Forms.NumericUpDown -Property @{Location='310,60'; Size='50,50'; Minimum=20; Maximum=60; Value=$properties.duration}
@@ -30,7 +30,7 @@ function ELO-Options {
 
 		$properties.eveningLO = $checkbox.Checked
 		$properties.duration = $duration.Value
-		Save-Properties $properties
+		Save-Properties -properties $properties
 		if($checkbox.Checked){
 			$msg = "Evening Lockout Enabled for $($Duration.Value) minutes.`nChanges will take effect after restarting Work Timer."
 		} else{
@@ -40,11 +40,13 @@ function ELO-Options {
 	})
 
 	$ELOcontrols = @($objELO, $labelELO, $labelELO2)
+	$allELOControls = @($checkboxELO, $labelELO, $objELO, $labelELO2, $updateELO) 
 
 	$checkboxELO.Tag = @{
 		controls = $ELOcontrols
 	}
 
+	Set-ControlsEnabled $properties.scheduled $allELOControls
 	Set-ControlsEnabled $checkboxELO.Checked $ELOcontrols
 
 	$checkboxELO.Add_CheckedChanged({
@@ -59,6 +61,7 @@ function ELO-Options {
         value = $objELO
         label2 = $labelELO2
         btn = $updateELO
-		controls = @($objELO, $labelELO, $labelELO2) 
+		controls = $ELOcontrols
+		all_controls = $allELOControls
     }
 }

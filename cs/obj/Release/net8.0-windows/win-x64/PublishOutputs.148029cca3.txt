@@ -1,0 +1,5 @@
+C:\WorkTimer\cs\bin\Release\net8.0-windows\win-x64\publish\WorkTimerProtocol.exe
+C:\WorkTimer\cs\bin\Release\net8.0-windows\win-x64\publish\WorkTimerProtocol.dll
+C:\WorkTimer\cs\bin\Release\net8.0-windows\win-x64\publish\WorkTimerProtocol.deps.json
+C:\WorkTimer\cs\bin\Release\net8.0-windows\win-x64\publish\WorkTimerProtocol.runtimeconfig.json
+C:\WorkTimer\cs\bin\Release\net8.0-windows\win-x64\publish\WorkTimerProtocol.pdb

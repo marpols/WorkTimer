@@ -21,12 +21,12 @@ function In-WorkHours {
     return (Is-Scheduled) -and ($now -ge $start -and $now -lt $end)
 }
 
-function In-EveningLockWindow {
+function In-EveningLO {
 	$properties = Load-Properties
     $now = Get-Date
     $start = Str-to-Date($properties.endTime)
     $end   = $start.AddMinutes($properties.duration)
-    return (Is-Scheduled) -and ($now -ge $start -and $now -lt $end)
+    return (Is-Scheduled) -and (($now -ge $start) -and ($now -lt $end))
 }
 
 function Get-RemainingText($seconds, $verbose = $false) {

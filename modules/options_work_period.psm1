@@ -6,10 +6,26 @@ function work-Options {
 
 	$curHours, $curMin = S-HM $properties.workPeriod
 
-    $objHours = New-Object System.Windows.Forms.NumericUpDown -Property @{Location = '30,60'; Size = '50,50'; Maximum = 4; Minimum = 0; Value = $curHours}
-	$objMin = New-Object System.Windows.Forms.NumericUpDown -Property @{Location = '140,60'; Size = '50,50'; Maximum = 59; Minimum = 0; Value = $curMin}
+    $objHours = New-Object System.Windows.Forms.NumericUpDown -Property @{
+		Location = '30,60'
+		Size = '50,50'
+		Maximum = 4
+		Minimum = 0
+		Value = $curHours
+	}
+	$objMin = New-Object System.Windows.Forms.NumericUpDown -Property @{
+		Location = '140,60'
+		Size = '50,50'
+		Maximum = 59
+		Minimum = 0
+		Value = $curMin
+	}
 
-	$updateWP = New-Object System.Windows.Forms.Button -Property @{Text = "Set work period"; Location = '140,90'; Autosize=$true}
+	$updateWP = New-Object System.Windows.Forms.Button -Property @{
+		Text = "Set work period"
+		Location = '140,90'
+		Autosize=$true
+	}
 
 	$updateWP.Tag = @{
 		properties = $Properties
@@ -26,8 +42,10 @@ function work-Options {
 
 		$time = HM-S $hours.Value $min.Value
 		$properties.workPeriod = $time
-		Save-Properties $properties
-		Toast-Notification -msg "Work period duration updated to $($hours.Value) hour(s) and $($min.Value) minute(s).`nChanges will take effect on restart." -header "Work Timer Update"
+		Save-Properties -properties $properties
+		Toast-Notification `
+			-msg "Work period duration updated to $($hours.Value) hour(s) and $($min.Value) minute(s).`nChanges will take effect on restart." `
+			-header "Work Timer Update"
 	})
 	
 	$Page.Controls.AddRange(@($objHours, $objMin, $updateWP,

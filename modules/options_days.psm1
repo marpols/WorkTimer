@@ -4,7 +4,11 @@ function day-Options {
             $Properties
         )
     
-    $daysList = New-Object System.Windows.Forms.CheckedListBox -Property @{Location='80,10'; Autosize=$true; CheckOnClick = $true}
+    $daysList = New-Object System.Windows.Forms.CheckedListBox -Property @{
+		Location='80,10' 
+		Autosize=$true
+		CheckOnClick = $true
+	}
 	$daysList.Items.AddRange(@("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"))
 
 	for ($i = 0; $i -lt $daysList.Items.Count; $i++) {
@@ -13,9 +17,21 @@ function day-Options {
 		}
 	}
 	
-	$weekDays = New-Object System.Windows.Forms.RadioButton -Property @{Text = "Weekdays Only"; Location='80,145'; Autosize=$true}
-	$weekEnds = New-Object System.Windows.Forms.RadioButton -Property @{Text = "Weekends Only"; Location='80,165'; Autosize=$true}
-	$allDays = New-Object System.Windows.Forms.RadioButton -Property @{Text = "Daily"; Location='80,185'; Autosize=$true}
+	$weekDays = New-Object System.Windows.Forms.RadioButton -Property @{
+		Text = "Weekdays Only" 
+		Location='80,145'
+		Autosize=$true
+	}
+	$weekEnds = New-Object System.Windows.Forms.RadioButton -Property @{
+		Text = "Weekends Only"
+		Location='80,165' 
+		Autosize=$true
+	}
+	$allDays = New-Object System.Windows.Forms.RadioButton -Property @{
+		Text = "Daily"
+		Location='80,185' 
+		Autosize=$true
+	}
 
 	$isWeekdays = (@(0..4) | Where-Object {
     -not $daysList.GetItemChecked($_)
@@ -35,7 +51,11 @@ function day-Options {
 		$weekDays.Checked = $true
 	}
 	
-	$updateDays = New-Object System.Windows.Forms.Button -Property @{Text="Set days of the week"; Location='80,210'; Autosize=$true}
+	$updateDays = New-Object System.Windows.Forms.Button -Property @{
+		Text="Set days of the week" 
+		Location='80,210'
+		Autosize=$true
+	}
 
 	#dynamic section
 
@@ -43,7 +63,7 @@ function day-Options {
     WeekDays = $weekDays
     WeekEnds = $weekEnds
     AllDays  = $allDays
-}
+	}
 
 	$weekDays.Tag = @{
 		DaysList = $daysList
@@ -139,8 +159,10 @@ function day-Options {
 		$list = $sender.Tag.list
 
 		$properties.days = @($list.CheckedItems | ForEach-Object { $_.ToString() })
-		Save-Properties $properties
-		Toast-Notification -msg "Work Timer will now be active on $($list.CheckedItems).`nChanges will take effect on restart." -header "Work Timer Update"
+		Save-Properties -properties $properties
+		Toast-Notification `
+			-msg "Work Timer will now be active on $($list.CheckedItems).`nChanges will take effect on restart." `
+			-header "Work Timer Update"
 	})
 
 	$controlsSched = @($daysList, $updateDays, $weekDays, $weekEnds, $allDays)

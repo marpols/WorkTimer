@@ -1,4 +1,4 @@
-function Time_Warning {
+function Warning-Triggers {
     
     param(
         $workPeriod

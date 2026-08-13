@@ -29,7 +29,7 @@ function time-Options {
 		} else {
 			$properties.startTime = $start.Value.ToString("HH:mm")
 			$properties.endTime = $end.Value.ToString("HH:mm")
-			Save-Properties $properties
+			Save-Properties -properties $properties
 			Toast-Notification -msg "Work Timer will now be active between $($start.Value.ToString("HH:mm")) and $($end.Value.ToString("HH:mm")).`nChanges will take effect on restart." -header "Work Timer Update"
 		}
 	})

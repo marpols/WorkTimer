@@ -35,6 +35,10 @@ function Set-State {
 		mainProcessID = $mainPID
 		volume = 500
 		unlockReset = $false
+		firstCountdown = $false
+		scheduled = $properties.scheduled
+		cycles = $properties.cycles
+		numCycles = $properties.cycles
 	}
 	Save-State $state
 }
@@ -42,6 +46,7 @@ function Set-State {
 function Reset-State{
 	
 	$state = Load-State
+	$pomReset = $false
 	
 	$state.remainingSeconds = $state.workPeriod
 	$state.thirdWarning = $false
@@ -55,8 +60,10 @@ function Reset-State{
 		
 	if($state.pomNum -lt 1){
 		$state.pomNum = $state.numPomodoros
+		$pomReset = $true
 	}
 	Save-State $state
+	return $pomReset
 }
 	
 
@@ -69,6 +76,7 @@ function Save-State {
 		$state
 	)
     $state | ConvertTo-Json | Set-Content $statePath -Encoding UTF8
+	return $(Load-State)
 }
 
 function Update-Pom {
@@ -77,5 +85,16 @@ function Update-Pom {
 	)
 	$state.pomNum -= 1
 	Save-State $state
-	Load-State
+
+	return $(Load-State)
+}
+
+function Update-Cycle {
+	param(
+		$state
+	)
+	$state.cycles -= 1
+	Save-State $state
+
+	return $(Load-State)
 }

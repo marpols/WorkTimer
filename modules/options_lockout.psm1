@@ -3,9 +3,24 @@ function lockout-Options {
             $Page,
             $Properties
         )
-    $objLO = New-Object System.Windows.Forms.NumericUpDown -Property @{Location = '30,140'; Size = '50,50'; Maximum = 60; Minimum = 0; Value = $properties.lockOut}
-	$titleLO = New-Object System.Windows.Forms.Label -Property @{Text = "Break length:"; Location = '10,120'; Autosize=$true}
-	$updateLO = New-Object System.Windows.Forms.Button -Property @{Text = "Set Break"; Location = '140,140'; Autosize=$true}
+
+    $objLO = New-Object System.Windows.Forms.NumericUpDown -Property @{
+        Location = '30,140' 
+        Size = '50,50' 
+        Maximum = 60 
+        Minimum = 0
+        Value = $properties.lockOut
+    }
+	$titleLO = New-Object System.Windows.Forms.Label -Property @{
+        Text = "Break length:"
+        Location = '10,120' 
+        Autosize=$true
+    }
+	$updateLO = New-Object System.Windows.Forms.Button -Property @{
+        Text = "Set Break" 
+        Location = '140,140' 
+        Autosize=$true
+    }
 
     $updateLO.Tag = @{
         properties = $Properties
@@ -19,7 +34,7 @@ function lockout-Options {
 
 		$properties.pomodoro = $false
 		$properties.lockOut = $lockout.Value
-		Save-Properties $properties
+		Save-Properties -properties $properties
 		Toast-Notification -msg "Lockout duration updated to $($lockout.Value) minutes.`nChanges will take effect on restart." -header "Work Timer Update"
 	})
 

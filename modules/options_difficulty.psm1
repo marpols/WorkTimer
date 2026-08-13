@@ -19,7 +19,7 @@ function diff-options {
 		$slider = $sender.Tag.slider
 
 		$properties.exitDifficulty = $slider.Value
-		Save-Properties $properties
+		Save-Properties -properties $properties
 		Toast-Notification -msg "Exit challenge difficulty has been set to: $($difficulty[$slider.Value])" -header "Work Timer Update"
 	})
 	$Page.Controls.AddRange(@(

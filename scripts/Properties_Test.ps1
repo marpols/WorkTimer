@@ -24,5 +24,6 @@ Write-Host "Test script propertiesPath: $propertiesPath"
 
 $properties = Load-Properties
 
-Show-Properties
+#Show-Properties
 
+set-cycles

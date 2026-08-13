@@ -3,7 +3,14 @@ function Show-TimeLeft {
   
 
     $pause = Get-PauseData
-    $msg = "Time left in this Session: $(Get-RemainingText $state.remainingSeconds)"
+
+    $msg = ""
+
+    if (-not $state.scheduled){
+        $msg += "`nSet $($state.numCycles - $state.cycles + 1) of $($state.numCycles)"
+    }
+
+    $msg += "Time left: $(Get-RemainingText $state.remainingSeconds)"
 	
 	if ($state.pomodoro){
 		$msg += "`nPomodoro:  $($state.numPomodoros - $state.pomNum + 1) out of $($state.numPomodoros)"
@@ -28,9 +35,13 @@ function Show-TimeLeft {
 		}
 	}
 	
-	if (-not (In-WorkHours)){
+	if ($state.scheduled -and -not (In-WorkHours)){
 		$msg = "Work Timer is running but not currently active."
 	}
+
+    if (-not $state.scheduled -and ($state.cycles -le 0)){
+        $msg = "All sets completed!"
+    }
 
     Show-Message $msg "Work Timer Status"
 }

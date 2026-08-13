@@ -24,7 +24,7 @@ function Show-Popup {
 	param(
 		[string]$text,
 		[string]$title = "Work Timer",
-		[int]$timeout = 3000,
+		[int]$timeout = 5000,
 		$chime = $true,
 		[string]$soundfile = "$parentDir\assets\sounds\long-chime-sound.mp3",
 		$volume = 500

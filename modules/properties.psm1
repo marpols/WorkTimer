@@ -7,7 +7,7 @@ function Show-Properties {
 	
 	$form = New-Object System.Windows.Forms.Form -Property @{
 		Text = "Work Timer Properties";
-		ClientSize = [System.Drawing.Size]::new(480, 400);
+		ClientSize = [System.Drawing.Size]::new(480, 370);
 		StartPosition = "CenterScreen";
 		AutoScaleMode = [System.Windows.Forms.AutoScaleMode]::None
 		Icon = New-Object System.Drawing.Icon("$parentDir\assets\time.ico")
@@ -18,14 +18,28 @@ function Show-Properties {
 		Size = '480,300'
 	}
 	
+	$modePage = New-Object System.Windows.Forms.TabPage -Property @{Text = "Timer Mode"}
 	$setPage = New-Object System.Windows.Forms.TabPage -Property @{Text = "Settings"}
 	$schedPage = New-Object System.Windows.Forms.TabPage -Property @{Text = "Schedule"}
 	$diffPage = New-Object System.Windows.Forms.TabPage -Property @{Text = "Exit Difficulty"}
 	$remPage = New-Object System.Windows.Forms.TabPage -Property @{Text = "Reminders"}
 	$dispPage = New-Object System.Windows.Forms.TabPage -Property @{Text = "Countdown Display"}
+
+	$tabOrder = @(
+    	$modePage
+    	$setPage
+    	$schedPage
+    	$diffPage
+    	$remPage
+		$dispPage
+	)
 	
-	$tabControl.Controls.AddRange(@($setPage, $schedPage, $diffPage, $remPage, $dispPage))
+	$tabControl.Controls.AddRange($tabOrder)
 	$form.Controls.Add($tabControl)
+
+	####### Mode Tab
+	$modeOpts = toggle-schedule -page $modePage -properties $properties
+	if($modeOpts.session.Checked){$tabControl.Controls.Remove($schedPage)}
 
 	####### Settings Tab
 	#Work Period
@@ -53,10 +67,14 @@ function Show-Properties {
 			Set-ControlsVisible $true $LOopts.controls
 		}
 	})
-
 	
 	#Evening Lockout
 	$ELOopts = ELO-Options -page $setPage -properties $properties
+	
+	$modeOpts.schedule.Add_CheckedChanged({
+		Set-TabVisible $tabControl $tabOrder $modeOpts.schedule.Checked $schedPage
+		Set-ControlsEnabled $modeOpts.schedule.Checked @($ELOopts.all_controls)
+	})
 
 	$verticalLine = New-Object System.Windows.Forms.Panel -Property @{Width=1; Height=200; Left=275; Top=20; BorderStyle="Fixed3D"; BackColor = [System.Drawing.Color]::Gray}
 	$setPage.Controls.Add($verticalLine)
@@ -117,8 +135,11 @@ function Show-Properties {
 	
 	####### Bottom of properties form
 	#Update All Button
-	$updateAll = New-Object System.Windows.Forms.Button -Property @{Location='247,310'; Size='100,40'; Text="Update All"}
+	$updateAll = New-Object System.Windows.Forms.Button -Property @{Location='247,310'; Size='100,40'; Text="Save"}
 	$updateAll.Add_Click({
+		$properties.scheduled = $modeOpts.schedule.Checked
+		$properties.cycles = $modeOpts.cycles.Value
+
 		$time = HM-S $workOpts.hours.Value $workOpts.min.Value
 		$properties.workPeriod = $time
 		$properties.lockOut = $LOopts.value.Value
@@ -150,7 +171,7 @@ function Show-Properties {
 		$properties.pieChartClr = $dispOpts.vals.pieClr
 		$properties.textDispClr = $dispOpts.vals.txtClr
 
-		Save-Properties $properties
+		Save-Properties -properties $properties
 		Toast-Notification -msg "All settings have been updated.`nChanges will take effect on restart." -header "Work Timer Update"
 	})
 	$form.Controls.Add($updateAll)
@@ -195,8 +216,10 @@ function Default-Properties {
 		volume = 500
 		pieChartClr = [System.Drawing.Color]::CornflowerBlue
 		textDispClr = [System.Drawing.Color]::Black	
+		scheduled = $true
+		cycles = 2
 	}
-	Save-Properties $properties
+	Save-Properties -properties $properties
 }
 
 function Load-Properties {
@@ -206,11 +229,19 @@ function Load-Properties {
 	Get-Content $propertiesPath -Raw | ConvertFrom-Json
 }
 
-function Save-Properties($properties) {
+function Save-Properties {
+	param(
+		$propertiesPath = "$parentDir/json/properties.json",
+		$properties
+	)
     $properties | ConvertTo-Json | Set-Content $propertiesPath -Encoding UTF8
 }
 
-function Get-Property($propname){
-	$properties = Load-Properties
+function Get-Property {
+	param(
+		$propertiesPath = "$parentDir/json/properties.json",
+		$propname
+	)
+	$properties = Load-Properties -propertiesPath $propertiesPath
 	return $properties.$propname
 }

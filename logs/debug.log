@@ -1793,3 +1793,42 @@ User=13 Correct=13
 Show-ExitChallenge returned: <True>
 Show-ExitChallenge returned: <False>
 Exit cancelled
+08/11/2026 15:33:06 - Reset from unlock after extended idle
+User=105 Correct=105
+Show-ExitChallenge returned: <True>
+User=10 Correct=10
+Show-ExitChallenge returned: <True>
+User=16 Correct=16
+Show-ExitChallenge returned: <True>
+User=11 Correct=11
+Show-ExitChallenge returned: <True>
+User=98 Correct=98
+Show-ExitChallenge returned: <True>
+08/11/2026 17:02:00 - Reset from unlock
+08/11/2026 17:41:42 - Reset from unlock
+ - setcycles called
+ - setcycles called
+ - setcycles called
+ - setcycles called
+ - setcycles called
+ - setcycles called
+ - setcycles called
+ - setcycles called
+ - setcycles called
+ - setcycles called
+ - setcycles called
+ - setcycles called
+ - setcycles called
+ - setcycles called
+ - setcycles called
+User=9 Correct=9
+Show-ExitChallenge returned: <True>
+User=8 Correct=8
+Show-ExitChallenge returned: <True>
+User=911960 Correct=911690
+User=367297 Correct=367297
+Show-ExitChallenge returned: <True>
+User=right Correct=right
+Show-ExitChallenge returned: <True>
+User=48 Correct=48
+Show-ExitChallenge returned: <True>
