@@ -68,8 +68,18 @@ $itemShow = $menu.Items.Add("Show time left")
 $itemRestart =$menu.Items.Add("Start new Session...")
 $itemPause = $menu.Items.Add("Pause for 1 hour")
 $itemResume = $menu.Items.Add("End pause now")
+$itemEmergency = $menu.Items.Add("Emergency unlock (15 min)")
 $itemProperties = $menu.Items.Add("Properties")
 $itemExit = $menu.Items.Add("Exit")
+
+$menu.Add_Opening({
+    param($sender, $e)
+
+	Update-ContextMenu `
+	 -menu $sender `
+	 -state $(Load-State)
+
+})
 
 $itemShow.Add_Click({ Show-TimeLeft })
 $itemRestart.Add_Click({set-cycles})
@@ -77,23 +87,24 @@ $itemPause.Add_Click({ Pause-OneHour })
 $itemResume.Add_Click({ Resume-Now })
 $itemProperties.Add_Click({ Show-Properties })
 
+
 $itemExit.Add_Click({ 
 
 	Exit-App $true
 
 })
 
-$itemEmergency = $menu.Items.Add("Emergency unlock (15 min)")
+
 $itemEmergency.Add_Click({ powershell.exe -ExecutionPolicy Bypass -File "$parentDir\scripts\emergency_unlock.ps1" })
 
-$contextMenu.Add_Opening({
-    param($sender, $e)
+# $contextMenu.Add_Opening({
+#     param($sender, $e)
 
-    $state = Load-State
+#     $state = Load-State
 
-    Update-ContextMenu `
-        -State $state `
-})
+#     Update-ContextMenu `
+#         -State $state `
+# })
 
 $script:notifyIcon.ContextMenuStrip = $menu
 $script:notifyIcon.Add_DoubleClick({ Show-TimeLeft })

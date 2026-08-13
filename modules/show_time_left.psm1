@@ -7,7 +7,7 @@ function Show-TimeLeft {
     $msg = ""
 
     if (-not $state.scheduled){
-        $msg += "`nSet $($state.numCycles - $state.cycles + 1) of $($state.numCycles)"
+        $msg += "Set $($state.numCycles - $state.cycles + 1) of $($state.numCycles)`n"
     }
 
     $msg += "Time left: $(Get-RemainingText $state.remainingSeconds)"

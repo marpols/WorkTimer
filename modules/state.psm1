@@ -76,7 +76,6 @@ function Save-State {
 		$state
 	)
     $state | ConvertTo-Json | Set-Content $statePath -Encoding UTF8
-	return $(Load-State)
 }
 
 function Update-Pom {

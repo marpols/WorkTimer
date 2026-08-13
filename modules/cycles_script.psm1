@@ -96,7 +96,7 @@ function Start-CyclesScript {
 						        $state = Update-Cycle $state
 					        }	
 				    
-                        $state = Save-State $state
+                        Save-State $state
 
                         if ($state.cycles -le 0){
                             return

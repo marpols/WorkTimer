@@ -1832,3 +1832,31 @@ User=right Correct=right
 Show-ExitChallenge returned: <True>
 User=48 Correct=48
 Show-ExitChallenge returned: <True>
+08/12/2026 21:42:28 - Reset from unlock
+08/12/2026 21:42:35 - Reset from work_timer.ps1 check
+08/12/2026 21:42:55 - Reset from work_timer.ps1 check
+08/12/2026 21:43:15 - Reset from work_timer.ps1 check
+08/12/2026 21:43:35 - Reset from work_timer.ps1 check
+User=6 Correct=6
+Show-ExitChallenge returned: <True>
+User=11 Correct=11
+Show-ExitChallenge returned: <True>
+User=10 Correct=10
+Show-ExitChallenge returned: <True>
+Show-ExitChallenge returned: <False>
+Exit cancelled
+User=left Correct=right
+User=27 Correct=27
+Show-ExitChallenge returned: <True>
+User=48 Correct=48
+Show-ExitChallenge returned: <True>
+User=33 Correct=33
+Show-ExitChallenge returned: <True>
+User=8 Correct=8
+Show-ExitChallenge returned: <True>
+ - scheduled mode: 
+ - scheduled mode: 
+User=13 Correct=13
+Show-ExitChallenge returned: <True>
+ - scheduled mode: True
+ - scheduled mode: True
